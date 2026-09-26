@@ -38,4 +38,4 @@ Ejecutar desde la raíz del proyecto:
 
 ## Pendientes conocidos
 
-Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual (paginación del listado de Clientes, algunos enlaces de imágenes rotos de terceros, el mapa de Google de Contáctenos que ya no carga, y los formularios de cotización/contacto dependientes del backend, dejados como placeholders estáticos).
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual (paginación del listado de Clientes, algunos enlaces de imágenes rotos de terceros, y los formularios de cotización/contacto dependientes del backend, dejados como placeholders estáticos).
