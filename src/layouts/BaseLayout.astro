@@ -1,0 +1,50 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import OffCanvas from "../components/OffCanvas.astro";
+import ThemeScripts from "../components/ThemeScripts.astro";
+
+interface Props {
+  title: string;
+  active: "inicio" | "nosotros" | "servicios" | "clientes" | "contactenos";
+}
+
+const { title, active } = Astro.props;
+---
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>{title}</title>
+<meta name="author" content="Fer Llanos">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/revolution-slider.css">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/shortcode.css">
+<link rel="stylesheet" type="text/css" href="/public_gv/web/stylesheets/responsive.css">
+<link rel="icon" href="/public_gv/imagenes/ico.ico" type="image/x-icon"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+</head>
+<body class="header-v1">
+  <div id="site-wrapper">
+    <Header active={active} />
+    <!-- /#site-header -->
+    <div id="site-content">
+      <div id="page-body">
+        <slot />
+      </div>
+      <!-- /#page-body -->
+      <Footer />
+      <!-- /#page-footer -->
+    </div>
+    <div id="site-footer"></div>
+    <!-- /#site-footer -->
+  </div>
+  <div class="goto-top"><a href="#top">Goto Top</a></div>
+  <OffCanvas />
+  <ThemeScripts />
+</body>
+</html>

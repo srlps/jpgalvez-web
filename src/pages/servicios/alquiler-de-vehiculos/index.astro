@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Cabecera from "../../../components/Cabecera.astro";
+import ServiceNav from "../../../components/ServiceNav.astro";
+import ServiceQuoteSection from "../../../components/ServiceQuoteSection.astro";
+---
+<BaseLayout title="ALQUILER DE VEHICULOS" active="servicios">
+  <Cabecera>Estamos siempre A SU DISPOSICIÓN</Cabecera>
+
+  <section class="nuestros-servicios-detalles">
+    <div class="row">
+      <div class="col-md-6 izquierdo">
+        <ServiceNav active="vehiculos" />
+      </div>
+      <div class="col-md-6 derecho">
+        <div class="row">
+          <div class="col-md-10">
+            <h1>ALQUILER DE VEHICULOS</h1>
+            <p><p style="margin-left: 40px;">Contamos con camionetas dise&ntilde;adas para soportar diversos materiales pesados y con amplias cajas para transportar grandes objetos. Si tiene dudas sobre las caracter&iacute;sticas de alg&uacute;n modelo en especial, consulte a trav&eacute;s de nuestras l&iacute;neas telef&oacute;nicas o cont&aacute;ctenos v&iacute;a email. En caso, tenga alg&uacute;n inconveniente con la camioneta, puede solicitar soporte t&eacute;cnico en nuestros talleres, en donde nos preocupamos por mantener toda nuestra flota en buenas condiciones.</p>
+</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ServiceQuoteSection />
+</BaseLayout>

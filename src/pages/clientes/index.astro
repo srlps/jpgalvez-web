@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Cabecera from "../../components/Cabecera.astro";
+import ServiceNav from "../../components/ServiceNav.astro";
+import clientes from "../../data/clientes.json";
+---
+<BaseLayout title="Nosotros" active="clientes">
+  <Cabecera>ELLOS CONFÍAN EN NOSOTROS Y <br> SON <b>NUESTRO RESPALDO</b></Cabecera>
+
+  <section class="clientes-servicios">
+    <div class="row">
+      <div class="col-md-6 izquierdo">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <!--
+              294 rows, all rendered unpaginated — this mirrors the extracted
+              markup as-is. In the original site a jQuery DataTables plugin
+              paginated this client-side (20/page); that JS was dropped during
+              extraction as assumed dead admin-panel weight, which was wrong
+              for this page. See AGENTS.md "Known gaps to improve in Phase 2".
+            -->
+            <div class="x_content">
+              <table id="example">
+                <thead>
+                  <tr class="headings" style="background: #FFF; border: none">
+                    <th><h2 style="font-size: 30px;">NUESTROS CLIENTES</h2></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clientes.map((nombre) => (
+                    <tr class="even pointer">
+                      <td class=" last">{nombre}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 derecho">
+        <div class="row">
+          <div class="col-md-12 derco">
+            <h1>NUESTROS CLIENTES <br>NOS RECOMIENDAN</h1>
+            <img src="/public_gv/uploads/clientes_recomiendanDJn0X7oP.jpg">
+            <p><p align="left" style="font-size: 18px;"><em>Excelente servicio, puntual y responsable.</em><br/>
+<strong>TRANSPORTES JEANPIERRE&nbsp;</strong>es una empresa que apunta a ser l&iacute;der en el mercado y su atenci&oacute;n asi lo demuestra.<br/>
+<strong>Totalmente recomendado!</strong></p>
+
+<p><em><strong>Marcos Monta&ntilde;ez</strong></em><br/>
+<em>Gerente General MM Consultores</em></p>
+
+<p>&nbsp;</p>
+</p>
+          </div>
+
+          <div class="col-md-12 caja">
+            <ServiceNav headingClass="left-sidebar" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

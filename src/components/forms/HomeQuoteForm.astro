@@ -1,0 +1,23 @@
+<!-- Home page's own quote form, posted to the (now dead) enviar_contactenos_home endpoint in the original site. -->
+<!-- TODO(redesign): backend-dependent form, needs mailto/Formspree/EmailJS or similar -->
+<form id="contact-form_2" method="post" novalidate="novalidate">
+  <div class="input-wrap">
+    <input type="text" value="" tabindex="1" placeholder="Nombre" name="nombre_contactenos" id="nombre_contactenos" required="">
+    <span id="mensaje_nombre_contactenos"></span>
+  </div>
+  <div class="input-wrap">
+    <input type="email" value="" tabindex="2" placeholder="Correo Electrónico" name="correo_contactenos" id="correo_contactenos" required="">
+    <span id="mensaje_correo_contactenos"></span>
+  </div>
+  <div class="message-wrap">
+    <textarea class="" tabindex="4" placeholder="¿En qué servicio está interesado?" name="mensaje_contactenos" id="mensaje_contactenos" required=""></textarea>
+    <span id="mensaje_mensaje_contactenos"></span>
+  </div>
+  <br>
+  <div class="send-wrap">
+    <span id="cargando()"></span>
+    <h4><button type="buttoN" class="button" id="btn_conta">CONTACTAR</button></h4>
+    <span id="confirmacion_sistema"></span>
+  </div>
+  <br>
+</form>

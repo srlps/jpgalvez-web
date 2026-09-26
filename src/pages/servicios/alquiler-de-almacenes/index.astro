@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Cabecera from "../../../components/Cabecera.astro";
+import ServiceNav from "../../../components/ServiceNav.astro";
+import ServiceQuoteSection from "../../../components/ServiceQuoteSection.astro";
+---
+<BaseLayout title="ALQUILER DE ALMACENES" active="servicios">
+  <Cabecera>Estamos siempre A SU DISPOSICIÓN</Cabecera>
+
+  <section class="nuestros-servicios-detalles">
+    <div class="row">
+      <div class="col-md-6 izquierdo">
+        <ServiceNav active="almacenes" />
+      </div>
+      <div class="col-md-6 derecho">
+        <div class="row">
+          <div class="col-md-10">
+            <h1>ALQUILER DE ALMACENES</h1>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ServiceQuoteSection />
+</BaseLayout>

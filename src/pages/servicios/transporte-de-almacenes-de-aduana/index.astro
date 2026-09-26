@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Cabecera from "../../../components/Cabecera.astro";
+import ServiceNav from "../../../components/ServiceNav.astro";
+import ServiceQuoteSection from "../../../components/ServiceQuoteSection.astro";
+---
+<BaseLayout title="TRANSPORTE DE ALMACENES DE ADUANA" active="servicios">
+  <Cabecera>Estamos siempre A SU DISPOSICIÓN</Cabecera>
+
+  <section class="nuestros-servicios-detalles">
+    <div class="row">
+      <div class="col-md-6 izquierdo">
+        <ServiceNav active="aduana" />
+      </div>
+      <div class="col-md-6 derecho">
+        <div class="row">
+          <div class="col-md-10">
+            <h1>TRANSPORTE DE ALMACENES DE ADUANA</h1>
+            <p><p style="margin-left: 40px;">Brindamos los servicios de retiro y/o ingreso de mercader&iacute;as a los diferentes terminales de almacenamiento. Asimismo, le brindamos orientaci&oacute;n en el manejo de mercanc&iacute;as, ya sea en contenedor (FCL) o carga suelta (LCL). Adicionalmente coordinamos su seguimiento, v&iacute;a GPS hasta su destino final.</p>
+
+<!-- TODO(broken-link): transp-aduanero.jpg points to whodp.com (dev server), never archived — not recoverable, see AGENTS.md "Known gaps" -->
+<p style="margin-left: 40px;"><img alt="" src="http://whodp.com//nuevos-proyectos/webgalvez/public_gv/web/images/transp-aduanero.jpg" style="width: 500px; height: 182px; border-width: 1px; border-style: solid; margin-top: 20px; margin-bottom: 20px; float: left;"/></p>
+</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ServiceQuoteSection />
+</BaseLayout>

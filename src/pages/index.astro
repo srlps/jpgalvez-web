@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ElegirNos from "../components/ElegirNos.astro";
+import HomeQuoteForm from "../components/forms/HomeQuoteForm.astro";
+---
+<BaseLayout title="Servicio de mudanza - Transportes JeanPierre | Inicio" active="inicio">
+  <!-- Slider -->
+  <div class="tp-banner-container">
+    <div class="tp-banner">
+      <ul>
+        <li data-transition="fade" data-slotamount="7" data-masterspeed="300" data-saveperformance="off">
+          <img src="/public_gv/uploads/slider_fondo_siGY.jpg" alt="slider_1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+          <div class="tp-caption 2 sft tp-resizeme" data-x="center" data-hoffset="0" data-y="center" data-voffset="-35" data-speed="300" data-start="500" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300">
+          </div>
+          <!-- LAYER NR. 2 -->
+          <div class="tp-caption text1 sfb tp-resizeme" data-x="center" data-hoffset="0" data-y="center" data-voffset="80" data-speed="300" data-start="800" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300">
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="nuestro-compromiso">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-4 caja">
+        <h1>NUESTRO COMPROMISO</h1>
+        <p><p><strong>Garantizar </strong>a nuestros clientes que la mercader&iacute;a que nos conf&iacute;an llegar&aacute; a su destino en perfectas condiciones, en el tiempo pactado, minimizando contratiempos y manteniendo la calidad de nuestro servicio de acuerdo a sus necesidades.</p>
+</p>
+        <img src="/public_gv/web/images/firma-cl.png" class="img-responsive">
+        <br>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+        <img src="/public_gv/uploads/compromiso_2HMwthPR.jpg">
+      </div>
+    </div>
+  </section>
+
+  <section class="nuestros-servicios">
+    <div class="row">
+      <div class="col-md-5">
+        <img src="/public_gv/imagenes/home2.png">
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-4 caja">
+        <h1>NUESTROS SERVICIOS</h1>
+        <ul>
+          <li><a href="/servicios/mudanzas/">MUDANZAS</a></li>
+          <li><a href="/servicios/transporte-de-almacenes-de-aduana/">TRANSPORTE DE ALMACENES DE ADUANA</a></li>
+          <li><a href="/servicios/alquiler-de-vehiculos/">ALQUILER DE VEHICULOS</a></li>
+          <li><a href="/servicios/alquiler-de-almacenes/">ALQUILER DE ALMACENES</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </section>
+
+  <ElegirNos />
+
+  <style>
+    .contactenos .fondo{
+      background-image: url(/public_gv/uploads/clientes_recomiendanFjPTdbUZ.jpg) ;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+  </style>
+
+  <section class="contactenos" data-waypoint-active="yes">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-4 caja">
+        <br><br>
+        <center><img src="/public_gv/uploads/clientes_recomiendanDJn0X7oP.jpg"></center>
+        <div class="row">
+          <div class="col-md-2 col-xs-2">
+            <img src="/public_gv/web/images/comilla_cliente.png" class="img-responsive">
+          </div>
+          <div class="col-md-8 col-xs-8">
+            <p><p align="left" style="font-size: 18px;"><em>Excelente servicio, puntual y responsable.</em><br/>
+<strong>TRANSPORTES JEANPIERRE&nbsp;</strong>es una empresa que apunta a ser l&iacute;der en el mercado y su atenci&oacute;n asi lo demuestra.<br/>
+<strong>Totalmente recomendado!</strong></p>
+
+<p><em><strong>Marcos Monta&ntilde;ez</strong></em><br/>
+<em>Gerente General MM Consultores</em></p>
+
+<p>&nbsp;</p>
+</p>
+          </div>
+          <div class="col-md-2 col-xs-2">
+            <br><br><br><br><br><br>
+            <img src="/public_gv/web/images/comilla_cliente_cerr.png">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-5 fondo">
+        <div class="row">
+          <div class="col-md-6 titulo_2">
+            <h3>SOLICITE SU PRESUPUESTO</h3>
+            <p>Escríbanos y gustosamente atenderemos sus requerimientos.</p>
+            <br>
+            <HomeQuoteForm />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

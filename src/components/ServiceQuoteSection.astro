@@ -1,0 +1,27 @@
+---
+import ServiceQuoteForm from "./forms/ServiceQuoteForm.astro";
+// "COTICE SU SERVICIO AHORA" section, identical on all 4 service subpages.
+---
+<style>
+  .contactenos_2 .fondo{
+    background-image: url(/public_gv/imagenes/contactenos.png) ;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+</style>
+<section class="contactenos_2" data-waypoint-active="yes">
+  <div class="row">
+    <div class="col-md-12 fondo">
+      <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-10 titulo"><h1>COTICE SU SERVICIO AHORA</h1></div>
+        <div class="col-md-12">&nbsp;</div>
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-8 titulo_2">
+          <ServiceQuoteForm />
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+  </div>
+</section>

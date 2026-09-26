@@ -1,0 +1,23 @@
+---
+interface Props {
+  active?: "mudanzas" | "aduana" | "vehiculos" | "almacenes";
+  headingClass?: string;
+}
+
+const { active, headingClass = "left-sidebar caja" } = Astro.props;
+
+const links = [
+  { key: "mudanzas", href: "/servicios/mudanzas/", label: "MUDANZAS" },
+  { key: "aduana", href: "/servicios/transporte-de-almacenes-de-aduana/", label: "TRANSPORTE DE ALMACENES DE ADUANA" },
+  { key: "vehiculos", href: "/servicios/alquiler-de-vehiculos/", label: "ALQUILER DE VEHICULOS" },
+  { key: "almacenes", href: "/servicios/alquiler-de-almacenes/", label: "ALQUILER DE ALMACENES" },
+] as const;
+---
+<div class={headingClass}>
+  <h1>NUESTROS SERVICIOS</h1>
+  <ul>
+    {links.map((link) => (
+      <li><a href={link.href} class={link.key === active ? "active" : ""}>{link.label}</a></li>
+    ))}
+  </ul>
+</div>

@@ -1,0 +1,28 @@
+---
+// Shared inner-page banner using servicio_detalle.jpg — reused on the 4 service
+// subpages and Clientes (5 pages total, same background image).
+---
+<style>
+  .cabecera_imagen .fondo{
+    background-image: url(/public_gv/uploads/servicio_detalle.jpg) ;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .cabecera_imagen h1{
+    padding-top: 60px;
+    padding-bottom: 50px;
+    text-align: center;
+    color: #FFFFFF;
+  }
+</style>
+<section class="cabecera_imagen" data-waypoint-active="yes">
+  <div class="row">
+    <div class="col-md-12 fondo">
+      <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-10"><h1><slot /></h1></div>
+      </div>
+    </div>
+  </div>
+</section>

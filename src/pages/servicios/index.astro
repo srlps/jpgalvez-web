@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Servicios" active="servicios">
+  <style>
+    #bljaIMGte{
+      float:left;
+      position:relative;
+      margin-left: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+      border-radius: 0px;
+      -webkit-transition: opacity 0.3s;
+      transition: opacity 0.3s;
+    }
+    #bljaIMGte:hover{
+      opacity: 0.9;
+      -webkit-transition: opacity 0.3s;
+      transition: opacity 0.3s;
+    }
+    #bljaIMGte .bljaIMGtex {
+      position:absolute;
+      top:30%;
+      color:#FFF;
+      font-size: 39px;
+      text-align: center;
+      letter-spacing: normal;
+      margin-bottom:0;
+      line-height: 44px;
+    }
+  </style>
+
+  <section class="contactenos" data-waypoint-active="yes">
+    <div class="row">
+      <div class="col-md-6" id="bljaIMGte">
+        <a href="/servicios/mudanzas/" style="color: #FFF">
+          <img style="border-radius: 0px;" src="/public_gv/uploads/servicios_8iSz_mudanza.jpg" style="width:100%" class="img-responsive">
+        </a>
+      </div>
+      <div class="col-md-6" id="bljaIMGte">
+        <a href="/servicios/transporte-de-almacenes-de-aduana/" style="color: #FFF">
+          <img style="border-radius: 0px;" src="/public_gv/uploads/servicios_TUwb_serv-aduana.jpg" style="width:100%" class="img-responsive">
+        </a>
+      </div>
+      <div class="col-md-6" id="bljaIMGte">
+        <a href="/servicios/alquiler-de-vehiculos/" style="color: #FFF">
+          <img style="border-radius: 0px;" src="/public_gv/uploads/servicios_H08p_serv-alquiler-vehiculos.jpg" style="width:100%" class="img-responsive">
+        </a>
+      </div>
+      <div class="col-md-6" id="bljaIMGte">
+        <a href="/servicios/alquiler-de-almacenes/" style="color: #FFF">
+          <img style="border-radius: 0px;" src="/public_gv/uploads/servicios_d39S_serv-almacenyembalaje.jpg" style="width:100%" class="img-responsive">
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

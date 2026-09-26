@@ -1,0 +1,65 @@
+---
+interface Props {
+  active: "inicio" | "nosotros" | "servicios" | "clientes" | "contactenos";
+}
+
+const { active } = Astro.props;
+
+const navItems: { key: Props["active"]; href: string; label: string }[] = [
+  { key: "inicio", href: "/", label: "Inicio" },
+  { key: "nosotros", href: "/nosotros/", label: "Nosotros" },
+  { key: "servicios", href: "/servicios/", label: "Servicios" },
+  { key: "clientes", href: "/clientes/", label: "Clientes" },
+  { key: "contactenos", href: "/contactenos/", label: "Contáctenos" },
+];
+---
+<div id="site-header">
+  <div id="masthead" class="header-v1">
+    <div class="wrapper">
+      <div class="brand has-logo has-sticky-logo">
+        <h1 class="logo"><a href="/"><img src="/public_gv/imagenes/logo.png" alt="Grupo Vargas"></a></h1>
+      </div>
+      <br>
+      <nav class="navigator">
+        <ul class="menu">
+          <li><a style="padding-left:1px" href="http://transportesjpgalvez.com:2095/" target="_blank"><img src="/public_gv/web/images/webm_header.png" width="30"></a></li>
+          <li><a style="padding-left:1px" href="https://www.facebook.com/transportejpgalvez/" target="_blank"><img src="/public_gv/web/images/fb_header.png" width="30"></a></li>
+          <li><a style="padding-left:1px" href="http://facturacion.transportesjpgalvez.com/" target="_blank"><img src="/public_gv/web/images/fact_header.png" width="30"></a></li>
+        </ul>
+      </nav>
+      <br><br>
+      <nav class="navigator">
+        <ul class="menu">
+          {navItems.map((item) => (
+            <li class={item.key === active ? "active" : ""}><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <nav id="site-navigator-mobile" class="navigator-mobile">
+        <a href="#" class="navigator-toggle">
+        <i class="fa fa-bars"></i>
+        </a>
+        <!-- /.navigator-toggle -->
+        <ul id="menu-main-menu-1" class="menu">
+          {navItems.map((item) => (
+            <li class={item.key === active ? "active" : ""}><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="masthead-sticky" class="header" style="background: #014171;">
+    <div class="wrapper">
+      <div class="brand has-logo has-sticky-logo">
+        <h1 class="logo"><a href="/"><img src="/public_gv/imagenes/logo.png" class="sticky-logo" alt="Grupo Vargas"></a></h1>
+      </div>
+      <nav class="navigator">
+        <ul class="menu">
+          {navItems.map((item) => (
+            <li class={item.key === active ? "active" : ""}><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

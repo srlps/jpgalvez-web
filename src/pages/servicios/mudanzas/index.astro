@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Cabecera from "../../../components/Cabecera.astro";
+import ServiceNav from "../../../components/ServiceNav.astro";
+import ServiceQuoteSection from "../../../components/ServiceQuoteSection.astro";
+---
+<BaseLayout title="MUDANZAS" active="servicios">
+  <Cabecera>Estamos siempre A SU DISPOSICIÓN</Cabecera>
+
+  <section class="nuestros-servicios-detalles">
+    <div class="row">
+      <div class="col-md-6 izquierdo">
+        <ServiceNav active="mudanzas" />
+      </div>
+      <div class="col-md-6 derecho">
+        <div class="row">
+          <div class="col-md-10">
+            <h1>MUDANZAS</h1>
+            <p><p style="margin-left: 40px;">Nuestro servicio de <strong>mudanza </strong>se realiza<em> puerta a puerta</em> con la cual, nos encargamos de todo el embalaje e inventario para seguir con la carga, descarga y ubicaci&oacute;n de los muebles de acuerdo a su indicaci&oacute;n. Contamos con personal altamente caliificado y&nbsp;unidades monitoreadas con sistema GPS.</p>
+
+<h3 style="margin-left: 40px;"><strong>Atendemos:</strong></h3>
+
+<ul style="margin-left: 80px;">
+	<li>Mudanza de oficinas.</li>
+	<li>Mudanza de casa.</li>
+	<li>Mudanza de departamentos.</li>
+	<li>Mudanza de planta.</li>
+</ul>
+
+<!-- TODO(broken-link): mudanza.jpg / mudanzasdepartamento.jpg point to whodp.com (dev server), never archived — not recoverable, see AGENTS.md "Known gaps" -->
+<p><img alt="" src="http://whodp.com/nuevos-proyectos/webgalvez/public_gv/web/images/mudanza.jpg" style="width: 250px; height: 187px; border-width: 1px; border-style: solid; margin: 20px 10px; float: left;"/><img alt="" src="http://whodp.com/nuevos-proyectos/webgalvez/public_gv/web/images/mudanzasdepartamento.jpg" style="width: 250px; height: 179px; float: right; border-width: 1px; border-style: solid; margin: 20px 0px;"/></p>
+</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ServiceQuoteSection />
+</BaseLayout>
