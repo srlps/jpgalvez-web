@@ -1,35 +1,35 @@
-# transportesjpgalvez.com — static reconstruction
+# transportesjpgalvez.com — reconstrucción estática
 
-Static reconstruction of `transportesjpgalvez.com` (Transportes e Inversiones Jeanpierre S.A.C.), rebuilt from its [Wayback Machine capture](https://web.archive.org/web/20231107032817/http://transportesjpgalvez.com/) after the original domain/source was lost. See [AGENTS.md](AGENTS.md) for full project background, scope and known gaps, and [EXTRACTION.md](EXTRACTION.md) for how the raw content was pulled from the archive.
+Reconstrucción estática de `transportesjpgalvez.com` (Transportes e Inversiones Jeanpierre S.A.C.), reconstruida a partir de su [captura de Wayback Machine](https://web.archive.org/web/20231107032817/http://transportesjpgalvez.com/) tras la pérdida del dominio/código fuente original. Ver [AGENTS.md](AGENTS.md) para el contexto completo del proyecto, su alcance y los pendientes conocidos, y [EXTRACTION.md](EXTRACTION.md) para el detalle de cómo se extrajo el contenido original del archivo.
 
 ## Stack
 
-Built with [Astro](https://astro.build/) as a static-site generator — compiles to plain HTML/CSS with no client-side JS framework and no backend.
+Construido con [Astro](https://astro.build/) como generador de sitios estáticos — compila a HTML/CSS plano sin framework de JS en el cliente y sin backend.
 
-## Project structure
+## Estructura del proyecto
 
 ```
 src/
-  layouts/BaseLayout.astro   # <head>, nav, off-canvas search, footer, theme scripts
-  components/                # shared header/footer/nav/form partials
-  pages/                      # one file per route (Astro file-based routing)
-  data/clientes.json          # Clientes page's 294-row client list
+  layouts/BaseLayout.astro   # <head>, nav, buscador off-canvas, footer, scripts del tema
+  components/                # partials compartidos de header/footer/nav/formularios
+  pages/                      # un archivo por ruta (routing por archivos de Astro)
+  data/clientes.json          # listado de 294 clientes de la página Clientes
 public/
-  public_gv/                  # static assets (images, CSS, JS), served as-is at /public_gv/...
-dist/                         # generated static site — gitignored, never edit directly
+  public_gv/                  # assets estáticos (imágenes, CSS, JS), servidos tal cual en /public_gv/...
+dist/                         # sitio estático generado — ignorado por git, nunca editar directamente
 ```
 
-## Commands
+## Comandos
 
-Run from the project root:
+Ejecutar desde la raíz del proyecto:
 
-| Command | Action |
+| Comando | Acción |
 |---|---|
-| `npm install` | Install dependencies (first time only) |
-| `npm run dev` | Start local dev server with live reload at http://localhost:4321 |
-| `npm run build` | Build the static site into `dist/` |
-| `npm run preview` | Serve the built `dist/` locally, to sanity-check the actual build output |
+| `npm install` | Instala las dependencias (solo la primera vez) |
+| `npm run dev` | Levanta el servidor local con recarga en vivo en http://localhost:4321 |
+| `npm run build` | Genera el sitio estático en `dist/` |
+| `npm run preview` | Sirve localmente el `dist/` ya generado, para verificar el build real |
 
-## Known gaps
+## Pendientes conocidos
 
-See AGENTS.md → "Known gaps to improve in Phase 2" for the current list (Clientes list pagination, a few broken third-party image links, and the backend-dependent quote/contact forms left as static placeholders).
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual (paginación del listado de Clientes, algunos enlaces de imágenes rotos de terceros, y los formularios de cotización/contacto dependientes del backend, dejados como placeholders estáticos).
