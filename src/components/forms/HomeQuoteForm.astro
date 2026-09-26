@@ -1,15 +1,18 @@
-<!-- TODO(redesign): backend-dependent form, needs mailto/Formspree/EmailJS or similar -->
-<form id="contact-form_2" class="form-presupuesto" method="post" novalidate>
+<!-- TODO(redesign): stub submit — wire to Web3Forms once the owner creates the account and shares the access key -->
+<form id="contact-form_2" class="form-presupuesto js-validate" method="post" novalidate>
   <div class="input-wrap">
     <input type="text" placeholder="Nombre" name="nombre_contactenos" id="nombre_contactenos" required>
+    <span class="field-error"></span>
   </div>
   <div class="input-wrap">
     <input type="email" placeholder="Correo Electrónico" name="correo_contactenos" id="correo_contactenos" required>
+    <span class="field-error"></span>
   </div>
   <div class="message-wrap">
     <textarea placeholder="¿En qué servicio está interesado?" name="mensaje_contactenos" id="mensaje_contactenos" required></textarea>
+    <span class="field-error"></span>
   </div>
   <div class="send-wrap">
-    <button type="button" class="button" id="btn_conta">CONTACTAR</button>
+    <button type="button" class="button js-form-submit" id="btn_conta">CONTACTAR</button>
   </div>
 </form>

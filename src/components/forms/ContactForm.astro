@@ -1,30 +1,32 @@
 ---
 const campos = [
-  { name: "nombre_contactenos", placeholder: "Nombres" },
-  { name: "empresa_contactenos", placeholder: "Empresa" },
-  { name: "email_contactenos", placeholder: "Email" },
-  { name: "telefono_contactenos", placeholder: "Teléfono" },
-  { name: "cargo_contactenos", placeholder: "Cargo / Puesto" },
-];
+  { name: "nombre_contactenos", type: "text", placeholder: "Nombres" },
+  { name: "empresa_contactenos", type: "text", placeholder: "Empresa" },
+  { name: "email_contactenos", type: "email", placeholder: "Email" },
+  { name: "telefono_contactenos", type: "tel", placeholder: "Teléfono" },
+  { name: "cargo_contactenos", type: "text", placeholder: "Cargo / Puesto" },
+] as const;
 ---
-<!-- TODO(redesign): backend-dependent form, needs mailto/Formspree/EmailJS or similar -->
-<form id="contact-form_2" method="post" novalidate>
+<!-- TODO(redesign): stub submit — wire to Web3Forms once the owner creates the account and shares the access key -->
+<form id="contact-form_2" class="js-validate" method="post" novalidate>
   <div class="row">
     {campos.map((campo) => (
       <div class="col-md-12">
         <div class="input-wrap">
-          <input type="text" placeholder={campo.placeholder} name={campo.name} id={campo.name} required>
+          <input type={campo.type} placeholder={campo.placeholder} name={campo.name} id={campo.name} required>
+          <span class="field-error"></span>
         </div>
       </div>
     ))}
     <div class="col-md-12">
       <div class="input-wrap">
         <textarea rows="6" placeholder="Mensaje" name="mensaje_contactenos" id="mensaje_contactenos" required></textarea>
+        <span class="field-error"></span>
       </div>
     </div>
     <div class="col-md-12">
       <div class="send-wrap">
-        <button type="button" class="button" id="btn_conta">Enviar</button>
+        <button type="button" class="button js-form-submit" id="btn_conta">Enviar</button>
       </div>
     </div>
   </div>
