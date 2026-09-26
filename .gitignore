@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+
+# Astro build output and cache
+dist/
+.astro/
+
+# Editor/OS
+.DS_Store
