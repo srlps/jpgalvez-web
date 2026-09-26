@@ -6,16 +6,22 @@ Reconstrucción estática de `transportesjpgalvez.com` (Transportes e Inversione
 
 Construido con [Astro](https://astro.build/) como generador de sitios estáticos — compila a HTML/CSS plano sin framework de JS en el cliente y sin backend.
 
+- **Estilos**: un único archivo propio, `src/styles/site.css`, que reemplaza a los 7 CSS del tema original (Bootstrap 3, Font Awesome, Owl Carousel, Revolution Slider, etc.). Astro lo minifica y lo publica como un solo `.css` en `dist/_astro/`.
+- **JavaScript**: sin jQuery ni plugins. `src/scripts/site.js` (unas pocas líneas en JS nativo) cubre lo único que el tema realmente usaba: header fijo al hacer scroll, menú móvil y botón "volver arriba".
+- **Fuentes**: Google Fonts (Fjalla One y Open Sans), solo con los pesos que se usan.
+
 ## Estructura del proyecto
 
 ```
 src/
-  layouts/BaseLayout.astro   # <head>, nav, buscador off-canvas, footer, scripts del tema
+  layouts/BaseLayout.astro   # <head>, header, footer y carga de estilos/scripts
   components/                # partials compartidos de header/footer/nav/formularios
   pages/                      # un archivo por ruta (routing por archivos de Astro)
+  styles/site.css             # hoja de estilos única del sitio
+  scripts/site.js             # comportamiento del header, menú móvil y "volver arriba"
   data/clientes.json          # listado de 294 clientes de la página Clientes
 public/
-  public_gv/                  # assets estáticos (imágenes, CSS, JS), servidos tal cual en /public_gv/...
+  public_gv/                  # imágenes del sitio original, servidas tal cual en /public_gv/...
 dist/                         # sitio estático generado — ignorado por git, nunca editar directamente
 ```
 
@@ -32,4 +38,4 @@ Ejecutar desde la raíz del proyecto:
 
 ## Pendientes conocidos
 
-Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual (paginación del listado de Clientes, algunos enlaces de imágenes rotos de terceros, y los formularios de cotización/contacto dependientes del backend, dejados como placeholders estáticos).
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual (paginación del listado de Clientes, algunos enlaces de imágenes rotos de terceros, el mapa de Google de Contáctenos que ya no carga, y los formularios de cotización/contacto dependientes del backend, dejados como placeholders estáticos).

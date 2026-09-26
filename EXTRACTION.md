@@ -3,6 +3,8 @@
 Working checklist for the one-time migration described in [AGENTS.md](AGENTS.md) → "Extraction plan". Source: Wayback Machine CDX index for `transportesjpgalvez.com` (queried 2026-09-25). Timestamps below are confirmed `200` captures.
 
 > This document records **Part 1** of the extraction (archive → 9 flat `.html` files). Those flat files were since migrated into the Astro `src/` structure described in AGENTS.md → "Stack" / "Source/dist architecture" (Part 2) and no longer exist in the repo — paths like `nosotros/index.html` below are historical, not current file locations.
+>
+> The theme CSS/JS/font files mapped below (`public_gv/web/stylesheets/**`, `public_gv/web/javascript/**`, `public_gv/web/fonts/**`, `shortcode/pattern3.png`) were later removed in the optimization pass: styles were consolidated into `src/styles/site.css` and jQuery + plugins replaced by `src/scripts/site.js`. Only the content images remain under `public/public_gv/`.
 
 Archive URL patterns:
 - Page: `https://web.archive.org/web/<timestamp>/http://transportesjpgalvez.com/<path>`

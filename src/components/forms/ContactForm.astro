@@ -1,56 +1,31 @@
-<!-- Contáctenos page's own form, posted to the (now dead) enviar_contactenos endpoint in the original site. -->
+---
+const campos = [
+  { name: "nombre_contactenos", placeholder: "Nombres" },
+  { name: "empresa_contactenos", placeholder: "Empresa" },
+  { name: "email_contactenos", placeholder: "Email" },
+  { name: "telefono_contactenos", placeholder: "Teléfono" },
+  { name: "cargo_contactenos", placeholder: "Cargo / Puesto" },
+];
+---
 <!-- TODO(redesign): backend-dependent form, needs mailto/Formspree/EmailJS or similar -->
-<form id="contact-form_2" method="post" novalidate="novalidate">
+<form id="contact-form_2" method="post" novalidate>
   <div class="row">
+    {campos.map((campo) => (
+      <div class="col-md-12">
+        <div class="input-wrap">
+          <input type="text" placeholder={campo.placeholder} name={campo.name} id={campo.name} required>
+        </div>
+      </div>
+    ))}
     <div class="col-md-12">
       <div class="input-wrap">
-        <input type="text" value="" tabindex="1" placeholder="Nombres" name="nombre_contactenos" id="nombre_contactenos" required="">
-        <span id="mensaje_nombre_contactenos"></span>
+        <textarea rows="6" placeholder="Mensaje" name="mensaje_contactenos" id="mensaje_contactenos" required></textarea>
       </div>
     </div>
-
-    <div class="col-md-12">
-      <div class="input-wrap">
-        <input type="text" value="" tabindex="1" placeholder="Empresa" name="empresa_contactenos" id="empresa_contactenos" required="">
-        <span id="mensaje_empresa_contactenos"></span>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="input-wrap">
-        <input type="text" value="" tabindex="1" placeholder="Email" name="email_contactenos" id="email_contactenos" required="">
-        <span id="mensaje_email_contactenos"></span>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="input-wrap">
-        <input type="text" value="" tabindex="1" placeholder="Teléfono" name="telefono_contactenos" id="telefono_contactenos" required="">
-        <span id="mensaje_telefono_contactenos"></span>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="input-wrap">
-        <input type="text" value="" tabindex="1" placeholder="Cargo / Puesto" name="cargo_contactenos" id="cargo_contactenos" required="">
-        <span id="mensaje_cargo_contactenos"></span>
-      </div>
-    </div>
-
-    <div class="col-md-12">
-      <div class="input-wrap">
-        <textarea class="" rows="6" tabindex="4" placeholder="Mensaje" name="mensaje_contactenos" id="mensaje_contactenos" required=""></textarea>
-        <span id="mensaje_mensaje_contactenos"></span>
-      </div>
-    </div>
-
     <div class="col-md-12">
       <div class="send-wrap">
-        <div id="cargando()"></div>
-        <button type="buttoN" class="button" id="btn_conta">Enviar</button>
-        <span id="confirmacion_sistema"></span>
+        <button type="button" class="button" id="btn_conta">Enviar</button>
       </div>
     </div>
   </div>
-  <br>
 </form>
