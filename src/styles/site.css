@@ -1101,4 +1101,52 @@ textarea {
   #masthead-sticky {
     display: none;
   }
+
+  /* Sin .container, .row solo queda legible si sus columnas conservan el padding lateral;
+     estas clases lo pisaban con shorthand (padding: 50px 0 0), pegando el texto al borde. */
+  .row {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .nuestro-compromiso .caja,
+  .nuestros-servicios .caja,
+  .elegirnos .titulo,
+  .servicios-nav,
+  #page-footer,
+  #page-header .description {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  /* El texto justificado en columnas angostas deja "ríos" de espacio en blanco. */
+  .nuestro-compromiso .caja p,
+  .contactenos p,
+  .contactenos_2 p,
+  #page-header .description,
+  .nuestros-servicios-detalles .derecho p,
+  .clientes-servicios .derco p {
+    text-align: left;
+  }
+
+  /* Imágenes rotas heredadas (ver AGENTS.md → Known gaps) con ancho fijo mayor al viewport. */
+  .foto-mudanza,
+  .foto-departamento,
+  .foto-aduana {
+    float: none;
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+  }
+
+  /* En desktop la recomendación de cliente queda al lado de la tabla; apiladas, obligaría a
+     desplazarse por 294 filas antes de verla — se adelanta en el orden solo en mobile. */
+  .clientes-servicios > .row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .clientes-servicios > .row > .derecho {
+    order: -1;
+  }
 }
