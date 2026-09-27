@@ -21,7 +21,12 @@ src/
   scripts/site.js             # comportamiento del header, menú móvil y "volver arriba"
   data/clientes.json          # listado de 294 clientes de la página Clientes
 public/
-  public_gv/                  # imágenes del sitio original, servidas tal cual en /public_gv/...
+  favicon.ico                 # ícono del sitio
+  images/                     # imágenes del sitio original, organizadas por tipo (no por sección)
+    logos/                    # logo de la empresa, firma, logos de clientes
+    iconos/                   # íconos de navegación, comillas de testimonios, viñetas
+    fondos/                   # imágenes usadas como background-image en site.css
+    fotos/                    # fotografías de contenido embebidas con <img>
 dist/                         # sitio estático generado — ignorado por git, nunca editar directamente
 ```
 

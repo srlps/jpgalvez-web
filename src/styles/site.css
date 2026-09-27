@@ -445,7 +445,7 @@ textarea {
 
 #page-footer {
   padding: 50px 0 0;
-  background: #2a2a2a url(/public_gv/web/images/common/map-background.png) center no-repeat;
+  background: #2a2a2a url(/images/fondos/footer-mapa.png) center no-repeat;
   color: #a2a2a2;
 }
 
@@ -516,11 +516,11 @@ textarea {
   background-size: 100% 100%;
 }
 
-.fondo--cabecera { background-image: url(/public_gv/uploads/servicio_detalle.jpg); }
-.fondo--testimonios { background-image: url(/public_gv/uploads/clientes_recomiendanFjPTdbUZ.jpg); }
-.fondo--mision { min-height: 200px; background-image: url(/public_gv/uploads/mision_sjU5MYPg.jpg); }
-.fondo--vision { min-height: 240px; background-image: url(/public_gv/uploads/vision_dZ3plyBV.jpg); }
-.fondo--contacto { background-image: url(/public_gv/uploads/mision_pa17uQBd.jpg); }
+.fondo--cabecera { background-image: url(/images/fondos/cabecera-interior.jpg); }
+.fondo--testimonios { background-image: url(/images/fondos/testimonios.jpg); }
+.fondo--mision { min-height: 200px; background-image: url(/images/fondos/mision.jpg); }
+.fondo--vision { min-height: 240px; background-image: url(/images/fondos/vision.jpg); }
+.fondo--contacto { background-image: url(/images/fondos/contacto.jpg); }
 
 /* ========== Inicio ========== */
 .banner {
