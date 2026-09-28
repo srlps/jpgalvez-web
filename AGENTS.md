@@ -6,10 +6,10 @@ Static reconstruction of `transportesjpgalvez.com` (Transportes e Inversiones Je
 - https://web.archive.org/web/20231107032817/http://transportesjpgalvez.com/
 
 **Phase 1 (done)**: rebuild the site as-is from the archive capture — same sections, text, images and page structure, no redesign. See EXTRACTION.md for how the raw HTML/assets were pulled from the archive, and "Source/dist architecture" below for how that raw HTML was then migrated into the current Astro source.
-**Phase 2 (future)**: modernize/redesign, especially anything that depended on the old backend (see below).
+**Phase 2 (in progress, scope confirmed with owner 2026-09-28)**: modernize/redesign the visual style, and add a small admin console so the owner can upload images and add new clients/testimonials without a developer editing files by hand. This requires a real backend for the first time — see "Firebase backend (Phase 2)" below for the chosen stack and its current setup status.
 
 ## Stack
-Plain HTML/CSS output, no backend, no client-side framework — this is a brochure/informational site (no client state, no auth), so React/Vue add an unneeded client runtime and hurt SEO for zero benefit.
+Static HTML/CSS output for the public site, no client-side framework — this is a brochure/informational site (no client state, no auth on the public pages), so React/Vue add an unneeded client runtime and hurt SEO for zero benefit. Phase 2 adds a Firebase backend (Firestore/Storage/Functions) behind an authenticated admin console — see below — but the public pages themselves stay static output from Astro.
 
 **Static-site generator: [Astro](https://astro.build/)**, chosen to compile layouts/partials down to plain HTML with zero client JS runtime by default. Fragments extracted into shared layout/partials (all under `src/`):
 - `src/layouts/BaseLayout.astro` — `<head>`, header, footer, and the site-wide CSS/JS imports (see `src/components/Header.astro`, `Footer.astro`)
@@ -30,6 +30,17 @@ Source lives under `src/` (Astro components/pages) and `public/` (static assets 
 - `npm run preview` — serves the built `dist/` locally, to sanity-check the actual build output
 
 Internal links and asset references use root-absolute paths (`/nosotros/`, `/images/...`) rather than the original archive's relative `../` paths — required by the layout/partial system (the same partial renders at different nesting depths) and idiomatic for Astro's routing, not a visual/content redesign. `astro.config.mjs` sets `trailingSlash: "always"` so `src/pages/nosotros.astro` builds to `dist/nosotros/index.html`, matching the original site's path structure exactly.
+
+## Firebase backend (Phase 2)
+Scope confirmed with the owner 2026-09-28: a modernized visual redesign plus a small authenticated admin console (upload images, add clients/testimonials) that the owner can operate without a developer. The owner connected the repo to a Firebase project with **Hosting, Firestore, Storage and Cloud Functions** (Functions are meant for sending the quote/contact form emails, replacing the Web3Forms plan below).
+
+**⚠️ Current status: `firebase init` was run but did not finish** — only part of the scaffold exists:
+- Present: `firestore.rules` (default 30-day-open test rules — **not safe to deploy as-is**, must be replaced with real rules before going live), `firestore.indexes.json` (empty, no indexes defined yet), `functions/` (TypeScript Cloud Functions scaffold — default `setGlobalOptions` boilerplate only, no actual function written yet; deps already installed under `functions/node_modules`).
+- **Missing**: `firebase.json` (ties Hosting/Firestore/Storage/Functions config together — without it the project has no deploy target config at all) and `.firebaserc` (project alias, i.e. which Firebase project this repo deploys to). No `storage.rules` either, so the Storage feature was never actually initialized despite being part of the plan.
+- Practical effect: **nothing here is deployable yet** (`firebase deploy` has no `firebase.json` to read) and the local emulators aren't configured. The owner runs the Firebase CLI directly (`firebase init` needs to be re-run/completed — likely stopped on a prompt, e.g. Hosting's public-directory question conflicting with Astro's `dist/`, or a Storage/billing prompt) — this project's job is to review state and keep docs in sync, not to run `firebase` commands.
+- `functions/` uses its own `package.json`/`tsconfig.json` (Node 24, `firebase-admin` + `firebase-functions` v7) independent from the root Astro `package.json` — don't merge them; Functions deploy and build separately (`npm run build` / `npm run deploy` inside `functions/`).
+
+Once `firebase.json`/`.firebaserc` exist and Hosting is wired up, decide whether Hosting serves the Astro `dist/` output directly (`"public": "dist"`) or sits in front of it — and update this section with the final answer.
 
 ## Site map (from the archive capture)
 Each route below maps to its Astro source page under `src/pages/`:

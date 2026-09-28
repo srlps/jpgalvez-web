@@ -7,3 +7,11 @@ dist/
 
 # Editor/OS
 .DS_Store
+
+# Firebase
+firebase-debug.log
+
+# local skills
+.agents
+.claude
+skills-lock.json

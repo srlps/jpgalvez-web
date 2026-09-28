@@ -28,7 +28,14 @@ public/
     fondos/                   # imágenes usadas como background-image en site.css
     fotos/                    # fotografías de contenido embebidas con <img>
 dist/                         # sitio estático generado — ignorado por git, nunca editar directamente
+
+functions/                    # Cloud Functions (Fase 2, en progreso — ver AGENTS.md)
+  src/index.ts                # solo boilerplate por ahora, sin funciones propias todavía
+firestore.rules                # reglas de Firestore (todavía las de prueba por defecto, no aptas para producción)
+firestore.indexes.json         # índices de Firestore (vacío por ahora)
 ```
+
+> ⚠️ El backend de Firebase (Fase 2) está a medio configurar: falta `firebase.json` y `.firebaserc`, por lo que **todavía no hay nada desplegable**. Ver AGENTS.md → "Firebase backend (Phase 2)" para el detalle.
 
 ## Comandos
 
