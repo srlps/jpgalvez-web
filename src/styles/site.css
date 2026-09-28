@@ -394,10 +394,6 @@ textarea {
   color: #156e85;
 }
 
-#site-header .navigator .menu-iconos li a {
-  padding-left: 1px;
-}
-
 #masthead .navigator .menu li a {
   height: 30px;
   line-height: 30px;
@@ -455,6 +451,15 @@ textarea {
 
 #page-footer p {
   margin-bottom: 0;
+}
+
+.redes-sociales {
+  margin-top: 15px;
+}
+
+.redes-sociales img {
+  vertical-align: middle;
+  margin-left: 6px;
 }
 
 .headquater {
