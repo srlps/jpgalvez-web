@@ -19,7 +19,7 @@ src/
   pages/                      # un archivo por ruta (routing por archivos de Astro)
   styles/site.css             # hoja de estilos única del sitio
   scripts/site.js             # comportamiento del header, menú móvil y "volver arriba"
-  data/clientes.json          # listado de 294 clientes de la página Clientes
+  data/clientes.json          # listado de 360 clientes de la página Clientes (curado 2026-09-28: duplicados fusionados + cliente del testimonio agregado, ver AGENTS.md)
 public/
   favicon.ico                 # ícono del sitio
   images/                     # imágenes del sitio original, organizadas por tipo (no por sección)

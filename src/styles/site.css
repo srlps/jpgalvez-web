@@ -1140,7 +1140,7 @@ textarea {
   }
 
   /* En desktop la recomendación de cliente queda al lado de la tabla; apiladas, obligaría a
-     desplazarse por 294 filas antes de verla — se adelanta en el orden solo en mobile. */
+     desplazarse por cientos de filas antes de verla — se adelanta en el orden solo en mobile. */
   .clientes-servicios > .row {
     display: flex;
     flex-direction: column;
