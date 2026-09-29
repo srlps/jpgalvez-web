@@ -9,7 +9,9 @@ export const firebaseConfig = {
 
 export const firebaseConfigurado = Object.values(firebaseConfig).every(Boolean);
 
-// Solo se aceptan imágenes de Firebase Storage o de los assets propios del sitio.
+// Solo se aceptan imágenes de Firebase Storage o de los assets propios del sitio (ruta relativa,
+// o absoluta al dominio principal — esto último para datos escritos por la consola admin, que
+// desde 2026-09-29 vive en admin/ como SPA separado en su propio subdominio, ver AGENTS.md).
 export function esUrlImagenSegura(url) {
-  return typeof url === "string" && (url.startsWith("https://firebasestorage.googleapis.com/") || url.startsWith("/images/"));
+  return typeof url === "string" && (url.startsWith("https://firebasestorage.googleapis.com/") || url.startsWith("/images/") || url.startsWith("https://transportesjpgalvez.com/images/"));
 }

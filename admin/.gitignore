@@ -1,0 +1,7 @@
+node_modules
+dist
+
+# Local environment (Firebase web config) — see .env.example
+.env
+.env.*
+!.env.example

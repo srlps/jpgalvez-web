@@ -1,6 +1,7 @@
 rules_version = '2';
 
-// Images managed from the admin console (/new/admin/). Paths: clientes/, testimonios/, galeria/
+// Images managed from the admin console (separate React SPA under admin/, deployed to its own
+// Firebase Hosting site/subdomain — see AGENTS.md). Paths: clientes/, testimonios/, galeria/
 // with filenames "<firestoreDocId>-<timestamp>.<webp|jpg|png>" (see isScopedPath in firestore.rules).
 // Admins are the uids with a document in Firestore /admins (cross-service lookup).
 service firebase.storage {

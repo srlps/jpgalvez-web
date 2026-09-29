@@ -1,5 +1,13 @@
 {
   "projects": {
     "default": "jpgalvez-7a5b3"
+  },
+  "targets": {
+    "jpgalvez-7a5b3": {
+      "hosting": {
+        "web": ["jpgalvez-7a5b3"],
+        "admin": ["landing-admin"]
+      }
+    }
   }
 }
