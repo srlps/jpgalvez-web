@@ -10,6 +10,7 @@ dist/
 
 # Firebase
 firebase-debug.log
+.firebase
 
 # Local environment (Firebase web config) — see .env.example
 .env

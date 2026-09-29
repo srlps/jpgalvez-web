@@ -81,8 +81,24 @@ Sin configurar Firebase, las páginas muestran los datos estáticos actuales (`c
 2. Copiar `.env.example` como `.env` y completar los valores `PUBLIC_FIREBASE_*`.
 3. Authentication → Método de acceso: habilitar **Correo electrónico/contraseña** y crear el usuario del dueño.
 4. Firestore → crear la colección `admins` con un documento cuyo ID sea el **UID** de ese usuario (sin campos).
-5. Revisar las reglas y desplegarlas: `firebase deploy --only firestore:rules --dry-run`, luego `firebase deploy --only firestore,storage` (aceptar el permiso para que Storage lea Firestore).
+5. Revisar las reglas y desplegarlas: `firebase deploy --only firestore:rules --dry-run`, luego `firebase deploy --only firestore,storage` (ver [Despliegue en Firebase](#despliegue-en-firebase)).
 6. Entrar a `/new/admin/` y usar «Importar» para cargar los 360 clientes y el testimonio actuales.
+
+## Despliegue en Firebase
+
+Requiere [Firebase CLI](https://firebase.google.com/docs/cli) y haber iniciado sesión (`firebase login`). El proyecto por defecto (`jpgalvez-7a5b3`) ya está fijado en `.firebaserc`; `firebase use` muestra cuál está activo.
+
+| Componente | Comando | Qué despliega |
+|---|---|---|
+| Hosting | `npm run build` y luego `firebase deploy --only hosting` | El sitio generado en `dist/`. El `.env` debe existir **antes** del build: la config de Firebase se incrusta en el JS |
+| Hosting (vista previa) | `firebase hosting:channel:deploy <nombre>` | Una URL temporal para revisar el build sin tocar el sitio publicado (tras `npm run build`) |
+| Reglas de Firestore | `firebase deploy --only firestore:rules` | `firestore.rules` |
+| Índices de Firestore | `firebase deploy --only firestore:indexes` | `firestore.indexes.json` (pueden tardar unos minutos en construirse) |
+| Firestore completo | `firebase deploy --only firestore` | Reglas + índices |
+| Reglas de Storage | `firebase deploy --only storage` | `storage.rules` (el primer despliegue pide permiso para que Storage lea Firestore: aceptarlo) |
+| Todo | `npm run build` y luego `firebase deploy` | Hosting, Firestore y Storage |
+
+Agregar `--dry-run` a cualquier `firebase deploy` valida la configuración y las reglas sin publicar nada (por ejemplo `firebase deploy --only firestore:rules --dry-run`).
 
 ## Pendientes conocidos
 
