@@ -1,0 +1,60 @@
+---
+import { servicios } from "../../data/servicios";
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+interface Campo {
+  name: string;
+  type: "text" | "email" | "tel";
+  label: string;
+  autocomplete: string;
+  opcional?: boolean;
+}
+
+// Campos del formulario de Contáctenos original; empresa y cargo pasan a opcionales (mudanzas de hogar).
+const campos: Campo[] = [
+  { name: "nombre", type: "text", label: "Nombres", autocomplete: "name" },
+  { name: "empresa", type: "text", label: "Empresa (opcional)", autocomplete: "organization", opcional: true },
+  { name: "email", type: "email", label: "Correo electrónico", autocomplete: "email" },
+  { name: "telefono", type: "tel", label: "Teléfono", autocomplete: "tel" },
+  { name: "cargo", type: "text", label: "Cargo / puesto (opcional)", autocomplete: "organization-title", opcional: true },
+];
+---
+<!-- TODO(redesign): stub submit — wire to Web3Forms once the owner creates the account and shares the access key -->
+<form class="form js-validar" id={id} method="post" novalidate>
+  <div class="form__grid">
+    {campos.map((campo) => (
+      <div class="campo">
+        <label for={`${id}-${campo.name}`}>{campo.label}</label>
+        <input type={campo.type} id={`${id}-${campo.name}`} name={campo.name} autocomplete={campo.autocomplete} required={!campo.opcional}>
+        <span class="campo__error" aria-live="polite"></span>
+      </div>
+    ))}
+    <div class="campo">
+      <label for={`${id}-servicio`}>Servicio de interés</label>
+      <select id={`${id}-servicio`} name="servicio" required>
+        <option value="">Seleccione un servicio</option>
+        {servicios.map((s) => <option>{s.titulo}</option>)}
+        <option>Transporte de carga / minería</option>
+        <option>Otro</option>
+      </select>
+      <span class="campo__error" aria-live="polite"></span>
+    </div>
+    <div class="campo campo--completo">
+      <label for={`${id}-mensaje`}>Detalle de su requerimiento</label>
+      <textarea id={`${id}-mensaje`} name="mensaje" rows="5" required></textarea>
+      <span class="campo__error" aria-live="polite"></span>
+    </div>
+  </div>
+  <!-- Honeypot anti-spam (Web3Forms lo lee como "botcheck"). -->
+  <input class="trampa" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <button type="submit" class="btn btn--primario">Enviar solicitud</button>
+  <p class="form__estado" role="status"></p>
+</form>
+<script>
+  import "../../scripts/new/formularios.js";
+</script>

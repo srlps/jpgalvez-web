@@ -1,18 +1,198 @@
-rules_version='2'
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: admins
+// Document ID: Firebase Auth uid of an administrator
+// Fields: none required. Created by hand in the Firebase console (the console bypasses these rules);
+//   no client can create, modify or delete it.
+//
+// Collection: clientes
+// Document ID: Firestore auto-ID
+// Fields:
+//   - nombre: string (required, 1-150)
+//   - destacado: bool (required) - shown on the home page
+//   - publicado: bool (required) - visible to the public only when true
+//   - logoUrl: string (optional, <=1000, Firebase Storage https URL or /images/... site asset)
+//   - logoPath: string (optional, requires logoUrl, "clientes/<docId>[-<n>].<webp|jpg|png>")
+//   - creadoEn: timestamp (required, == request.time on create, immutable)
+//   - actualizadoEn: timestamp (required, == request.time on every write)
+//
+// Collection: testimonios
+// Document ID: Firestore auto-ID
+// Fields:
+//   - autor: string (required, 1-100)
+//   - cargo: string (optional, 1-100)
+//   - empresa: string (required, 1-150)
+//   - texto: string (required, 1-1000)
+//   - orden: int (required, 0-9999) - ascending display order
+//   - publicado: bool (required)
+//   - logoUrl / logoPath: same as clientes, path under "testimonios/"
+//   - creadoEn / actualizadoEn: same as clientes
+//
+// Collection: galeria
+// Document ID: Firestore auto-ID
+// Fields:
+//   - titulo: string (required, 1-120)
+//   - descripcion: string (optional, 1-500)
+//   - categoria: string (required, one of the values in isValidCategoria())
+//   - url: string (required, <=1000, Firebase Storage https URL)
+//   - path: string (required, "galeria/<docId>[-<n>].<webp|jpg|png>")
+//   - ancho, alto: int (required, 1-10000)
+//   - publicado: bool (required)
+//   - creadoEn / actualizadoEn: same as clientes
+//
+// Access: the public site reads only documents with publicado == true (its queries always
+// filter on it). Only administrators (uid present in /admins) can read everything and write.
+// ===============================================================
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      // This rule allows anyone with your database reference to view, edit,
-      // and delete all data in your database. It is useful for getting
-      // started, but it is configured to expire after 30 days because it
-      // leaves your app open to attackers. At that time, all client
-      // requests to your database will be denied.
-      //
-      // Make sure to write security rules for your app before that time, or
-      // else all client requests to your database will be denied until you
-      // update your rules.
-      allow read, write: if request.time < timestamp.date(2026, 10, 28);
+
+    // ---------- Helper Functions ----------
+
+    function isAuthenticated() {
+      return request.auth != null;
     }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isPublished() {
+      return resource.data.publicado == true;
+    }
+
+    function hasOnlyAllowedFields(data, fields) {
+      return data.keys().hasOnly(fields);
+    }
+
+    function hasRequiredFields(data, fields) {
+      return data.keys().hasAll(fields);
+    }
+
+    function validString(value, minLen, maxLen) {
+      return value is string && value.size() >= minLen && value.size() <= maxLen;
+    }
+
+    function validOptionalString(data, field, minLen, maxLen) {
+      return !(field in data) || validString(data[field], minLen, maxLen);
+    }
+
+    function validInt(value, minValue, maxValue) {
+      return value is int && value >= minValue && value <= maxValue;
+    }
+
+    function isStorageUrl(url) {
+      return validString(url, 1, 1000) && url.matches('^https://firebasestorage[.]googleapis[.]com/.+');
+    }
+
+    function isImageUrl(url) {
+      return isStorageUrl(url) || (validString(url, 1, 1000) && url.matches('^/images/[A-Za-z0-9/._-]+$'));
+    }
+
+    // Storage path scoped to the collection folder and to this document's ID.
+    function isScopedPath(path, folder, docId) {
+      return validString(path, 1, 200) && path.matches('^' + folder + '/' + docId + '(-[0-9]+)?[.](webp|jpg|png)$');
+    }
+
+    function isValidOptionalLogo(data, folder, docId) {
+      return (!('logoUrl' in data) || isImageUrl(data.logoUrl)) &&
+             (!('logoPath' in data) || ('logoUrl' in data && isScopedPath(data.logoPath, folder, docId)));
+    }
+
+    function isValidCreateTimestamps() {
+      return request.resource.data.creadoEn == request.time &&
+             request.resource.data.actualizadoEn == request.time;
+    }
+
+    function isValidUpdateTimestamps() {
+      return request.resource.data.creadoEn == resource.data.creadoEn &&
+             request.resource.data.actualizadoEn == request.time;
+    }
+
+    function isValidCategoria(value) {
+      // Keep in sync with categoriasGaleria in src/data/sitio.ts.
+      return value in ['flota', 'mudanzas', 'aduana', 'almacenes', 'equipo', 'otros'];
+    }
+
+    // ---------- Domain Validators (used in both create and update) ----------
+
+    function isValidCliente(data, docId) {
+      return hasOnlyAllowedFields(data, ['nombre', 'destacado', 'publicado', 'logoUrl', 'logoPath', 'creadoEn', 'actualizadoEn']) &&
+             hasRequiredFields(data, ['nombre', 'destacado', 'publicado', 'creadoEn', 'actualizadoEn']) &&
+             validString(data.nombre, 1, 150) &&
+             data.destacado is bool &&
+             data.publicado is bool &&
+             data.creadoEn is timestamp &&
+             data.actualizadoEn is timestamp &&
+             isValidOptionalLogo(data, 'clientes', docId);
+    }
+
+    function isValidTestimonio(data, docId) {
+      return hasOnlyAllowedFields(data, ['autor', 'cargo', 'empresa', 'texto', 'orden', 'publicado', 'logoUrl', 'logoPath', 'creadoEn', 'actualizadoEn']) &&
+             hasRequiredFields(data, ['autor', 'empresa', 'texto', 'orden', 'publicado', 'creadoEn', 'actualizadoEn']) &&
+             validString(data.autor, 1, 100) &&
+             validOptionalString(data, 'cargo', 1, 100) &&
+             validString(data.empresa, 1, 150) &&
+             validString(data.texto, 1, 1000) &&
+             validInt(data.orden, 0, 9999) &&
+             data.publicado is bool &&
+             data.creadoEn is timestamp &&
+             data.actualizadoEn is timestamp &&
+             isValidOptionalLogo(data, 'testimonios', docId);
+    }
+
+    function isValidGaleria(data, docId) {
+      return hasOnlyAllowedFields(data, ['titulo', 'descripcion', 'categoria', 'url', 'path', 'ancho', 'alto', 'publicado', 'creadoEn', 'actualizadoEn']) &&
+             hasRequiredFields(data, ['titulo', 'categoria', 'url', 'path', 'ancho', 'alto', 'publicado', 'creadoEn', 'actualizadoEn']) &&
+             validString(data.titulo, 1, 120) &&
+             validOptionalString(data, 'descripcion', 1, 500) &&
+             isValidCategoria(data.categoria) &&
+             isStorageUrl(data.url) &&
+             isScopedPath(data.path, 'galeria', docId) &&
+             validInt(data.ancho, 1, 10000) &&
+             validInt(data.alto, 1, 10000) &&
+             data.publicado is bool &&
+             data.creadoEn is timestamp &&
+             data.actualizadoEn is timestamp;
+    }
+
+    // ---------- Rules ----------
+
+    // Admin membership is managed only from the Firebase console.
+    match /admins/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if false;
+    }
+
+    match /clientes/{clienteId} {
+      allow read: if isPublished() || isAdmin();
+      allow create: if isAdmin() && isValidCliente(request.resource.data, clienteId) && isValidCreateTimestamps();
+      allow update: if isAdmin() && isValidCliente(request.resource.data, clienteId) && isValidUpdateTimestamps();
+      allow delete: if isAdmin();
+    }
+
+    match /testimonios/{testimonioId} {
+      allow read: if isPublished() || isAdmin();
+      allow create: if isAdmin() && isValidTestimonio(request.resource.data, testimonioId) && isValidCreateTimestamps();
+      allow update: if isAdmin() && isValidTestimonio(request.resource.data, testimonioId) && isValidUpdateTimestamps();
+      allow delete: if isAdmin();
+    }
+
+    match /galeria/{fotoId} {
+      allow read: if isPublished() || isAdmin();
+      allow create: if isAdmin() && isValidGaleria(request.resource.data, fotoId) && isValidCreateTimestamps();
+      allow update: if isAdmin() && isValidGaleria(request.resource.data, fotoId) && isValidUpdateTimestamps();
+      allow delete: if isAdmin();
+    }
+
+    // Everything else stays closed (default deny).
   }
 }

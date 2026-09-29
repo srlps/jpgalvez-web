@@ -1,12 +1,33 @@
 rules_version = '2';
 
-// Craft rules based on data in your Firestore database
-// allow write: if firestore.get(
-//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+// Images managed from the admin console (/new/admin/). Paths: clientes/, testimonios/, galeria/
+// with filenames "<firestoreDocId>-<timestamp>.<webp|jpg|png>" (see isScopedPath in firestore.rules).
+// Admins are the uids with a document in Firestore /admins (cross-service lookup).
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if false;
+
+    function isManagedFolder(folder) {
+      return folder in ['clientes', 'testimonios', 'galeria'];
     }
+
+    function isAdmin() {
+      return request.auth != null &&
+        firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid));
+    }
+
+    function isValidImage(fileName) {
+      return fileName.matches('[A-Za-z0-9]+(-[0-9]+)?[.](webp|jpg|png)') &&
+        request.resource.size < 5 * 1024 * 1024 &&
+        request.resource.contentType.matches('image/(webp|jpeg|png)');
+    }
+
+    match /{folder}/{fileName} {
+      // "get" only (no "list"): URLs are public, but folders can't be enumerated.
+      allow get: if isManagedFolder(folder);
+      allow create, update: if isManagedFolder(folder) && isAdmin() && isValidImage(fileName);
+      allow delete: if isManagedFolder(folder) && isAdmin();
+    }
+
+    // Everything else stays closed (default deny).
   }
 }

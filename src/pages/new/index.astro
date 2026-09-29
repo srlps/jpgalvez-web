@@ -1,0 +1,102 @@
+---
+import NewLayout from "../../layouts/NewLayout.astro";
+import Icono from "../../components/new/Icono.astro";
+import Encabezado from "../../components/new/Encabezado.astro";
+import Servicios from "../../components/new/Servicios.astro";
+import Nosotros from "../../components/new/Nosotros.astro";
+import Testimonios from "../../components/new/Testimonios.astro";
+import ClientesCinta from "../../components/new/ClientesCinta.astro";
+import ClientesListado from "../../components/new/ClientesListado.astro";
+import GaleriaGrid from "../../components/new/GaleriaGrid.astro";
+import FormContacto from "../../components/new/FormContacto.astro";
+import { empresa } from "../../data/sitio";
+import clientes from "../../data/clientes.json";
+
+const telOficina = empresa.oficinas[0];
+---
+<NewLayout title="Inicio">
+  <!-- La portada ofrece canales directos (llamar / WhatsApp); el formulario solo se enlaza desde "Contacto" del menú. -->
+  <section class="hero" data-oculta-whatsapp>
+    <img class="hero__fondo" src="/images/fondos/banner-inicio-clean.jpeg" alt="" width="1340" height="557" fetchpriority="high">
+    <div class="contenedor">
+      <div class="hero__texto">
+        <p class="overline">{empresa.lema}</p>
+        <h1 class="hero__titulo">Servicio de calidad con un enfoque personal</h1>
+        <p class="lead">Desde {empresa.fundacion} trasladamos carga, mudanzas y mercadería aduanera con flota propia, personal capacitado y unidades monitoreadas por GPS.</p>
+        <div class="acciones">
+          <a class="btn btn--primario" href={`tel:${telOficina.tel}`}><Icono nombre="telefono" size={18} />Llamar al {telOficina.numero}</a>
+          <a class="btn btn--claro" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener"><Icono nombre="whatsapp" size={18} />WhatsApp</a>
+        </div>
+      </div>
+      <ul class="datos">
+        <li class="dato"><strong class="dato__valor">{empresa.fundacion}</strong><span>Año de fundación</span></li>
+        <li class="dato"><strong class="dato__valor"><span data-fs="clientes-total">{clientes.length}</span>+</strong><span>Clientes atendidos</span></li>
+        <li class="dato"><strong class="dato__valor"><Icono nombre="gps" size={32} /></strong><span>Unidades monitoreadas por GPS</span></li>
+        <li class="dato"><strong class="dato__valor"><Icono nombre="mineria" size={32} /></strong><span>Acceso a faenas mineras del Perú</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <Servicios />
+
+  <Nosotros />
+
+  <section class="seccion" id="clientes">
+    <div class="contenedor">
+      <Encabezado overline="Clientes" titulo="Ellos confían en nosotros y son nuestro respaldo" centrado>
+        <p class="lead">Más de <strong data-fs="clientes-total">{clientes.length}</strong> empresas y personas han confiado su carga a Transportes JeanPierre.</p>
+      </Encabezado>
+    </div>
+    <ClientesCinta />
+    <div class="contenedor">
+      <div class="seccion__subbloque">
+        <Testimonios />
+      </div>
+      <ClientesListado />
+    </div>
+  </section>
+
+  <section class="seccion seccion--clara" id="galeria">
+    <div class="contenedor">
+      <Encabezado overline="Galería" titulo="Nuestro trabajo en imágenes" lead="Flota, instalaciones, mudanzas y operaciones: así trabajamos día a día." centrado />
+      <GaleriaGrid />
+    </div>
+  </section>
+
+  <section class="seccion seccion--oscura" id="contacto" data-oculta-whatsapp>
+    <div class="contenedor contacto">
+      <div>
+        <Encabezado overline="Contacto" titulo="Solicite su cotización" lead="Escríbanos y gustosamente atenderemos sus requerimientos. Le responderemos a la brevedad posible." />
+        <ul class="lista-contacto">
+          <li>
+            <Icono nombre="telefono" />
+            <span><span class="lista-contacto__etiqueta">Oficina</span>{empresa.oficinas.map((o) => <a href={`tel:${o.tel}`}>{o.numero}</a>)}</span>
+          </li>
+          <li>
+            <Icono nombre="telefono" />
+            <span><span class="lista-contacto__etiqueta">Celulares</span>{empresa.celulares.map((c) => <a href={`tel:${c.tel}`}>{c.numero}</a>)}</span>
+          </li>
+          <li>
+            <Icono nombre="whatsapp" />
+            <span><span class="lista-contacto__etiqueta">WhatsApp</span><a href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener">{empresa.celulares[0].numero}</a></span>
+          </li>
+          <li>
+            <Icono nombre="ubicacion" />
+            <span><span class="lista-contacto__etiqueta">Visítenos</span>{empresa.direccion.linea1}, {empresa.direccion.linea2}</span>
+          </li>
+          <li>
+            <Icono nombre="facebook" />
+            <span><span class="lista-contacto__etiqueta">Síganos</span><a href={empresa.facebook} target="_blank" rel="noopener">Facebook</a></span>
+          </li>
+        </ul>
+      </div>
+      <div class="tarjeta-form">
+        <FormContacto id="form-contacto" />
+      </div>
+    </div>
+  </section>
+
+  <section class="mapa">
+    <iframe src={empresa.mapaEmbed} title={`Ubicación de ${empresa.razonSocial} en Google Maps`} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </section>
+</NewLayout>

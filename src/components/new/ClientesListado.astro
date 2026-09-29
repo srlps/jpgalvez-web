@@ -1,0 +1,44 @@
+---
+import Icono from "./Icono.astro";
+import clientes from "../../data/clientes.json";
+---
+<!-- El listado completo se pide a Firestore recién al abrir el desplegable (publico.js); mientras, se ve la semilla de clientes.json. -->
+<details class="desplegable" data-clientes-desplegable>
+  <summary class="btn btn--secundario">
+    <span class="desplegable__abrir">Ver los <span data-fs="clientes-total">{clientes.length}</span> clientes atendidos</span>
+    <span class="desplegable__cerrar">Ocultar listado</span>
+  </summary>
+  <div class="desplegable__cuerpo">
+    <div class="buscador">
+      <label class="sr-only" for="buscar-clientes">Buscar cliente</label>
+      <Icono nombre="buscar" size={20} />
+      <input type="search" id="buscar-clientes" placeholder="Buscar cliente por nombre…" autocomplete="off" data-buscar-clientes>
+    </div>
+    <p class="buscador__estado" role="status" data-clientes-estado></p>
+    <ul class="lista-clientes" data-fs="clientes-lista">
+      {clientes.map((nombre) => <li>{nombre}</li>)}
+    </ul>
+  </div>
+</details>
+<script>
+  import "../../scripts/new/publico.js";
+
+  const buscador = document.querySelector<HTMLInputElement>("[data-buscar-clientes]")!;
+  const lista = document.querySelector<HTMLUListElement>('[data-fs="clientes-lista"]')!;
+  const estado = document.querySelector<HTMLElement>("[data-clientes-estado]")!;
+  const normalizar = (texto: string) => texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  function filtrar() {
+    const consulta = normalizar(buscador.value.trim());
+    let visibles = 0;
+    for (const item of lista.children) {
+      const coincide = !consulta || normalizar(item.textContent ?? "").includes(consulta);
+      (item as HTMLElement).hidden = !coincide;
+      if (coincide) visibles++;
+    }
+    estado.textContent = consulta ? (visibles ? `${visibles} resultado(s) para "${buscador.value.trim()}".` : "No se encontraron clientes con ese nombre.") : "";
+  }
+
+  buscador.addEventListener("input", filtrar);
+  document.addEventListener("fs:clientes", filtrar);
+</script>

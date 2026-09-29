@@ -1,0 +1,167 @@
+// Carga clientes, testimonios y galería publicados en Firestore y reemplaza la semilla estática del HTML.
+// Todo se construye con textContent/atributos (nunca innerHTML): el contenido viene de la consola admin.
+import { firebaseConfigurado, esUrlImagenSegura } from "./firebase-config.js";
+
+const todos = (selector) => [...document.querySelectorAll(selector)];
+
+function el(tag, clase, texto) {
+  const nodo = document.createElement(tag);
+  if (clase) nodo.className = clase;
+  if (texto != null) nodo.textContent = texto;
+  return nodo;
+}
+
+function renderTestimonio(t) {
+  const li = el("li", "testimonio");
+  const figura = el("figure");
+  const cita = el("blockquote", "testimonio__texto");
+  cita.append(el("p", null, t.texto));
+  const pie = el("figcaption", "testimonio__autor");
+  if (esUrlImagenSegura(t.logoUrl)) {
+    const logo = el("img", "testimonio__logo");
+    Object.assign(logo, { src: t.logoUrl, alt: "", width: 64, height: 64, loading: "lazy" });
+    pie.append(logo);
+  }
+  const datos = el("span");
+  datos.append(el("strong", "testimonio__nombre", t.autor), el("span", "testimonio__cargo", [t.cargo, t.empresa].filter(Boolean).join(", ")));
+  pie.append(datos);
+  figura.append(cita, pie);
+  li.append(figura);
+  return li;
+}
+
+function renderItemCinta(cliente, duplicado) {
+  const li = el("li", "cinta__item");
+  if (esUrlImagenSegura(cliente.logoUrl)) {
+    li.classList.add("cinta__item--logo");
+    const logo = el("img");
+    Object.assign(logo, { src: cliente.logoUrl, alt: duplicado ? "" : cliente.nombre, height: 56, loading: "lazy" });
+    li.append(logo);
+  } else {
+    li.textContent = cliente.nombre;
+  }
+  return li;
+}
+
+function renderItemGaleria(foto) {
+  const li = el("li", "galeria__item");
+  li.dataset.categoria = foto.categoria;
+  const boton = el("button", "galeria__boton");
+  boton.type = "button";
+  Object.assign(boton.dataset, { src: foto.url, titulo: foto.titulo, descripcion: foto.descripcion ?? "" });
+  const img = el("img");
+  Object.assign(img, { src: foto.url, alt: foto.titulo, width: foto.ancho, height: foto.alto, loading: "lazy", decoding: "async" });
+  boton.append(img, el("span", "galeria__titulo", foto.titulo));
+  li.append(boton);
+  return li;
+}
+
+function pintarCinta(cinta, clientes) {
+  // Repetir hasta llenar la pista para que la animación no quede con huecos.
+  let items = clientes;
+  while (items.length < 12) items = items.concat(clientes);
+  cinta.querySelectorAll(".cinta__pista").forEach((pista, i) => {
+    pista.replaceChildren(...items.map((c) => renderItemCinta(c, i > 0)));
+  });
+}
+
+function pintarGalerias(galerias, fotos) {
+  galerias.forEach((lista) => {
+    const limite = Number(lista.dataset.limite) || fotos.length;
+    const bloque = lista.closest("[data-galeria]");
+    lista.replaceChildren(...fotos.slice(0, limite).map(renderItemGaleria));
+    lista.setAttribute("aria-busy", "false");
+    bloque?.querySelector("[data-galeria-vacio]")?.toggleAttribute("hidden", fotos.length > 0);
+  });
+  document.dispatchEvent(new CustomEvent("fs:galeria"));
+}
+
+// Espera a que se abra el <details> que contiene el listado, para no leer los ~360 clientes en cada visita.
+function alAbrir(elemento, callback) {
+  const desplegable = elemento.closest("details");
+  if (!desplegable || desplegable.open) return callback();
+  return new Promise((resolve, reject) => {
+    desplegable.addEventListener("toggle", () => Promise.resolve(callback()).then(resolve, reject), { once: true });
+  });
+}
+
+async function iniciar() {
+  const testimonios = todos('[data-fs="testimonios"]');
+  const cintas = todos('[data-fs="clientes-cinta"]');
+  const listas = todos('[data-fs="clientes-lista"]');
+  const totales = todos('[data-fs="clientes-total"]');
+  const galerias = todos('[data-fs="galeria"]');
+
+  if (!firebaseConfigurado) {
+    galerias.forEach((lista) => lista.setAttribute("aria-busy", "false"));
+    return;
+  }
+
+  galerias.forEach((lista) => lista.closest("[data-galeria]")?.querySelector("[data-galeria-vacio]")?.setAttribute("hidden", ""));
+
+  const [{ db }, { collection, query, where, orderBy, limit, getDocs, getCount }] = await Promise.all([
+    import("./firebase-app.js"),
+    import("firebase/firestore/lite"),
+  ]);
+
+  // Las reglas solo permiten al público leer documentos con publicado == true: el filtro es obligatorio.
+  const publicados = (coleccion, ...extra) => query(collection(db, coleccion), where("publicado", "==", true), ...extra);
+  const datos = (snap) => snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const pintarTotal = (n) => n > 0 && totales.forEach((t) => (t.textContent = String(n)));
+  const tareas = [];
+
+  if (testimonios.length) {
+    tareas.push(
+      getDocs(publicados("testimonios", orderBy("orden"))).then((snap) => {
+        const items = datos(snap);
+        if (!items.length) return;
+        testimonios.forEach((lista) => {
+          const limite = Number(lista.dataset.limite) || items.length;
+          lista.replaceChildren(...items.slice(0, limite).map(renderTestimonio));
+        });
+      }),
+    );
+  }
+
+  if (cintas.length) {
+    tareas.push(
+      getDocs(publicados("clientes", where("destacado", "==", true))).then((snap) => {
+        const destacados = datos(snap).sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+        if (destacados.length) cintas.forEach((cinta) => pintarCinta(cinta, destacados));
+      }),
+    );
+  }
+
+  if (totales.length) {
+    tareas.push(getCount(publicados("clientes")).then((snap) => pintarTotal(snap.data().count)));
+  }
+
+  listas.forEach((lista) => {
+    tareas.push(
+      alAbrir(lista, () =>
+        getDocs(publicados("clientes", orderBy("nombre"))).then((snap) => {
+          const clientes = datos(snap);
+          if (!clientes.length) return;
+          lista.replaceChildren(...clientes.map((c) => el("li", null, c.nombre)));
+          document.dispatchEvent(new CustomEvent("fs:clientes"));
+        }),
+      ),
+    );
+  });
+
+  if (galerias.length) {
+    const maximo = Math.max(...galerias.map((g) => Number(g.dataset.limite) || 200));
+    tareas.push(
+      getDocs(publicados("galeria", orderBy("creadoEn", "desc"), limit(maximo)))
+        .then((snap) => pintarGalerias(galerias, datos(snap).filter((f) => esUrlImagenSegura(f.url))))
+        .catch((error) => {
+          pintarGalerias(galerias, []);
+          throw error;
+        }),
+    );
+  }
+
+  tareas.forEach((tarea) => tarea.catch((error) => console.error("[firestore]", error)));
+}
+
+iniciar();

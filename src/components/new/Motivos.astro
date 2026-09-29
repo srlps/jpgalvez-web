@@ -1,0 +1,19 @@
+---
+import Icono from "./Icono.astro";
+import Encabezado from "./Encabezado.astro";
+import { motivos } from "../../data/servicios";
+---
+<section class="seccion seccion--azul">
+  <div class="contenedor">
+    <Encabezado overline="Nuestra diferencia" titulo="¿Por qué elegirnos?" centrado />
+    <ul class="motivos">
+      {motivos.map((motivo) => (
+        <li class="motivo">
+          <span class="motivo__circulo"><Icono nombre={motivo.icono} size={36} /></span>
+          <h3 class="motivo__titulo">{motivo.titulo}</h3>
+          <p>{motivo.texto}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

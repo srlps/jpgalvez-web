@@ -1,0 +1,39 @@
+---
+import Icono from "./Icono.astro";
+import { categoriasGaleria } from "../../data/sitio";
+
+interface Props {
+  // Máximo de fotos que se piden a Firestore; en pantalla se muestran de a `porPagina`.
+  limite?: number;
+  porPagina?: number;
+}
+
+const { limite = 200, porPagina = 9 } = Astro.props;
+---
+<div class="galeria-bloque" data-galeria>
+  <div class="filtros" role="group" aria-label="Filtrar por categoría" hidden>
+    <button type="button" class="filtro" data-filtro="" aria-pressed="true">Todas</button>
+    {categoriasGaleria.map((c) => (
+      <button type="button" class="filtro" data-filtro={c.valor} aria-pressed="false">{c.label}</button>
+    ))}
+  </div>
+  <ul class="galeria" data-fs="galeria" data-limite={limite} data-por-pagina={porPagina} aria-busy="true"></ul>
+  <p class="centrado" data-galeria-mas hidden><button type="button" class="btn btn--secundario">Ver más fotos</button></p>
+  <div class="vacio" data-galeria-vacio>
+    <Icono nombre="imagen" size={40} />
+    <p>Muy pronto publicaremos aquí fotos de nuestra flota, instalaciones y servicios.</p>
+  </div>
+  <dialog class="lightbox" data-lightbox aria-label="Foto ampliada">
+    <button type="button" class="lightbox__cerrar" data-lightbox-cerrar><Icono nombre="cerrar" /><span class="sr-only">Cerrar</span></button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" data-lightbox-prev><Icono nombre="izquierda" size={32} /><span class="sr-only">Anterior</span></button>
+    <figure class="lightbox__figura">
+      <img data-lightbox-img alt="">
+      <figcaption data-lightbox-caption></figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__nav--next" data-lightbox-next><Icono nombre="derecha" size={32} /><span class="sr-only">Siguiente</span></button>
+  </dialog>
+</div>
+<script>
+  import "../../scripts/new/publico.js";
+  import "../../scripts/new/galeria.js";
+</script>

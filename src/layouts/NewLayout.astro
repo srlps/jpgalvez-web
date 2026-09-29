@@ -1,0 +1,52 @@
+---
+import Header from "../components/new/Header.astro";
+import Footer from "../components/new/Footer.astro";
+import Icono from "../components/new/Icono.astro";
+import { empresa } from "../data/sitio";
+import "../styles/new.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  admin?: boolean;
+}
+
+const {
+  title,
+  description = "Transportes JeanPierre: transporte de carga, mudanzas, transporte aduanero y alquiler de vehículos y almacenes en Lima desde 2006.",
+  admin = false,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} | {empresa.nombre}</title>
+<meta name="description" content={description}>
+<!-- Vista previa del rediseño: quitar noindex al publicarlo en la raíz. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#014171">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap">
+</head>
+<body class:list={[{ "body--admin": admin }]}>
+  <a class="salto" href="#contenido">Saltar al contenido</a>
+  {!admin && <Header />}
+  <main id="contenido">
+    <slot />
+  </main>
+  {!admin && <Footer />}
+  {!admin && (
+    <a class="whatsapp-flotante" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener">
+      <Icono nombre="whatsapp" size={28} />
+      <span class="sr-only">Escríbanos por WhatsApp</span>
+    </a>
+  )}
+  <script>
+    import "../scripts/new/layout.js";
+  </script>
+</body>
+</html>

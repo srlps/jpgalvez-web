@@ -1,0 +1,18 @@
+---
+interface Props {
+  overline?: string;
+  titulo: string;
+  lead?: string;
+  centrado?: boolean;
+  nivel?: "h1" | "h2";
+}
+
+const { overline, titulo, lead, centrado = false, nivel = "h2" } = Astro.props;
+const Titulo = nivel;
+---
+<div class:list={["encabezado", { "encabezado--centrado": centrado }]}>
+  {overline && <p class="overline">{overline}</p>}
+  <Titulo class="encabezado__titulo">{titulo}</Titulo>
+  {lead && <p class="lead">{lead}</p>}
+  <slot />
+</div>

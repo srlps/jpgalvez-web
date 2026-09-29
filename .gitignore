@@ -11,6 +11,11 @@ dist/
 # Firebase
 firebase-debug.log
 
+# Local environment (Firebase web config) — see .env.example
+.env
+.env.*
+!.env.example
+
 # local skills
 .agents
 .claude

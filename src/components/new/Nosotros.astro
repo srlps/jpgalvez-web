@@ -1,0 +1,85 @@
+---
+import Icono from "./Icono.astro";
+import Encabezado from "./Encabezado.astro";
+import Motivos from "./Motivos.astro";
+import { empresa } from "../../data/sitio";
+
+const objetivos = [
+  "Garantía en nuestros servicios",
+  "Minimizar contratiempos",
+  "Perfectas condiciones de traslado",
+  "Puntualidad",
+  "Mantener nuestra calidad",
+];
+---
+<!-- Contenedor de las 3 bandas de Nosotros, para que el menú marque "Nosotros" en todas. -->
+<div id="nosotros">
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="historia">
+        <div>
+          <Encabezado overline="Nosotros" titulo="Una tradición familiar en el transporte" />
+          <p><strong>Transportes e Inversiones Jeanpierre S.A.C.</strong> fue fundada en el año {empresa.fundacion} por el <strong>Sr. Alejandro Galvez Sempertegui</strong>, quien sigue siendo el pilar fundamental de la empresa, orientada al servicio del transporte de carga terrestre y a la gran minería.</p>
+          <details class="desplegable desplegable--izquierda">
+            <summary class="btn-texto">
+              <span class="desplegable__abrir">Leer nuestra historia completa</span>
+              <span class="desplegable__cerrar">Mostrar menos</span>
+            </summary>
+            <div class="desplegable__cuerpo">
+              <p>Emprendedor y apasionado, el Sr. Alejandro dio sus primeros pasos en el rubro desde su juventud junto a su padre, en un entorno familiar ligado al transporte: una experiencia y trayectoria que ha plasmado en su empresa durante más de 10 años.</p>
+              <p>En la actualidad contamos con <strong>instalaciones propias</strong>, bodega de acopio para nuestros clientes y una flota de <strong>tracto camiones de última generación</strong>. Mantenemos nuestra flota renovada, y nuestros equipos y conductores cuentan con la <strong>capacidad técnica para ingresar a todas las faenas mineras del Perú</strong>.</p>
+              <p>Gracias a ellos, y sobre todo a nuestros clientes, hemos levantado una gran empresa, con un equipo de trabajadores de la más alta calidad profesional enfocado en una sola misión: brindar la mejor respuesta de calidad y servicio a nuestros clientes.</p>
+            </div>
+          </details>
+        </div>
+        <aside class="fundador">
+          <p class="fundador__anio">{empresa.fundacion}</p>
+          <p class="fundador__texto">Año de fundación</p>
+          <hr>
+          <p class="fundador__nombre">Alejandro Galvez Sempertegui</p>
+          <p class="fundador__texto">Fundador</p>
+        </aside>
+      </div>
+
+      <div class="mision-vision">
+        <article class="tarjeta-imagen">
+          <img src="/images/fondos/mision.jpg" alt="" loading="lazy">
+          <div class="tarjeta-imagen__cuerpo">
+            <h3 class="tarjeta-imagen__titulo">Misión</h3>
+            <p>Brindar un servicio de <strong>primera calidad</strong> en el transporte de su carga, cumpliendo con los estándares de <strong>seguridad</strong>, garantía y tiempos de entrega pactados con nuestros clientes.</p>
+          </div>
+        </article>
+        <article class="tarjeta-imagen">
+          <img src="/images/fondos/vision.jpg" alt="" loading="lazy">
+          <div class="tarjeta-imagen__cuerpo">
+            <h3 class="tarjeta-imagen__titulo">Visión</h3>
+            <p>Ser una empresa de <strong>transporte de carga</strong> reconocida a nivel nacional, cubriendo las principales rutas de nuestro país y, en un futuro, brindar este servicio a nivel internacional, cubriendo las exigencias y expectativas de nuestros clientes con costos competitivos en el mercado.</p>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="objetivos__titulo">Nuestros objetivos</h3>
+      <ul class="objetivos">
+        {objetivos.map((o) => (
+          <li class="objetivo"><span class="objetivo__check"><Icono nombre="check" size={20} /></span>{o}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="seccion seccion--granate">
+    <div class="contenedor split">
+      <div>
+        <p class="overline">Nuestro compromiso</p>
+        <h2 class="encabezado__titulo">Su mercadería, en perfectas condiciones y a tiempo</h2>
+        <p class="lead"><strong>Garantizar</strong> a nuestros clientes que la mercadería que nos confían llegará a su destino en perfectas condiciones, en el tiempo pactado, minimizando contratiempos y manteniendo la calidad de nuestro servicio de acuerdo a sus necesidades.</p>
+        <img class="firma" src="/images/logos/firma.png" alt="Firma de la gerencia" loading="lazy">
+      </div>
+      <div class="split__media">
+        <img src="/images/fotos/compromiso.jpg" alt="" width="463" height="357" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <Motivos />
+</div>

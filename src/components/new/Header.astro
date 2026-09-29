@@ -1,0 +1,33 @@
+---
+import Icono from "./Icono.astro";
+import { navegacion, ruta, empresa } from "../../data/sitio";
+
+// "Contacto" se muestra como botón: es la única llamada a la acción del header.
+const esCta = (href: string) => href.endsWith("#contacto");
+---
+<header class="header" data-header>
+  <div class="contenedor header__inner">
+    <a class="header__logo" href={ruta("/")}>
+      <img src="/images/logos/logo.png" alt={empresa.nombre} width="480" height="189">
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <ul class="nav__lista">
+        {navegacion.map((item) => (
+          <li><a class:list={[esCta(item.href) ? "btn btn--primario nav__cta" : "nav__link"]} href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-movil" data-menu-toggle>
+      <Icono nombre="menu" class="menu-toggle__abrir" />
+      <Icono nombre="cerrar" class="menu-toggle__cerrar" />
+      <span class="sr-only">Menú</span>
+    </button>
+  </div>
+  <div class="nav-movil" id="nav-movil" data-menu hidden>
+    <ul class="nav-movil__lista">
+      {navegacion.map((item) => (
+        <li><a class:list={[esCta(item.href) ? "btn btn--primario btn--bloque nav__cta" : "nav-movil__link"]} href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</header>

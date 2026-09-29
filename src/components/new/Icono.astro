@@ -1,0 +1,36 @@
+---
+const trazos = {
+  reloj: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  escudo: '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+  personal: '<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14c2 .8 3 2.8 3 6"/>',
+  camion: '<path d="M2 6h12v10H2z"/><path d="M14 9h4l3 3.5V16h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
+  caja: '<path d="M3 7.5l9-4.5 9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5l9 4.5 9-4.5"/><path d="M12 12v9"/>',
+  contenedor: '<path d="M3 6h18v12H3z"/><path d="M7.5 9v6M12 9v6M16.5 9v6"/>',
+  almacen: '<path d="M3 21V9l9-5 9 5v12"/><path d="M7 21v-8h10v8"/><path d="M7 17h10"/>',
+  mineria: '<path d="M2 20l7-11 4 6 3-4 6 9z"/>',
+  gps: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  telefono: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  ubicacion: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  facebook: '<path d="M15 3h-2.5A4.5 4.5 0 0 0 8 7.5V10H5v4h3v7h4v-7h3l1-4h-4V7.5a.5.5 0 0 1 .5-.5H15z"/>',
+  whatsapp: '<path d="M4 20l1.3-4A8.5 8.5 0 1 1 8.2 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 1a4 4 0 0 1-2-2l1-1-1-2z"/>',
+  flecha: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  izquierda: '<path d="M15 5l-7 7 7 7"/>',
+  derecha: '<path d="M9 5l7 7-7 7"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  cerrar: '<path d="M6 6l12 12M18 6L6 18"/>',
+  imagen: '<path d="M3 5h18v14H3z"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/>',
+  buscar: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+} as const;
+
+export type NombreIcono = keyof typeof trazos;
+
+interface Props {
+  nombre: NombreIcono;
+  size?: number;
+  class?: string;
+}
+
+const { nombre, size = 24, class: clase } = Astro.props;
+---
+<svg class:list={["icono", clase]} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={trazos[nombre]} />

@@ -1,0 +1,17 @@
+---
+import TestimonioCard from "./TestimonioCard.astro";
+import { testimoniosIniciales } from "../../data/testimonios-iniciales";
+
+interface Props {
+  limite?: number;
+}
+
+const { limite = 50 } = Astro.props;
+---
+<!-- Semilla estática; src/scripts/new/publico.js la reemplaza con los testimonios publicados en Firestore. -->
+<ul class="testimonios" data-fs="testimonios" data-limite={limite}>
+  {testimoniosIniciales.slice(0, limite).map((t) => <TestimonioCard {...t} />)}
+</ul>
+<script>
+  import "../../scripts/new/publico.js";
+</script>
