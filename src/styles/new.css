@@ -10,6 +10,9 @@
   --color-cian: #00b5e8;
   --color-azul-hover: color-mix(in srgb, var(--color-azul) 82%, #000);
   --color-granate-hover: color-mix(in srgb, var(--color-granate) 82%, #000);
+  /* Excepción aprobada por el dueño: verde oficial de WhatsApp, solo para el botón flotante (ver GUIA-DE-ESTILO.md § 9). */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-hover: color-mix(in srgb, var(--color-whatsapp) 82%, #000);
 
   --gris-900: #2a2a2a;
   --gris-800: #303030;
@@ -305,6 +308,15 @@ p.centrado {
 .btn--claro:hover {
   background: var(--blanco);
   color: var(--color-azul);
+}
+
+/* Variante de .btn--claro con relleno translúcido: menos protagonismo que .btn--primario pero visible (p. ej. WhatsApp junto a Llamar en el hero). */
+.btn--relleno {
+  background: rgb(255 255 255 / 0.16);
+}
+
+.btn--relleno:hover {
+  background: var(--blanco);
 }
 
 .btn--bloque {
@@ -820,6 +832,42 @@ p.centrado {
   color: var(--color-granate);
 }
 
+.documento-legal {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.documento-legal h2 {
+  margin-top: var(--sp-7);
+  font-size: var(--fs-h4);
+}
+
+.documento-legal p {
+  margin-top: var(--sp-3);
+}
+
+/* ========== Página independiente (documento legal/certificación) ========== */
+.body--documento {
+  background: var(--gris-50);
+}
+
+.documento__cabecera {
+  /* Fondo blanco pierde el logo (círculo blanco/celeste): mismo azul del header principal, donde sí contrasta. */
+  background: var(--color-azul);
+}
+
+.documento__cabecera-inner {
+  display: flex;
+  align-items: center;
+  padding-block: var(--sp-3);
+}
+
+.documento__marca img {
+  display: block;
+  height: 48px;
+  width: auto;
+}
+
 /* ========== Tarjetas genéricas ========== */
 .tarjeta {
   padding: var(--sp-6);
@@ -866,11 +914,6 @@ p.centrado {
   }
 }
 
-.firma {
-  width: 200px;
-  margin-top: var(--sp-5);
-}
-
 .historia {
   display: grid;
   gap: var(--sp-7);
@@ -910,10 +953,6 @@ p.centrado {
 .fundador__texto {
   font-size: var(--fs-small);
   color: rgb(255 255 255 / 0.8);
-}
-
-.fundador .firma {
-  margin-inline: auto;
 }
 
 .mision-vision {
@@ -957,8 +996,9 @@ p.centrado {
 }
 
 .objetivos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--sp-4);
 }
 
@@ -966,9 +1006,12 @@ p.centrado {
   display: flex;
   align-items: center;
   gap: var(--sp-4);
+  flex: 1 1 260px;
+  max-width: 320px;
   padding: var(--sp-5);
-  border: 1px solid var(--gris-100);
   border-radius: var(--radio-md);
+  background: var(--blanco);
+  box-shadow: var(--sombra-sm);
   font-family: var(--font-display);
   font-size: 1.125rem;
   letter-spacing: 0.02em;
@@ -1431,6 +1474,12 @@ p.centrado {
   color: var(--color-cian);
 }
 
+.enlace-icono {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
 .mapa iframe {
   display: block;
   width: 100%;
@@ -1577,6 +1626,26 @@ input[type="file"] {
   gap: var(--sp-3);
 }
 
+.footer__col {
+  display: grid;
+  gap: var(--sp-2);
+  align-content: start;
+}
+
+.footer__documentos {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.footer__documentos a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.footer__documentos a:hover {
+  color: var(--blanco);
+}
+
 .footer__titulo {
   font-family: var(--font-display);
   font-size: 1rem;
@@ -1653,7 +1722,7 @@ input[type="file"] {
   width: 56px;
   height: 56px;
   border-radius: var(--radio-circulo);
-  background: var(--color-granate);
+  background: var(--color-whatsapp);
   color: var(--blanco);
   box-shadow: var(--sombra-lg);
   transition: background-color var(--transicion), transform var(--transicion), opacity var(--transicion), visibility var(--transicion);
@@ -1666,7 +1735,7 @@ input[type="file"] {
 }
 
 .whatsapp-flotante:hover {
-  background: var(--color-granate-hover);
+  background: var(--color-whatsapp-hover);
   color: var(--blanco);
   transform: scale(1.05);
 }

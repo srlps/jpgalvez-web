@@ -13,11 +13,12 @@ import { empresa } from "../../data/sitio";
 import clientes from "../../data/clientes.json";
 
 const telOficina = empresa.oficinas[0];
+const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
 ---
 <NewLayout title="Inicio">
   <!-- La portada ofrece canales directos (llamar / WhatsApp); el formulario solo se enlaza desde "Contacto" del menú. -->
   <section class="hero" data-oculta-whatsapp>
-    <img class="hero__fondo" src="/images/fondos/banner-inicio-clean.jpeg" alt="" width="1340" height="557" fetchpriority="high">
+    <img class="hero__fondo" src="/images/fondos/banner-inicio-clean.jpg" alt="" width="1340" height="557" fetchpriority="high">
     <div class="contenedor">
       <div class="hero__texto">
         <p class="overline">{empresa.lema}</p>
@@ -25,11 +26,11 @@ const telOficina = empresa.oficinas[0];
         <p class="lead">Desde {empresa.fundacion} trasladamos carga, mudanzas y mercadería aduanera con flota propia, personal capacitado y unidades monitoreadas por GPS.</p>
         <div class="acciones">
           <a class="btn btn--primario" href={`tel:${telOficina.tel}`}><Icono nombre="telefono" size={18} />Llamar al {telOficina.numero}</a>
-          <a class="btn btn--claro" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener"><Icono nombre="whatsapp" size={18} />WhatsApp</a>
+          <a class="btn btn--claro btn--relleno" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener"><Icono nombre="whatsapp" size={18} />WhatsApp al {empresa.celulares[0].numero}</a>
         </div>
       </div>
       <ul class="datos">
-        <li class="dato"><strong class="dato__valor">{empresa.fundacion}</strong><span>Año de fundación</span></li>
+        <li class="dato"><strong class="dato__valor">{aniosExperiencia}+</strong><span>Años de experiencia</span></li>
         <li class="dato"><strong class="dato__valor"><span data-fs="clientes-total">{clientes.length}</span>+</strong><span>Clientes atendidos</span></li>
         <li class="dato"><strong class="dato__valor"><Icono nombre="gps" size={32} /></strong><span>Unidades monitoreadas por GPS</span></li>
         <li class="dato"><strong class="dato__valor"><Icono nombre="mineria" size={32} /></strong><span>Acceso a faenas mineras del Perú</span></li>
@@ -81,14 +82,19 @@ const telOficina = empresa.oficinas[0];
             <span><span class="lista-contacto__etiqueta">WhatsApp</span><a href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener">{empresa.celulares[0].numero}</a></span>
           </li>
           <li>
+            <Icono nombre="correo" />
+            <span><span class="lista-contacto__etiqueta">Correo electrónico</span><a href={`mailto:${empresa.correo}`}>{empresa.correo}</a></span>
+          </li>
+          <li>
             <Icono nombre="ubicacion" />
             <span><span class="lista-contacto__etiqueta">Visítenos</span>{empresa.direccion.linea1}, {empresa.direccion.linea2}</span>
           </li>
           <li>
-            <Icono nombre="facebook" />
-            <span><span class="lista-contacto__etiqueta">Síganos</span><a href={empresa.facebook} target="_blank" rel="noopener">Facebook</a></span>
+            <Icono nombre="redes" />
+            <span><span class="lista-contacto__etiqueta">Síganos</span><a class="enlace-icono" href={empresa.facebook} target="_blank" rel="noopener"><Icono nombre="facebook" size={16} /> Facebook</a></span>
           </li>
         </ul>
+        <p class="nota-revision">Correo electrónico de contacto pendiente de confirmar con el dueño — el que se muestra es un placeholder.</p>
       </div>
       <div class="tarjeta-form">
         <FormContacto id="form-contacto" />

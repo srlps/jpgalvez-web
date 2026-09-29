@@ -1,0 +1,44 @@
+---
+import NewLayout from "../../../layouts/NewLayout.astro";
+import { empresa, ruta } from "../../../data/sitio";
+---
+<NewLayout title="Política de privacidad" description="Política de privacidad de Transportes JeanPierre: qué datos recopilamos a través de nuestro formulario de contacto, para qué los usamos y cómo ejercer sus derechos." documento>
+  <header class="documento__cabecera">
+    <div class="contenedor documento__cabecera-inner">
+      <a class="documento__marca" href={ruta("/")}>
+        <img src="/images/logos/logo.png" alt={empresa.nombre} width="160" height="63" loading="lazy">
+      </a>
+    </div>
+  </header>
+  <section class="seccion">
+    <div class="contenedor documento-legal">
+      <h1>Política de privacidad</h1>
+      <p class="nota-revision">Borrador redactado para esta propuesta de rediseño, pendiente de revisión legal y de aprobación del dueño antes de publicarse como versión definitiva.</p>
+      <p>Última actualización: 29 de septiembre de 2026.</p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <p>{empresa.razonSocial}, con domicilio en {empresa.direccion.linea1}, {empresa.direccion.linea2}, es responsable del tratamiento de los datos personales que usted nos proporciona a través de este sitio web.</p>
+
+      <h2>2. Qué datos recopilamos</h2>
+      <p>Cuando completa nuestro formulario de contacto, recopilamos: nombre, correo electrónico, teléfono, servicio de su interés y, opcionalmente, empresa y cargo. No recopilamos datos a través de cookies ni herramientas de analítica: este sitio no utiliza ninguna.</p>
+
+      <h2>3. Finalidad</h2>
+      <p>Usamos estos datos únicamente para responder a su solicitud de cotización o consulta, y para contactarlo por correo electrónico, teléfono o WhatsApp según el medio que usted prefiera.</p>
+
+      <h2>4. Con quién compartimos sus datos</h2>
+      <p>El envío del formulario se procesa a través de <a href="https://web3forms.com/" target="_blank" rel="noopener">Web3Forms</a>, un servicio externo que reenvía el contenido del formulario a nuestro correo electrónico sin almacenarlo en sus propios servidores. No vendemos ni cedemos sus datos a terceros con fines comerciales.</p>
+
+      <h2>5. Conservación</h2>
+      <p>Conservamos los datos de contacto solo durante el tiempo necesario para atender su solicitud, salvo que exista una relación comercial posterior que requiera conservarlos por más tiempo.</p>
+
+      <h2>6. Sus derechos</h2>
+      <p>De acuerdo con la Ley N.° 29733, Ley de Protección de Datos Personales del Perú, usted puede ejercer sus derechos de acceso, rectificación, cancelación y oposición (derechos ARCO) sobre sus datos personales escribiéndonos a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a>.</p>
+
+      <h2>7. Cambios a esta política</h2>
+      <p>Podemos actualizar esta política ocasionalmente. La fecha de la última actualización se indica al inicio de esta página.</p>
+
+      <h2>8. Contacto</h2>
+      <p>Si tiene preguntas sobre esta política, escríbanos a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a>.</p>
+    </div>
+  </section>
+</NewLayout>

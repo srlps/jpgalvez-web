@@ -332,3 +332,4 @@ Estas decisiones respetan la paleta, pero cambian cómo se usa un color existent
 2. Unificar `#004070` en `#014171`.
 3. Subir el texto base de 14 px a 16 px y oscurecer el texto de párrafo de `#737373` a `#4C4C4C`.
 4. Mantener el header azul también en móvil (hoy es blanco y oculta el nombre del logo).
+5. **Decidido** (2026-09-29): excepción puntual a la regla de "no introducir tonos nuevos" — el botón flotante de WhatsApp usa el verde oficial de la marca (`#25D366`, token `--color-whatsapp`), porque es el ícono de un canal externo reconocible, no una marca nueva del sitio. El botón de WhatsApp del hero mantiene la paleta del sitio (variante `.btn--relleno` sobre `.btn--claro`), a propósito más discreto que "Llamar" pero visible (no un simple contorno transparente).

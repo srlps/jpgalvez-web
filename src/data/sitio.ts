@@ -25,7 +25,14 @@ export const empresa = {
   ],
   // ⚠️ Por confirmar con el dueño: que este celular tenga WhatsApp.
   whatsapp: "51994192267",
+  // ⚠️ Placeholder por confirmar con el dueño: no había correo de contacto en el sitio original.
+  correo: "contacto@transportesjpgalvez.com",
   facebook: "https://www.facebook.com/transportejpgalvez/",
+  // ⚠️ Placeholder por confirmar con el dueño: no había horario de atención en el sitio original.
+  horario: {
+    linea1: "Lunes a viernes: 9:00 am – 6:00 pm",
+    linea2: "Sábados: 9:00 am – 1:00 pm",
+  },
   mapaEmbed:
     "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1950.7082671415167!2d-77.0304703!3d-12.0836114!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c9a61a433dab%3A0xde659da5d642334a!2sTransportes%20E%20Inversiones%20Jeanpierre%20S.A.C.!5e0!3m2!1ses!2spe!4v1790458962143!5m2!1ses!2spe",
 };
