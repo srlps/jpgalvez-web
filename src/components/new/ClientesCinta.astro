@@ -1,17 +1,9 @@
 ---
-import clientes from "../../data/clientes.json";
-
-// Muestra repartida del listado como semilla, hasta que el admin marque clientes "destacados" en Firestore.
-const paso = Math.ceil(clientes.length / 24);
-const muestra = clientes.filter((_, i) => i % paso === 0);
 ---
+<!-- Vacía hasta que src/scripts/new/publico.js la llene con los clientes "destacados" en Firestore. -->
 <div class="cinta" data-fs="clientes-cinta">
-  {[false, true].map((duplicado) => (
-    <ul class="cinta__pista" aria-hidden={duplicado ? "true" : undefined}>
-      <li class="cinta__item cinta__item--logo"><img src="/images/logos/logo-mm-consultores.jpg" alt={duplicado ? "" : "MM Consultores"} height="56" loading="lazy"></li>
-      {muestra.map((nombre) => <li class="cinta__item">{nombre}</li>)}
-    </ul>
-  ))}
+  <ul class="cinta__pista"></ul>
+  <ul class="cinta__pista" aria-hidden="true"></ul>
 </div>
 <script>
   import "../../scripts/new/publico.js";

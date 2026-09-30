@@ -1205,6 +1205,19 @@ p.centrado {
 @media (min-width: 576px) { .lista-clientes { columns: 2; } }
 @media (min-width: 992px) { .lista-clientes { columns: 3; } }
 
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+}
+
+.paginacion button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ========== Testimonios ========== */
 .testimonios {
   display: grid;

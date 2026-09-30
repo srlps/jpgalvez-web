@@ -10,7 +10,6 @@ import ClientesListado from "../../components/new/ClientesListado.astro";
 import GaleriaGrid from "../../components/new/GaleriaGrid.astro";
 import FormContacto from "../../components/new/FormContacto.astro";
 import { empresa } from "../../data/sitio";
-import clientes from "../../data/clientes.json";
 
 const telOficina = empresa.oficinas[0];
 const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
@@ -31,7 +30,7 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
       </div>
       <ul class="datos">
         <li class="dato"><strong class="dato__valor">{aniosExperiencia}+</strong><span>Años de experiencia</span></li>
-        <li class="dato"><strong class="dato__valor"><span data-fs="clientes-total">{clientes.length}</span>+</strong><span>Clientes atendidos</span></li>
+        <li class="dato"><strong class="dato__valor"><span data-fs="clientes-total">…</span>+</strong><span>Clientes atendidos</span></li>
         <li class="dato"><strong class="dato__valor"><Icono nombre="gps" size={32} /></strong><span>Unidades monitoreadas por GPS</span></li>
         <li class="dato"><strong class="dato__valor"><Icono nombre="mineria" size={32} /></strong><span>Acceso a faenas mineras del Perú</span></li>
       </ul>
@@ -45,7 +44,7 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
   <section class="seccion" id="clientes">
     <div class="contenedor">
       <Encabezado overline="Clientes" titulo="Ellos confían en nosotros y son nuestro respaldo" centrado>
-        <p class="lead">Más de <strong data-fs="clientes-total">{clientes.length}</strong> empresas y personas han confiado su carga a Transportes JeanPierre.</p>
+        <p class="lead">Más de <strong data-fs="clientes-total">…</strong> empresas y personas han confiado su carga a Transportes JeanPierre.</p>
       </Encabezado>
     </div>
     <ClientesCinta />

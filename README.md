@@ -74,7 +74,7 @@ El sitio público es **una sola página**: todo el menú lleva por scroll a secc
 |---|---|
 | `/new/` | Portada · `#servicios` (acordeón con el detalle de cada servicio + bloque de minería) · `#nosotros` (historia, fundador, misión y visión, objetivos, compromiso, ¿por qué elegirnos?) · `#clientes` (cinta, testimonios, listado completo con buscador) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, formulario, mapa) |
 
-Sin configurar Firebase, las páginas muestran los datos estáticos actuales (`clientes.json` y el testimonio existente) y la galería aparece vacía.
+Sin configurar Firebase, las secciones de clientes/testimonios de `/new/` quedan vacías (no hay semilla estática) y la galería también aparece vacía.
 
 ### Activar Firebase para los datos de clientes/testimonios/galería
 

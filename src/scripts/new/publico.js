@@ -1,4 +1,5 @@
-// Carga clientes, testimonios y galería publicados en Firestore y reemplaza la semilla estática del HTML.
+// Carga clientes, testimonios y galería publicados en Firestore (no hay semilla estática: si
+// Firebase no está configurado, estas secciones quedan vacías).
 // Todo se construye con textContent/atributos (nunca innerHTML): el contenido viene de la consola admin.
 import { firebaseConfigurado, esUrlImagenSegura } from "./firebase-config.js";
 
