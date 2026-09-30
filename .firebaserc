@@ -6,7 +6,7 @@
     "jpgalvez-7a5b3": {
       "hosting": {
         "web": ["jpgalvez-7a5b3"],
-        "admin": ["landing-admin"]
+        "admin": ["landing-admin-65fab"]
       }
     }
   }
