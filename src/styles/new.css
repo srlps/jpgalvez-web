@@ -512,6 +512,13 @@ p.centrado {
 /* ========== Secciones ========== */
 .seccion {
   padding-block: var(--sp-seccion);
+  /* Compensa el padding-top propio de la sección (dejando un poco de aire) para que el scroll del menú no encaje pegado al header. */
+  scroll-margin-top: calc(-1 * var(--sp-seccion) + var(--sp-6));
+}
+
+/* Nosotros es un <div> envolvente (3 bandas) sin su propio padding: misma compensación que .seccion. */
+#nosotros {
+  scroll-margin-top: calc(-1 * var(--sp-seccion) + var(--sp-6));
 }
 
 .seccion--clara {
@@ -563,7 +570,7 @@ p.centrado {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding-block: var(--sp-8) var(--sp-6);
+  padding-block: var(--sp-6);
   background: var(--color-azul);
   color: var(--blanco);
 }
@@ -626,7 +633,7 @@ p.centrado {
 
 @media (min-width: 992px) {
   .hero {
-    padding-block: var(--sp-9) var(--sp-7);
+    padding-block: var(--sp-7);
   }
 
   /* Texto sobre la parte izquierda; el camión queda a la vista a la derecha. */
