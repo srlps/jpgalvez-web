@@ -11,19 +11,19 @@ function el(tag, clase, texto) {
   return nodo;
 }
 
-function renderTestimonio(t) {
+function renderTestimonio(t, cliente) {
   const li = el("li", "testimonio");
   const figura = el("figure");
   const cita = el("blockquote", "testimonio__texto");
   cita.append(el("p", null, t.texto));
   const pie = el("figcaption", "testimonio__autor");
-  if (esUrlImagenSegura(t.logoUrl)) {
+  if (cliente && esUrlImagenSegura(cliente.logoUrl)) {
     const logo = el("img", "testimonio__logo");
-    Object.assign(logo, { src: t.logoUrl, alt: "", width: 64, height: 64, loading: "lazy" });
+    Object.assign(logo, { src: cliente.logoUrl, alt: "", width: 64, height: 64, loading: "lazy" });
     pie.append(logo);
   }
   const datos = el("span");
-  datos.append(el("strong", "testimonio__nombre", t.autor), el("span", "testimonio__cargo", [t.cargo, t.empresa].filter(Boolean).join(", ")));
+  datos.append(el("strong", "testimonio__nombre", t.autor), el("span", "testimonio__cargo", [t.cargo, cliente?.nombre].filter(Boolean).join(", ")));
   pie.append(datos);
   figura.append(cita, pie);
   li.append(figura);
@@ -99,7 +99,7 @@ async function iniciar() {
 
   galerias.forEach((lista) => lista.closest("[data-galeria]")?.querySelector("[data-galeria-vacio]")?.setAttribute("hidden", ""));
 
-  const [{ db }, { collection, query, where, orderBy, limit, getDocs, getCount }] = await Promise.all([
+  const [{ db }, { collection, query, where, orderBy, limit, getDocs, getCount, getDoc, doc }] = await Promise.all([
     import("./firebase-app.js"),
     import("firebase/firestore/lite"),
   ]);
@@ -112,12 +112,21 @@ async function iniciar() {
 
   if (testimonios.length) {
     tareas.push(
-      getDocs(publicados("testimonios", orderBy("orden"))).then((snap) => {
+      getDocs(publicados("testimonios", orderBy("orden"))).then(async (snap) => {
         const items = datos(snap);
         if (!items.length) return;
+        // El nombre y el logo de la empresa vienen del cliente enlazado, no del propio testimonio.
+        const clientesPorId = new Map();
+        await Promise.all(
+          [...new Set(items.map((t) => t.clienteId).filter(Boolean))].map((id) =>
+            getDoc(doc(db, "clientes", id))
+              .then((snap) => snap.exists() && clientesPorId.set(id, { id: snap.id, ...snap.data() }))
+              .catch(() => {}),
+          ),
+        );
         testimonios.forEach((lista) => {
           const limite = Number(lista.dataset.limite) || items.length;
-          lista.replaceChildren(...items.slice(0, limite).map(renderTestimonio));
+          lista.replaceChildren(...items.slice(0, limite).map((t) => renderTestimonio(t, clientesPorId.get(t.clienteId))));
         });
       }),
     );

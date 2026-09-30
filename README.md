@@ -29,7 +29,7 @@ src/
   data/clientes.json          # listado de 360 clientes de la página Clientes (curado 2026-09-28: duplicados fusionados + cliente del testimonio agregado, ver AGENTS.md)
   data/sitio.ts               # datos de contacto, navegación y categorías de galería del rediseño
   data/servicios.ts           # textos de los 4 servicios y "¿Por qué elegirnos?" del rediseño
-  data/testimonios-iniciales.ts # testimonio existente (semilla para Firestore)
+
 public/
   favicon.ico                 # ícono del sitio
   images/                     # imágenes del sitio original, organizadas por tipo (no por sección)

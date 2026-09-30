@@ -25,11 +25,11 @@ rules_version = '2';
 // Fields:
 //   - autor: string (required, 1-100)
 //   - cargo: string (optional, 1-100)
-//   - empresa: string (required, 1-150)
+//   - clienteId: string (required) - id of an existing clientes/{clienteId} document; the
+//     company name and logo shown on the public site come from that cliente, not from this doc
 //   - texto: string (required, 1-1000)
 //   - orden: int (required, 0-9999) - ascending display order
 //   - publicado: bool (required)
-//   - logoUrl / logoPath: same as clientes, path under "testimonios/"
 //   - creadoEn / actualizadoEn: same as clientes
 //
 // Collection: galeria
@@ -111,6 +111,10 @@ service cloud.firestore {
              (!('logoPath' in data) || ('logoUrl' in data && isScopedPath(data.logoPath, folder, docId)));
     }
 
+    function clienteExiste(clienteId) {
+      return exists(/databases/$(database)/documents/clientes/$(clienteId));
+    }
+
     function isValidCreateTimestamps() {
       return request.resource.data.creadoEn == request.time &&
              request.resource.data.actualizadoEn == request.time;
@@ -140,17 +144,17 @@ service cloud.firestore {
     }
 
     function isValidTestimonio(data, docId) {
-      return hasOnlyAllowedFields(data, ['autor', 'cargo', 'empresa', 'texto', 'orden', 'publicado', 'logoUrl', 'logoPath', 'creadoEn', 'actualizadoEn']) &&
-             hasRequiredFields(data, ['autor', 'empresa', 'texto', 'orden', 'publicado', 'creadoEn', 'actualizadoEn']) &&
+      return hasOnlyAllowedFields(data, ['autor', 'cargo', 'clienteId', 'texto', 'orden', 'publicado', 'creadoEn', 'actualizadoEn']) &&
+             hasRequiredFields(data, ['autor', 'clienteId', 'texto', 'orden', 'publicado', 'creadoEn', 'actualizadoEn']) &&
              validString(data.autor, 1, 100) &&
              validOptionalString(data, 'cargo', 1, 100) &&
-             validString(data.empresa, 1, 150) &&
+             validString(data.clienteId, 1, 200) &&
+             clienteExiste(data.clienteId) &&
              validString(data.texto, 1, 1000) &&
              validInt(data.orden, 0, 9999) &&
              data.publicado is bool &&
              data.creadoEn is timestamp &&
-             data.actualizadoEn is timestamp &&
-             isValidOptionalLogo(data, 'testimonios', docId);
+             data.actualizadoEn is timestamp;
     }
 
     function isValidGaleria(data, docId) {

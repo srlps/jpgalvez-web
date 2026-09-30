@@ -300,12 +300,7 @@ input[type="file"] {
   font-family: var(--font-display);
   font-size: 1.125rem;
   color: var(--blanco);
-  text-decoration: none;
   text-transform: uppercase;
-}
-
-.admin-header__marca:hover {
-  color: var(--blanco);
 }
 
 .admin-header__marca img {

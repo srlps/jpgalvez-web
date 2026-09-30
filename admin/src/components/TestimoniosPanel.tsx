@@ -2,17 +2,18 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   collection, deleteDoc, deleteField, doc, getDocs, orderBy, query, serverTimestamp, setDoc, updateDoc,
 } from "firebase/firestore/lite";
-import { db, storage } from "../lib/firebase";
+import { db } from "../lib/firebase";
 import { esUrlImagenSegura } from "../lib/config";
 import { mensajeError } from "../lib/errores";
-import { eliminarArchivo, prepararImagen, rutaArchivo, subirArchivo } from "../lib/imagenes";
-import type { Testimonio } from "../types";
-import { testimoniosSemilla } from "../data/testimonios-semilla";
+import { descargarCsv, generarCsv } from "../lib/csv";
+import { normalizar } from "../lib/texto";
+import type { Cliente, Testimonio } from "../types";
 
 const coleccion = "testimonios";
 
 export default function TestimoniosPanel() {
   const [items, setItems] = useState<Testimonio[]>([]);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
   const [cargado, setCargado] = useState(false);
   const [editando, setEditando] = useState<Testimonio | null>(null);
   const [estadoForm, setEstadoForm] = useState("");
@@ -27,12 +28,19 @@ export default function TestimoniosPanel() {
 
   useEffect(() => {
     cargar();
+    getDocs(query(collection(db!, "clientes"), orderBy("nombre"))).then((snap) => {
+      setClientes(snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<Cliente, "id">) })));
+    });
   }, []);
 
   function limpiarForm() {
     formRef.current?.reset();
     setEditando(null);
     setEstadoForm("");
+  }
+
+  function clienteDe(item: Testimonio) {
+    return clientes.find((c) => c.id === item.clienteId);
   }
 
   function editar(item: Testimonio) {
@@ -44,7 +52,7 @@ export default function TestimoniosPanel() {
       form.reset();
       (form.elements.namedItem("autor") as HTMLInputElement).value = item.autor;
       (form.elements.namedItem("cargo") as HTMLInputElement).value = item.cargo ?? "";
-      (form.elements.namedItem("empresa") as HTMLInputElement).value = item.empresa;
+      (form.elements.namedItem("empresa") as HTMLInputElement).value = clienteDe(item)?.nombre ?? "";
       (form.elements.namedItem("texto") as HTMLTextAreaElement).value = item.texto;
       (form.elements.namedItem("orden") as HTMLInputElement).value = String(item.orden);
       (form.elements.namedItem("publicado") as HTMLInputElement).checked = item.publicado;
@@ -56,52 +64,32 @@ export default function TestimoniosPanel() {
     evento.preventDefault();
     const form = evento.currentTarget;
     if (!form.reportValidity()) return;
+    const datos = new FormData(form);
+    const empresaTexto = String(datos.get("empresa") ?? "").trim();
+    const clienteElegido = clientes.find((c) => normalizar(c.nombre) === normalizar(empresaTexto));
+    if (!clienteElegido) {
+      setEstadoForm(clientes.length === 0 ? "Primero agrega un cliente en la pestaña Clientes." : "Selecciona una empresa de la lista de clientes.");
+      return;
+    }
     setGuardando(true);
     setEstadoForm("Guardando…");
     try {
-      const datos = new FormData(form);
       const autor = String(datos.get("autor") ?? "").trim();
       const cargo = String(datos.get("cargo") ?? "").trim();
-      const empresa = String(datos.get("empresa") ?? "").trim();
       const texto = String(datos.get("texto") ?? "").trim();
       const orden = Math.max(0, Math.min(9999, Math.trunc(Number(datos.get("orden")) || 0)));
       const publicado = datos.get("publicado") === "on";
-      const quitarLogo = datos.get("quitarLogo") === "on";
-      const archivo = datos.get("logo") as File | null;
 
       const referencia = editando ? doc(db!, coleccion, editando.id) : doc(collection(db!, coleccion));
-      let camposLogo: Record<string, unknown> = {};
-      let subido: string | undefined;
-      let descartar = editando?.logoPath;
-
-      if (archivo && archivo.size > 0) {
-        const imagen = await prepararImagen(archivo, 400);
-        const ruta = rutaArchivo(coleccion, referencia.id, imagen.ext);
-        const url = await subirArchivo(storage!, ruta, imagen.blob);
-        camposLogo = { logoUrl: url, logoPath: ruta };
-        subido = ruta;
-      } else if (editando && quitarLogo && editando.logoUrl) {
-        camposLogo = { logoUrl: deleteField(), logoPath: deleteField() };
-      } else {
-        descartar = undefined;
-      }
-
       const payload = {
-        autor, empresa, texto, orden, publicado,
+        autor, clienteId: clienteElegido.id, texto, orden, publicado,
         ...(cargo ? { cargo } : editando ? { cargo: deleteField() } : {}),
-        ...camposLogo,
       };
-      try {
-        if (editando) {
-          await updateDoc(referencia, { ...payload, actualizadoEn: serverTimestamp() });
-        } else {
-          await setDoc(referencia, { ...payload, creadoEn: serverTimestamp(), actualizadoEn: serverTimestamp() });
-        }
-      } catch (error) {
-        if (subido) await eliminarArchivo(storage!, subido).catch(() => {});
-        throw error;
+      if (editando) {
+        await updateDoc(referencia, { ...payload, actualizadoEn: serverTimestamp() });
+      } else {
+        await setDoc(referencia, { ...payload, creadoEn: serverTimestamp(), actualizadoEn: serverTimestamp() });
       }
-      if (descartar) await eliminarArchivo(storage!, descartar).catch((error) => console.warn("No se pudo borrar el logo anterior", error));
 
       setEstadoForm("Testimonio guardado.");
       limpiarForm();
@@ -127,18 +115,16 @@ export default function TestimoniosPanel() {
     if (!confirm(`¿Eliminar el testimonio de "${item.autor}"? Esta acción no se puede deshacer.`)) return;
     try {
       await deleteDoc(doc(db!, coleccion, item.id));
-      await eliminarArchivo(storage!, item.logoPath).catch((error) => console.warn("No se pudo borrar el archivo", error));
       await cargar();
     } catch (error) {
       alert(mensajeError(error));
     }
   }
 
-  async function importar() {
-    for (const t of testimoniosSemilla) {
-      await setDoc(doc(collection(db!, coleccion)), { ...t, publicado: true, creadoEn: serverTimestamp(), actualizadoEn: serverTimestamp() });
-    }
-    await cargar();
+  function exportarCsv() {
+    const columnas = ["Autor", "Cargo", "Empresa", "Texto", "Orden", "Publicado"];
+    const filas = items.map((t) => [t.autor, t.cargo ?? "", clienteDe(t)?.nombre ?? "", t.texto, t.orden, t.publicado ? "Sí" : "No"]);
+    descargarCsv("testimonios.csv", generarCsv(columnas, filas));
   }
 
   return (
@@ -155,7 +141,11 @@ export default function TestimoniosPanel() {
         </div>
         <div className="campo">
           <label htmlFor="testimonio-empresa">Empresa</label>
-          <input id="testimonio-empresa" name="empresa" maxLength={150} required />
+          <input id="testimonio-empresa" name="empresa" list="testimonio-empresa-lista" maxLength={150} autoComplete="off" required />
+          <datalist id="testimonio-empresa-lista">
+            {clientes.map((c) => <option key={c.id} value={c.nombre} />)}
+          </datalist>
+          <p className="form__ayuda">Escribe para buscar y elige una empresa de la lista de clientes.</p>
         </div>
         <div className="campo">
           <label htmlFor="testimonio-texto">Testimonio</label>
@@ -165,16 +155,7 @@ export default function TestimoniosPanel() {
           <label htmlFor="testimonio-orden">Orden (menor = aparece primero)</label>
           <input type="number" id="testimonio-orden" name="orden" min={0} max={9999} step={1} defaultValue={1} required />
         </div>
-        <div className="campo">
-          <label htmlFor="testimonio-logo">Logo de la empresa (opcional)</label>
-          <input type="file" id="testimonio-logo" name="logo" accept="image/*" />
-        </div>
-        {editando && esUrlImagenSegura(editando.logoUrl) && (
-          <div className="admin-logo-actual">
-            <img src={editando.logoUrl} alt="Logo actual" />
-            <label className="check"><input type="checkbox" name="quitarLogo" /> Quitar logo actual</label>
-          </div>
-        )}
+        <p className="form__ayuda">El logo mostrado junto al testimonio es el logo del cliente elegido; para cambiarlo, edítalo en la pestaña Clientes.</p>
         <label className="check"><input type="checkbox" name="publicado" defaultChecked /> Publicado en el sitio</label>
         <div className="acciones">
           <button type="submit" className="btn btn--primario" disabled={guardando}>Guardar</button>
@@ -184,20 +165,24 @@ export default function TestimoniosPanel() {
       </form>
 
       <div>
+        <div className="admin-toolbar">
+          <span>{items.length} testimonios</span>
+          <button type="button" className="btn btn--secundario btn--chico" onClick={exportarCsv}>Exportar CSV</button>
+        </div>
+
         {cargado && items.length === 0 && (
           <div className="admin-aviso">
             <p>Todavía no hay testimonios en Firestore.</p>
-            <button type="button" className="btn btn--primario" onClick={importar}>Importar el testimonio del sitio actual</button>
           </div>
         )}
         <ul className="admin-lista">
           {items.map((item) => (
             <li key={item.id} className="tarjeta admin-item">
               <div className="admin-item__cabecera">
-                {esUrlImagenSegura(item.logoUrl) && <img src={item.logoUrl} alt="" className="admin-miniatura" />}
+                {esUrlImagenSegura(clienteDe(item)?.logoUrl) && <img src={clienteDe(item)!.logoUrl} alt="" className="admin-miniatura" />}
                 <div>
                   <strong>{item.autor}</strong>
-                  <span className="admin-item__meta">{[item.cargo, item.empresa].filter(Boolean).join(", ")}</span>
+                  <span className="admin-item__meta">{[item.cargo, clienteDe(item)?.nombre].filter(Boolean).join(", ")}</span>
                   <span className="admin-item__meta">Orden: {item.orden}</span>
                 </div>
               </div>

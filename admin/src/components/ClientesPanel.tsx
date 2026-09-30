@@ -4,14 +4,13 @@ import {
 } from "firebase/firestore/lite";
 import { db, storage } from "../lib/firebase";
 import { esUrlImagenSegura } from "../lib/config";
-import { SITIO_URL } from "../lib/constantes";
 import { mensajeError } from "../lib/errores";
 import { eliminarArchivo, prepararImagen, rutaArchivo, subirArchivo } from "../lib/imagenes";
+import { descargarCsv, generarCsv } from "../lib/csv";
+import { normalizar } from "../lib/texto";
 import type { Cliente } from "../types";
-import clientesSemilla from "../data/clientes-semilla.json";
 
 const coleccion = "clientes";
-const normalizar = (texto: string) => texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 export default function ClientesPanel() {
   const [items, setItems] = useState<Cliente[]>([]);
@@ -134,22 +133,10 @@ export default function ClientesPanel() {
     }
   }
 
-  async function importar() {
-    const nombres = clientesSemilla as string[];
-    if (!confirm(`Se crearán ${nombres.length} clientes publicados a partir del listado del sitio actual. ¿Continuar?`)) return;
-    const documentos = nombres.map((nombre) => ({
-      nombre,
-      destacado: nombre === "MM CONSULTORES",
-      publicado: true,
-      ...(nombre === "MM CONSULTORES" ? { logoUrl: `${SITIO_URL}/images/logos/logo-mm-consultores.jpg` } : {}),
-    }));
-    for (let i = 0; i < documentos.length; i += 20) {
-      const grupo = documentos.slice(i, i + 20);
-      await Promise.all(grupo.map((datos) =>
-        setDoc(doc(collection(db!, coleccion)), { ...datos, creadoEn: serverTimestamp(), actualizadoEn: serverTimestamp() }),
-      ));
-    }
-    await cargar();
+  function exportarCsv() {
+    const columnas = ["Nombre", "Destacado", "Publicado"];
+    const filas = items.map((c) => [c.nombre, c.destacado ? "Sí" : "No", c.publicado ? "Sí" : "No"]);
+    descargarCsv("clientes.csv", generarCsv(columnas, filas));
   }
 
   return (
@@ -183,12 +170,12 @@ export default function ClientesPanel() {
         <div className="admin-toolbar">
           <input type="search" placeholder="Buscar cliente…" aria-label="Buscar cliente" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} />
           <span>{items.length} clientes · {publicados} publicados</span>
+          <button type="button" className="btn btn--secundario btn--chico" onClick={exportarCsv}>Exportar CSV</button>
         </div>
 
         {cargado && items.length === 0 && (
           <div className="admin-aviso">
             <p>Todavía no hay clientes en Firestore.</p>
-            <button type="button" className="btn btn--primario" onClick={importar}>Importar los {(clientesSemilla as string[]).length} clientes del sitio actual</button>
           </div>
         )}
 

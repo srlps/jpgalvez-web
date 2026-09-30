@@ -11,12 +11,10 @@ export interface Testimonio {
   id: string;
   autor: string;
   cargo?: string;
-  empresa: string;
+  clienteId: string;
   texto: string;
   orden: number;
   publicado: boolean;
-  logoUrl?: string;
-  logoPath?: string;
 }
 
 export interface Foto {

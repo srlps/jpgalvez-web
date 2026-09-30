@@ -1,7 +1,7 @@
 import { useState, type KeyboardEvent } from "react";
 import { signOut, type User } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { SITIO_URL } from "../lib/constantes";
+import logo from "../assets/logo.png";
 import ClientesPanel from "./ClientesPanel";
 import TestimoniosPanel from "./TestimoniosPanel";
 import GaleriaPanel from "./GaleriaPanel";
@@ -28,10 +28,10 @@ export default function Consola({ usuario }: { usuario: User }) {
   return (
     <div className="admin">
       <header className="admin-header">
-        <a className="admin-header__marca" href={SITIO_URL}>
-          <img src={`${SITIO_URL}/images/logos/logo.png`} alt="Transportes JeanPierre" height={56} />
+        <div className="admin-header__marca">
+          <img src={logo} alt="Transportes JeanPierre" height={56} />
           <span>Consola de administración</span>
-        </a>
+        </div>
         <div className="admin-header__sesion">
           <span>{usuario.email}</span>
           <button type="button" className="btn btn--claro btn--chico" onClick={() => signOut(auth!)}>Cerrar sesión</button>
