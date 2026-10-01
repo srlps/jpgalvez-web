@@ -4,18 +4,18 @@ import Icono from "./Icono.astro";
 <!-- El listado completo se pide a Firestore al abrir el desplegable (publico.js). -->
 <details class="desplegable" data-clientes-desplegable>
   <summary class="btn btn--secundario">
-    <span class="desplegable__abrir">Ver los <span data-fs="clientes-total">…</span> clientes atendidos</span>
+    <span class="desplegable__abrir">Ver el listado de empresas clientes</span>
     <span class="desplegable__cerrar">Ocultar listado</span>
   </summary>
   <div class="desplegable__cuerpo">
     <div class="buscador">
-      <label class="sr-only" for="buscar-clientes">Buscar cliente</label>
+      <label class="sr-only" for="buscar-clientes">Buscar empresa</label>
       <Icono nombre="buscar" size={20} />
-      <input type="search" id="buscar-clientes" placeholder="Buscar cliente por nombre…" autocomplete="off" data-buscar-clientes>
+      <input type="search" id="buscar-clientes" placeholder="Buscar empresa por nombre…" autocomplete="off" data-buscar-clientes>
     </div>
     <p class="buscador__estado" role="status" data-clientes-estado></p>
     <ul class="lista-clientes" data-fs="clientes-lista"></ul>
-    <nav class="paginacion" data-clientes-paginacion hidden aria-label="Paginación de clientes">
+    <nav class="paginacion" data-clientes-paginacion hidden aria-label="Paginación de empresas">
       <button type="button" class="btn btn--secundario btn--chico" data-pagina-anterior>Anterior</button>
       <span data-pagina-indicador></span>
       <button type="button" class="btn btn--secundario btn--chico" data-pagina-siguiente>Siguiente</button>
@@ -53,7 +53,7 @@ import Icono from "./Icono.astro";
     for (const item of lista.children) (item as HTMLElement).hidden = !visibles.has(item);
 
     estado.textContent = consulta
-      ? (items.length ? `${items.length} resultado(s) para "${consulta}".` : "No se encontraron clientes con ese nombre.")
+      ? (items.length ? `${items.length} resultado(s) para "${consulta}".` : "No se encontraron empresas con ese nombre.")
       : "";
 
     paginacion.hidden = items.length <= POR_PAGINA;

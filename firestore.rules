@@ -13,7 +13,9 @@ rules_version = '2';
 // Document ID: Firestore auto-ID
 // Fields:
 //   - nombre: string (required, 1-150)
-//   - destacado: bool (required) - shown on the home page
+//   - tipo: string (optional, 'empresa' | 'persona'; a missing value means 'empresa') - 'persona' = natural
+//     person: cannot be destacado, and the public site leaves it out of its counts and lists
+//   - destacado: bool (required) - shown on the home page; always false when tipo == 'persona'
 //   - publicado: bool (required) - visible to the public only when true
 //   - logoUrl: string (optional, <=1000, Firebase Storage https URL or /images/... site asset)
 //   - logoPath: string (optional, requires logoUrl, "clientes/<docId>[-<n>].<webp|jpg|png>")
@@ -133,10 +135,12 @@ service cloud.firestore {
     // ---------- Domain Validators (used in both create and update) ----------
 
     function isValidCliente(data, docId) {
-      return hasOnlyAllowedFields(data, ['nombre', 'destacado', 'publicado', 'logoUrl', 'logoPath', 'creadoEn', 'actualizadoEn']) &&
+      return hasOnlyAllowedFields(data, ['nombre', 'tipo', 'destacado', 'publicado', 'logoUrl', 'logoPath', 'creadoEn', 'actualizadoEn']) &&
              hasRequiredFields(data, ['nombre', 'destacado', 'publicado', 'creadoEn', 'actualizadoEn']) &&
              validString(data.nombre, 1, 150) &&
+             (!('tipo' in data) || data.tipo in ['empresa', 'persona']) &&
              data.destacado is bool &&
+             !(data.get('tipo', 'empresa') == 'persona' && data.destacado) &&
              data.publicado is bool &&
              data.creadoEn is timestamp &&
              data.actualizadoEn is timestamp &&

@@ -1,6 +1,8 @@
 import { useState, type KeyboardEvent } from "react";
 import { signOut, type User } from "firebase/auth";
 import { auth } from "../lib/firebase";
+import { exportarTodoConMultimedia } from "../lib/exportar";
+import { mensajeError } from "../lib/errores";
 import logo from "../assets/logo.png";
 import ClientesPanel from "./ClientesPanel";
 import TestimoniosPanel from "./TestimoniosPanel";
@@ -16,6 +18,20 @@ type Pestana = (typeof pestanas)[number]["id"];
 
 export default function Consola({ usuario }: { usuario: User }) {
   const [activa, setActiva] = useState<Pestana>("clientes");
+  const [exportando, setExportando] = useState(false);
+  const [estadoExport, setEstadoExport] = useState("");
+
+  async function exportarTodo() {
+    setExportando(true);
+    try {
+      await exportarTodoConMultimedia(setEstadoExport);
+    } catch (error) {
+      console.error(error);
+      setEstadoExport(mensajeError(error));
+    } finally {
+      setExportando(false);
+    }
+  }
 
   function alPresionarTecla(evento: KeyboardEvent<HTMLButtonElement>, indice: number) {
     const paso = { ArrowRight: 1, ArrowLeft: -1 }[evento.key];
@@ -33,6 +49,10 @@ export default function Consola({ usuario }: { usuario: User }) {
           <span>Consola de administración</span>
         </div>
         <div className="admin-header__sesion">
+          <button type="button" className="btn btn--claro btn--chico" onClick={exportarTodo} disabled={exportando}>
+            {exportando ? "Exportando…" : "Exportar todo (ZIP)"}
+          </button>
+          {estadoExport && <span role="status">{estadoExport}</span>}
           <span>{usuario.email}</span>
           <button type="button" className="btn btn--claro btn--chico" onClick={() => signOut(auth!)}>Cerrar sesión</button>
         </div>

@@ -1,6 +1,10 @@
+export type TipoCliente = "empresa" | "persona";
+
 export interface Cliente {
   id: string;
   nombre: string;
+  // Ausente en documentos anteriores a este campo: se trata como "empresa".
+  tipo?: TipoCliente;
   destacado: boolean;
   publicado: boolean;
   logoUrl?: string;

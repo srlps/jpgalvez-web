@@ -68,7 +68,7 @@ export default function TestimoniosPanel() {
     const empresaTexto = String(datos.get("empresa") ?? "").trim();
     const clienteElegido = clientes.find((c) => normalizar(c.nombre) === normalizar(empresaTexto));
     if (!clienteElegido) {
-      setEstadoForm(clientes.length === 0 ? "Primero agrega un cliente en la pestaña Clientes." : "Selecciona una empresa de la lista de clientes.");
+      setEstadoForm(clientes.length === 0 ? "Primero agrega un cliente en la pestaña Clientes." : "Selecciona un cliente de la lista de clientes.");
       return;
     }
     setGuardando(true);
@@ -140,12 +140,12 @@ export default function TestimoniosPanel() {
           <input id="testimonio-cargo" name="cargo" maxLength={100} />
         </div>
         <div className="campo">
-          <label htmlFor="testimonio-empresa">Empresa</label>
+          <label htmlFor="testimonio-empresa">Cliente (empresa o persona)</label>
           <input id="testimonio-empresa" name="empresa" list="testimonio-empresa-lista" maxLength={150} autoComplete="off" required />
           <datalist id="testimonio-empresa-lista">
             {clientes.map((c) => <option key={c.id} value={c.nombre} />)}
           </datalist>
-          <p className="form__ayuda">Escribe para buscar y elige una empresa de la lista de clientes.</p>
+          <p className="form__ayuda">Escribe para buscar y elige un cliente de la lista. Si es una persona natural, en el sitio solo se mostrará su nombre como autor.</p>
         </div>
         <div className="campo">
           <label htmlFor="testimonio-texto">Testimonio</label>

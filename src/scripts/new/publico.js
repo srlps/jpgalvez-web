@@ -18,13 +18,15 @@ function renderTestimonio(t, cliente) {
   const cita = el("blockquote", "testimonio__texto");
   cita.append(el("p", null, t.texto));
   const pie = el("figcaption", "testimonio__autor");
-  if (cliente && esUrlImagenSegura(cliente.logoUrl)) {
+  // Una persona natural no tiene "empresa": su nombre ya figura como autor del testimonio.
+  const empresaDe = cliente?.tipo === "persona" ? undefined : cliente;
+  if (empresaDe && esUrlImagenSegura(empresaDe.logoUrl)) {
     const logo = el("img", "testimonio__logo");
-    Object.assign(logo, { src: cliente.logoUrl, alt: "", width: 64, height: 64, loading: "lazy" });
+    Object.assign(logo, { src: empresaDe.logoUrl, alt: "", width: 64, height: 64, loading: "lazy" });
     pie.append(logo);
   }
   const datos = el("span");
-  datos.append(el("strong", "testimonio__nombre", t.autor), el("span", "testimonio__cargo", [t.cargo, cliente?.nombre].filter(Boolean).join(", ")));
+  datos.append(el("strong", "testimonio__nombre", t.autor), el("span", "testimonio__cargo", [t.cargo, empresaDe?.nombre].filter(Boolean).join(", ")));
   pie.append(datos);
   figura.append(cita, pie);
   li.append(figura);
@@ -108,6 +110,8 @@ async function iniciar() {
   // Las reglas solo permiten al público leer documentos con publicado == true: el filtro es obligatorio.
   const publicados = (coleccion, ...extra) => query(collection(db, coleccion), where("publicado", "==", true), ...extra);
   const datos = (snap) => snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  // Los documentos antiguos no tienen `tipo` (Firestore no los devuelve con where("tipo", "!=", ...)): se filtra aquí.
+  const empresas = (clientes) => clientes.filter((c) => c.tipo !== "persona");
   const pintarTotal = (n) => n > 0 && totales.forEach((t) => (t.textContent = String(n)));
   const tareas = [];
 
@@ -136,7 +140,7 @@ async function iniciar() {
   if (cintas.length) {
     tareas.push(
       getDocs(publicados("clientes", where("destacado", "==", true))).then((snap) => {
-        const destacados = datos(snap).sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+        const destacados = empresas(datos(snap)).sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
         if (destacados.length) cintas.forEach((cinta) => pintarCinta(cinta, destacados));
       }),
     );
@@ -150,7 +154,7 @@ async function iniciar() {
     tareas.push(
       alAbrir(lista, () =>
         getDocs(publicados("clientes", orderBy("nombre"))).then((snap) => {
-          const clientes = datos(snap);
+          const clientes = empresas(datos(snap));
           if (!clientes.length) return;
           lista.replaceChildren(...clientes.map((c) => el("li", null, c.nombre)));
           document.dispatchEvent(new CustomEvent("fs:clientes"));

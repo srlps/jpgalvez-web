@@ -99,7 +99,7 @@ La consola admin vive en `admin/`, un **segundo proyecto npm independiente** (Re
 2. Authentication → Método de acceso: habilitar **Correo electrónico/contraseña** y crear el usuario del dueño.
 3. Firestore → crear la colección `admins` con un documento cuyo ID sea el **UID** de ese usuario (sin campos).
 4. `npm run admin:install` y luego `npm run admin:dev` (o desplegar `admin/dist/` una vez construido).
-5. Entrar a la consola y usar «Importar» para cargar los 360 clientes y el testimonio actuales.
+5. Entrar a la consola y cargar clientes/testimonios/galería desde cada pestaña. La pestaña Clientes también permite **importar y exportar un CSV** (`Nombre`, `Tipo`, `Destacado`, `Publicado`; las demás columnas se ignoran). Importar crea los clientes nuevos y actualiza los existentes comparando el nombre; no puede renombrar.
 
 ## Despliegue en Firebase
 
