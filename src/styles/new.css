@@ -1115,7 +1115,9 @@ p.centrado {
 
 .cinta__item--logo img {
   width: auto;
+  max-width: 140px;
   height: 56px;
+  object-fit: contain;
 }
 
 @keyframes cinta {

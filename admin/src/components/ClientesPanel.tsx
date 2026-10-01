@@ -161,7 +161,7 @@ export default function ClientesPanel() {
     if (!archivo) return;
 
     const [encabezado, ...datos] = parsearCsv(await archivo.text());
-    // Las columnas se buscan por nombre (no por posición) para aceptar CSV con columnas extra, como clientes-analisis.csv.
+    // Las columnas se buscan por nombre (no por posición) para aceptar CSV con columnas extra.
     const columna = (nombre: string) => (encabezado ?? []).findIndex((h) => normalizar(h.trim()) === nombre);
     const [iNombre, iTipo, iDestacado, iPublicado] = ["nombre", "tipo", "destacado", "publicado"].map(columna);
     if (iNombre < 0 || iDestacado < 0 || iPublicado < 0) {
