@@ -47,6 +47,7 @@ Los colores de la marca son **azul, granate y plata**: los mismos de la flota y 
 | `--color-azul` | `#014171` | Header, bloque "¿Por qué elegirnos?" | Color institucional principal: header, footer superior, bandas de sección, títulos y enlaces sobre fondo claro |
 | `--color-granate` | `#8F0616` | Botones, "Nuestro compromiso", cabeceras de página | Acción y énfasis: botones principales (CTA), bandas destacadas |
 | `--color-plata` | `#BBBCBF` | Camión del logo, vehículos y uniformes | Acento sobre fondos oscuros (antetítulos, enlaces en hover, borde de los círculos de íconos), franjas bajo el header y sobre el footer. **Nunca como color de texto sobre blanco** |
+| `--color-plata-medio` | `color-mix(plata 75%, blanco)` ≈ `#CECFD1` | Derivado del plata | Segundo tinte claro para alternar bandas claras contiguas (Nosotros tras Servicios, Galería tras Clientes) |
 | `--color-plata-claro` | `color-mix(plata 40%, blanco)` ≈ `#E4E4E5` | Derivado del plata | **Fondo de todas las secciones claras y de la página.** Ningún fondo de sección es blanco; el blanco queda para tarjetas y campos |
 | `--color-cian` | `#00B5E8` | Círculo del logo | Acentos puntuales que se mantienen por decisión del cliente: subrayado activo/hover del menú, métricas de la portada, año de fundación, borde y comilla de los testimonios, íconos y etiquetas de la sección Contacto, y el anillo de foco |
 | `--color-rojo-logo` | `#E41319` | Lema del logo | **Reservado al logo.** No se usa en la interfaz para no competir con el granate |
@@ -149,7 +150,7 @@ El original usaba 14 px de base; se sube a 16 px por legibilidad.
 
 `--sp-1: 4px` · `--sp-2: 8px` · `--sp-3: 12px` · `--sp-4: 16px` · `--sp-5: 24px` · `--sp-6: 32px` · `--sp-7: 48px` · `--sp-8: 64px` · `--sp-9: 96px`
 
-- Padding vertical de sección: `--sp-seccion: clamp(3rem, 2rem + 4vw, 6rem)` (más aire que el original, que usaba 40–50 px fijos).
+- Padding vertical de sección: `--sp-seccion: clamp(2.5rem, 1.5rem + 3.5vw, 4.5rem)` (compactado el 2026-10-02 para acortar el scroll hasta el formulario).
 - Separación entre tarjetas de una rejilla: `--sp-5` en móvil, `--sp-6` en escritorio.
 
 ### Rejilla
@@ -181,7 +182,8 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 ## 5. Lenguaje visual
 
 - **Bandas de color a ancho completo**: es el rasgo más reconocible del sitio original (granate → carbón → azul). Se mantiene, pero:
-  - Las bandas claras usan `--color-plata-claro` (nunca blanco); no encadenar más de dos bandas oscuras seguidas.
+  - Las bandas claras usan `--color-plata-claro` o `--color-plata-medio` (nunca blanco); no encadenar más de dos bandas oscuras seguidas.
+  - Dos secciones principales contiguas (las del menú) nunca comparten fondo. Orden actual: Servicios `plata-claro` → Nosotros (`plata-medio`, granate, azul) → Clientes `plata-claro` → Galería `plata-medio` → Contacto `gris-800`. Las subsecciones sí pueden repetir color.
   - Cada banda oscura usa un solo color de marca plano (sin degradados entre granate y azul).
 - **Plata como tercer color de marca**: es el fondo de toda la página (plata claro) y el acento de antetítulos y círculos sobre las bandas oscuras. Una franja plata de 3 px bajo el header y sobre el footer recuerda la franja de los vehículos. El cian se mantiene solo en los acentos listados en 2.1.
 - **El círculo** del logo es el motivo gráfico recurrente: contenedores circulares para íconos (como ya hace "¿Por qué elegirnos?"), avatares de testimonios, viñetas.
@@ -246,7 +248,7 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 ### 6.8 Footer
 
 - Fondo `--gris-900` con franja plata superior de 3 px (se conserva el mapa de fondo `footer-mapa.png` con baja opacidad), texto `--gris-400`, títulos blancos en Fjalla One.
-- Columnas: contacto (teléfonos como enlaces `tel:`), dirección, horario, redes ("Síguenos").
+- Columnas (3 en escritorio): marca y datos corporativos; "Legal y cumplimiento" + "Respaldo y cumplimiento" apilados; "Horario de atención" + "Síganos" apilados. En tablet la marca ocupa la columna izquierda y las otras dos se apilan a su derecha; en móvil todo se apila.
 - Barra inferior con copyright y créditos, separada por un borde `rgb(255 255 255 / .1)`.
 
 ---
@@ -263,6 +265,7 @@ Bloque de referencia para el inicio de `src/styles/site.css` cuando se implement
   --color-cian: #00B5E8; /* acentos puntuales, ver 2.1 */
   --color-plata: #BBBCBF;
   --color-plata-claro: color-mix(in srgb, var(--color-plata) 40%, #fff);
+  --color-plata-medio: color-mix(in srgb, var(--color-plata) 75%, #fff);
   --color-rojo-logo: #E41319; /* solo logo */
   --color-azul-hover: color-mix(in srgb, var(--color-azul) 82%, #000);
   --color-granate-hover: color-mix(in srgb, var(--color-granate) 82%, #000);
@@ -305,7 +308,7 @@ Bloque de referencia para el inicio de `src/styles/site.css` cuando se implement
   --sp-7: 48px;
   --sp-8: 64px;
   --sp-9: 96px;
-  --sp-seccion: clamp(3rem, 2rem + 4vw, 6rem);
+  --sp-seccion: clamp(2.5rem, 1.5rem + 3.5vw, 4.5rem);
   --ancho-max: 1170px;
 
   /* Forma */

@@ -1,0 +1,66 @@
+---
+import NewLayout from "../../../layouts/NewLayout.astro";
+import { empresa, ruta } from "../../../data/sitio";
+---
+<NewLayout title="Política de contratación y cancelación" description="Condiciones de contratación, adelanto, cancelación y reprogramación de los servicios de Transportes JeanPierre." documento>
+  <header class="documento__cabecera">
+    <div class="contenedor documento__cabecera-inner">
+      <a class="documento__marca" href={ruta("/")}>
+        <img src="/images/logos/logo.png" alt={empresa.nombre} width="160" height="63" loading="lazy">
+      </a>
+    </div>
+  </header>
+  <section class="seccion">
+    <div class="contenedor documento-legal">
+      <h1>Política de contratación y cancelación de servicios</h1>
+      <p class="nota-revision">Borrador pendiente de revisión legal y de aprobación del dueño antes de publicarse. Los valores resaltados entre corchetes (porcentajes, plazos, jurisdicción) son propuestas por definir. Puntos para el abogado: (1) si el adelanto se pacta como arras de retractación (Código Civil, arts. 1477 y ss.; por defecto, quien recibe y se retracta devuelve el doble, por eso la sección 3 pacta la devolución simple), (2) que la escala de retención sea proporcional y no resulte cláusula abusiva con consumidores finales (Ley 29571), (3) si aplica el Libro de Reclamaciones y (4) la cláusula de controversias.</p>
+      <p>Última actualización: 2 de octubre de 2026.</p>
+
+      <h2>1. Alcance</h2>
+      <p>Esta política regula la contratación, el adelanto, la cancelación y la reprogramación de los servicios prestados por {empresa.razonSocial} (RUC {empresa.ruc}), con domicilio en {empresa.direccion.linea1}, {empresa.direccion.linea2}. Aplica a todos los servicios ofrecidos en este sitio, salvo que la cotización indique condiciones particulares.</p>
+      <p>Cuando el cliente sea un consumidor final (por ejemplo, en una mudanza de hogar), esta política se aplica sin perjuicio de los derechos que le reconoce la Ley N.° 29571, Código de Protección y Defensa del Consumidor.</p>
+
+      <h2>2. Cotización y confirmación del servicio</h2>
+      <p>El formulario de este sitio solo permite solicitar una cotización y no constituye contratación. Cada cotización detalla el servicio, la ruta, la fecha y el precio, y tiene una vigencia de <mark>[X] días</mark>.</p>
+      <p>El servicio queda confirmado cuando el cliente acepta la cotización por escrito, respondiendo "Acepto" por correo electrónico o WhatsApp, y abona el adelanto. Si confirma por teléfono, le enviaremos esta política por escrito para su aceptación. La cotización destaca la cláusula de adelanto y cancelación (secciones 3 y 4), que el cliente acepta de forma específica.</p>
+
+      <h2>3. Adelanto</h2>
+      <p>Para reservar la unidad, el personal y la fecha, el cliente abona un adelanto equivalente a <mark>[X]%</mark> del valor total del servicio, que se descuenta del monto final. El saldo se cancela <mark>[al inicio / al término]</mark> del servicio, según la cotización.</p>
+      <p>Las partes pactan que el adelanto es una arra de retractación: el cliente puede retractarse perdiendo, total o parcialmente, el adelanto según la sección 4, y si {empresa.nombre} se retracta, devuelve el adelanto íntegro al cliente.</p>
+
+      <h2>4. Cancelación o reprogramación por el cliente</h2>
+      <p>El plazo se cuenta desde la fecha y hora de inicio del servicio indicada en la cotización:</p>
+      <ul>
+        <li><strong><mark>[72] horas o más</mark> de anticipación:</strong> el cliente puede reprogramar sin costo o cancelar. Se devuelve el adelanto, descontando <mark>[X]%</mark> por gastos administrativos, o queda como saldo a favor por <mark>[X] días</mark>.</li>
+        <li><strong>Entre <mark>[24] y [72] horas</mark>:</strong> se retiene el <mark>[50]%</mark> del adelanto. El resto se devuelve o queda como saldo a favor.</li>
+        <li><strong>Menos de <mark>[24] horas</mark> o inasistencia:</strong> el adelanto <strong>no es reembolsable</strong>.</li>
+      </ul>
+      <p>La retención responde a los costos de reservar la unidad y el personal, que ya no pueden asignarse a otro servicio. La reprogramación está sujeta a disponibilidad de unidades.</p>
+      <p>Se considera inasistencia que el cliente no pueda iniciar el servicio por causas propias (carga no disponible, falta de acceso o de permisos, dirección incorrecta o falta de respuesta) pasados <mark>[60] minutos</mark> de la hora acordada.</p>
+
+      <h2>5. Cancelación o reprogramación por la empresa</h2>
+      <p>Si {empresa.nombre} no puede prestar el servicio en la fecha acordada, ofrecerá una nueva fecha o la devolución íntegra del adelanto, a elección del cliente.</p>
+
+      <h2>6. Fuerza mayor</h2>
+      <p>Ninguna de las partes responde por incumplimientos causados por hechos fuera de su control razonable, como bloqueos de vías, huelgas, desastres naturales, restricciones de las autoridades o cierres de carreteras. En esos casos el cliente elige entre reprogramar el servicio sin penalidad o recibir la devolución íntegra del adelanto, sin retención alguna.</p>
+
+      <h2>7. Cómo comunicar una cancelación o reprogramación</h2>
+      <p>El cliente debe avisar por escrito a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a> o por WhatsApp a los números publicados en este sitio. Para el cómputo del plazo se considera la fecha y hora del mensaje recibido.</p>
+
+      <h2>8. Comprobantes de pago</h2>
+      <p>Emitimos el comprobante de pago electrónico correspondiente por el adelanto y por el saldo. Cuando se retenga parte del adelanto, se informará al cliente por escrito el monto retenido y el devuelto.</p>
+
+      <h2>9. Servicios con condiciones particulares</h2>
+      <p>Servicios como transporte de carga MATPEL, trámites aduaneros o alquileres pueden tener condiciones adicionales, que se indicarán en la cotización y prevalecen sobre esta política.</p>
+
+      <h2>10. Reclamos</h2>
+      <p>El cliente puede presentar sus reclamos por escrito a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a><mark>[, o en nuestro Libro de Reclamaciones, si aplica]</mark>. Si es consumidor final, conserva su derecho de acudir al Instituto Nacional de Defensa de la Competencia y de la Protección de la Propiedad Intelectual (Indecopi).</p>
+
+      <h2>11. Ley aplicable y solución de controversias</h2>
+      <p>Esta política se rige por las leyes de la República del Perú. Las partes procuran resolver cualquier controversia por trato directo y, de no lograrlo, se someten a <mark>[los jueces y tribunales del Cercado de Lima / arbitraje]</mark>. Esto no limita los derechos del consumidor final.</p>
+
+      <h2>12. Contacto</h2>
+      <p>Para consultas sobre esta política, escríbanos a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a>.</p>
+    </div>
+  </section>
+</NewLayout>

@@ -14,7 +14,7 @@ const objetivos = [
 ---
 <!-- Contenedor de las 3 bandas de Nosotros, para que el menú marque "Nosotros" en todas. -->
 <div id="nosotros">
-  <section class="seccion seccion--clara">
+  <section class="seccion seccion--media">
     <div class="contenedor">
       <div class="historia">
         <div>
@@ -57,13 +57,6 @@ const objetivos = [
           </div>
         </article>
       </div>
-
-      <h3 class="objetivos__titulo">Nuestros objetivos</h3>
-      <ul class="objetivos">
-        {objetivos.map((o) => (
-          <li class="objetivo"><span class="objetivo__check"><Icono nombre="check" size={20} /></span>{o}</li>
-        ))}
-      </ul>
     </div>
   </section>
 
@@ -73,9 +66,15 @@ const objetivos = [
         <p class="overline">Nuestro compromiso</p>
         <h2 class="encabezado__titulo">Su mercadería, en perfectas condiciones y a tiempo</h2>
         <p class="lead"><strong>Garantizar</strong> a nuestros clientes que la mercadería que nos confían llegará a su destino en perfectas condiciones, en el tiempo pactado, minimizando contratiempos y manteniendo la calidad de nuestro servicio de acuerdo a sus necesidades.</p>
+        <img class="compromiso__foto" src="/images/fotos/compromiso.jpg" alt="" width="463" height="357" loading="lazy">
       </div>
-      <div class="split__media">
-        <img src="/images/fotos/compromiso.jpg" alt="" width="463" height="357" loading="lazy">
+      <div>
+        <h3 class="objetivos__titulo">Nuestros objetivos</h3>
+        <ul class="objetivos">
+          {objetivos.map((o) => (
+            <li class="objetivo"><span class="objetivo__check"><Icono nombre="check" size={20} /></span>{o}</li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>

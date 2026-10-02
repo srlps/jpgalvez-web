@@ -72,7 +72,7 @@ El sitio público es **una sola página**: todo el menú lleva por scroll a secc
 
 | Ruta | Contenido |
 |---|---|
-| `/new/` | Portada · `#servicios` (acordeón con el detalle de cada servicio; el primero es el transporte de carga MATPEL, destacado como «Certificados») · `#nosotros` (historia, fundador, misión y visión, objetivos, compromiso, ¿por qué elegirnos?) · `#clientes` (cinta, testimonios, listado completo con buscador) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, formulario, mapa) |
+| `/new/` | Portada · `#servicios` (acordeón con el detalle de cada servicio; el primero es el transporte de carga MATPEL, destacado como «Certificados») · `#nosotros` (historia, fundador, misión y visión, compromiso junto a los objetivos, ¿por qué elegirnos?) · `#clientes` (encabezado junto a los testimonios, cinta de clientes) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, mapa, formulario) |
 
 Sin configurar Firebase, las secciones de clientes/testimonios de `/new/` quedan vacías (no hay semilla estática) y la galería también aparece vacía.
 

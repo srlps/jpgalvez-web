@@ -79,19 +79,9 @@ function pintarGalerias(galerias, fotos) {
   document.dispatchEvent(new CustomEvent("fs:galeria"));
 }
 
-// Espera a que se abra el <details> que contiene el listado, para no leer los ~360 clientes en cada visita.
-function alAbrir(elemento, callback) {
-  const desplegable = elemento.closest("details");
-  if (!desplegable || desplegable.open) return callback();
-  return new Promise((resolve, reject) => {
-    desplegable.addEventListener("toggle", () => Promise.resolve(callback()).then(resolve, reject), { once: true });
-  });
-}
-
 async function iniciar() {
   const testimonios = todos('[data-fs="testimonios"]');
   const cintas = todos('[data-fs="clientes-cinta"]');
-  const listas = todos('[data-fs="clientes-lista"]');
   const totales = todos('[data-fs="clientes-total"]');
   const galerias = todos('[data-fs="galeria"]');
 
@@ -149,19 +139,6 @@ async function iniciar() {
   if (totales.length) {
     tareas.push(getCount(publicados("clientes")).then((snap) => pintarTotal(snap.data().count)));
   }
-
-  listas.forEach((lista) => {
-    tareas.push(
-      alAbrir(lista, () =>
-        getDocs(publicados("clientes", orderBy("nombre"))).then((snap) => {
-          const clientes = empresas(datos(snap));
-          if (!clientes.length) return;
-          lista.replaceChildren(...clientes.map((c) => el("li", null, c.nombre)));
-          document.dispatchEvent(new CustomEvent("fs:clientes"));
-        }),
-      ),
-    );
-  });
 
   if (galerias.length) {
     const maximo = Math.max(...galerias.map((g) => Number(g.dataset.limite) || 200));

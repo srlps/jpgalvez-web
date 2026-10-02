@@ -6,7 +6,6 @@ import Servicios from "../../components/new/Servicios.astro";
 import Nosotros from "../../components/new/Nosotros.astro";
 import Testimonios from "../../components/new/Testimonios.astro";
 import ClientesCinta from "../../components/new/ClientesCinta.astro";
-import ClientesListado from "../../components/new/ClientesListado.astro";
 import GaleriaGrid from "../../components/new/GaleriaGrid.astro";
 import FormContacto from "../../components/new/FormContacto.astro";
 import { empresa } from "../../data/sitio";
@@ -42,21 +41,16 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
   <Nosotros />
 
   <section class="seccion" id="clientes">
-    <div class="contenedor">
+    <div class="contenedor clientes-cabecera">
       <Encabezado overline="Clientes" titulo="Ellos confían en nosotros y son nuestro respaldo" centrado>
         <p class="lead">Más de <strong data-fs="clientes-total">…</strong> clientes han confiado su carga a Transportes JeanPierre.</p>
       </Encabezado>
+      <Testimonios />
     </div>
     <ClientesCinta />
-    <div class="contenedor">
-      <div class="seccion__subbloque">
-        <Testimonios />
-      </div>
-      <ClientesListado />
-    </div>
   </section>
 
-  <section class="seccion seccion--clara" id="galeria">
+  <section class="seccion seccion--media" id="galeria">
     <div class="contenedor">
       <Encabezado overline="Galería" titulo="Nuestro trabajo en imágenes" lead="Flota, instalaciones, mudanzas y operaciones: así trabajamos día a día." centrado />
       <GaleriaGrid />
@@ -96,14 +90,11 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
             <span><span class="lista-contacto__etiqueta">Síganos</span><a class="enlace-icono" href={empresa.facebook} target="_blank" rel="noopener"><Icono nombre="facebook" size={16} /> Facebook</a></span>
           </li>
         </ul>
+        <iframe class="contacto__mapa" src={empresa.mapaEmbed} title={`Ubicación de ${empresa.razonSocial} en Google Maps`} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div class="tarjeta-form">
         <FormContacto id="form-contacto" />
       </div>
     </div>
-  </section>
-
-  <section class="mapa">
-    <iframe src={empresa.mapaEmbed} title={`Ubicación de ${empresa.razonSocial} en Google Maps`} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </section>
 </NewLayout>

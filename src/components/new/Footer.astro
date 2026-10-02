@@ -4,31 +4,49 @@ import { empresa, ruta } from "../../data/sitio";
 
 const anio = new Date().getFullYear();
 ---
-<!-- Sin menú ni datos de contacto: ya están en el header y en #contacto, justo encima. -->
+<!-- Sin menú ni teléfonos: ya están en el header y en #contacto. Aquí van datos corporativos, condiciones legales y respaldo. -->
 <footer class="footer">
   <div class="contenedor footer__principal">
     <div class="footer__marca">
       <img class="footer__logo" src="/images/logos/logo.png" alt={empresa.nombre} width="480" height="189" loading="lazy">
       <p>{empresa.lema} desde {empresa.fundacion}.</p>
+      <address class="footer__direccion">
+        <p><strong>{empresa.razonSocial}</strong></p>
+        <p>RUC {empresa.ruc}</p>
+        <p>{empresa.direccion.linea1}<br>{empresa.direccion.linea2}</p>
+        <a href={empresa.mapaEnlace} target="_blank" rel="noopener">Ver en el mapa</a>
+      </address>
     </div>
     <div class="footer__col">
-      <p class="footer__titulo">Horario de atención</p>
-      <p>{empresa.horario.linea1}</p>
-      <p>{empresa.horario.linea2}</p>
-    </div>
-    <div class="footer__redes">
-      <p class="footer__titulo">Síganos</p>
-      <a class="footer__red" href={empresa.facebook} target="_blank" rel="noopener">
-        <span class="footer__red-icono"><Icono nombre="facebook" size={20} /></span>
-        Facebook
-      </a>
+      <div class="footer__grupo">
+        <p class="footer__titulo">Legal y cumplimiento</p>
+        <ul class="footer__lista">
+          <li><a href={ruta("/politica-de-contratacion-y-cancelacion/")} target="_blank" rel="noopener">Política de contratación y cancelación</a></li>
+          <li><a href={ruta("/politica-de-privacidad/")} target="_blank" rel="noopener">Política de privacidad</a></li>
+          <!-- Libro de Reclamaciones / Términos y condiciones: agregar aquí solo si el dueño confirma que le aplican, también con target="_blank". -->
+        </ul>
+      </div>
+      <div class="footer__grupo">
+        <p class="footer__titulo">Respaldo y cumplimiento</p>
+        <ul class="footer__lista footer__lista--respaldo">
+          <li><Icono nombre="escudo" size={18} /><span>Unidades y conductores con certificación MATPEL</span></li>
+          <!-- Solo afirmaciones, sin enlazar certificados. Agregar cuando el dueño confirme: permisos y habilitaciones de transporte (¿qué entidad?), seguro de carga / responsabilidad civil. -->
+        </ul>
+      </div>
     </div>
     <div class="footer__col">
-      <p class="footer__titulo">Documentos relevantes</p>
-      <ul class="footer__documentos">
-        <li><a href={ruta("/politica-de-privacidad/")} target="_blank" rel="noopener">Política de privacidad</a></li>
-        <!-- Certificaciones/homologaciones: agregar aquí cuando el dueño las confirme, también con target="_blank" (son documentos independientes, sin nav/footer). -->
-      </ul>
+      <div class="footer__grupo">
+        <p class="footer__titulo">Horario de atención</p>
+        <p><strong>Oficina:</strong> {empresa.horario.oficina}</p>
+        <p><strong>Atención virtual:</strong> {empresa.horario.virtual}</p>
+      </div>
+      <div class="footer__grupo">
+        <p class="footer__titulo">Síganos</p>
+        <a class="footer__red" href={empresa.facebook} target="_blank" rel="noopener">
+          <span class="footer__red-icono"><Icono nombre="facebook" size={20} /></span>
+          Facebook
+        </a>
+      </div>
     </div>
   </div>
   <div class="footer__base">

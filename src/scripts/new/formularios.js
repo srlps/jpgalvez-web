@@ -11,6 +11,11 @@ function mostrarError(campo, mensaje) {
 function validar(campo) {
   const valor = campo.value.trim();
 
+  if (campo.type === "checkbox") {
+    const ok = !campo.required || campo.checked;
+    mostrarError(campo, ok ? "" : "Debe aceptar la política de privacidad para enviar su solicitud.");
+    return ok;
+  }
   if (campo.required && !valor) {
     mostrarError(campo, "Este campo es obligatorio.");
     return false;

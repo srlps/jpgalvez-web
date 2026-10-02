@@ -40,7 +40,7 @@ document.querySelectorAll("[data-galeria]").forEach((bloque) => {
     if (event.key === "ArrowRight") mostrar(indice + 1);
   });
 
-  const porPagina = Number(lista.dataset.porPagina) || 9;
+  const porPagina = Number(lista.dataset.porPagina) || 6;
   const contenedorFiltros = bloque.querySelector(".filtros");
   const verMas = bloque.querySelector("[data-galeria-mas]");
   let mostrarHasta = porPagina;

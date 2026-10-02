@@ -1,5 +1,6 @@
 ---
 import { servicios } from "../../data/servicios";
+import { ruta as rutaSitio } from "../../data/sitio";
 
 interface Props {
   id: string;
@@ -60,6 +61,13 @@ const ruta: Campo[] = [
     <div class="campo campo--completo">
       <label for={`${id}-mensaje`}>Detalle de su requerimiento</label>
       <textarea id={`${id}-mensaje`} name="mensaje" rows="5" placeholder="Ej.: 10 pallets de mercadería (aprox. 4 toneladas) para recoger el lunes 15 en almacén y entregar en 3 días. Requiere montacargas para la descarga." required></textarea>
+      <span class="campo__error" aria-live="polite"></span>
+    </div>
+    <div class="campo campo--completo">
+      <label class="check" for={`${id}-acepta_politica`}>
+        <input type="checkbox" id={`${id}-acepta_politica`} name="acepta_politica" required>
+        <span>He leído la <a href={rutaSitio("/politica-de-privacidad/")} target="_blank" rel="noopener">política de privacidad</a> y autorizo el tratamiento de mis datos personales para atender mi solicitud.</span>
+      </label>
       <span class="campo__error" aria-live="polite"></span>
     </div>
   </div>

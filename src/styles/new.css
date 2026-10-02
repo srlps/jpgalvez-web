@@ -11,6 +11,8 @@
   /* Plata de la flota y los uniformes: acento sobre fondos oscuros y tinte de las bandas claras. */
   --color-plata: #bbbcbf;
   --color-plata-claro: color-mix(in srgb, var(--color-plata) 40%, #fff);
+  /* Segundo tinte de plata para alternar bandas claras contiguas (Servicios/Nosotros, Clientes/Galería). */
+  --color-plata-medio: color-mix(in srgb, var(--color-plata) 75%, #fff);
   --color-azul-hover: color-mix(in srgb, var(--color-azul) 82%, #000);
   --color-granate-hover: color-mix(in srgb, var(--color-granate) 82%, #000);
   /* Excepción aprobada por el dueño: verde oficial de WhatsApp, solo para el botón flotante (ver GUIA-DE-ESTILO.md § 9). */
@@ -51,7 +53,7 @@
   --sp-7: 48px;
   --sp-8: 64px;
   --sp-9: 96px;
-  --sp-seccion: clamp(3rem, 2rem + 4vw, 6rem);
+  --sp-seccion: clamp(2.5rem, 1.5rem + 3.5vw, 4.5rem);
   --ancho-max: 1170px;
 
   --radio-sm: 4px;
@@ -236,7 +238,7 @@ p.centrado {
 }
 
 .encabezado {
-  margin-bottom: var(--sp-7);
+  margin-bottom: var(--sp-6);
 }
 
 .encabezado--centrado {
@@ -526,8 +528,8 @@ p.centrado {
   scroll-margin-top: calc(-1 * var(--sp-seccion) + var(--sp-6));
 }
 
-.seccion--clara {
-  background: var(--color-plata-claro);
+.seccion--media {
+  background: var(--color-plata-medio);
 }
 
 .seccion--azul,
@@ -565,10 +567,6 @@ p.centrado {
 .seccion--azul a:not(.btn):hover,
 .seccion--oscura a:not(.btn):hover {
   color: var(--color-plata);
-}
-
-.seccion__subbloque {
-  margin-block: var(--sp-7);
 }
 
 /* ========== Hero de Inicio ========== */
@@ -653,6 +651,22 @@ p.centrado {
 }
 
 /* ========== Servicios (acordeón) ========== */
+/* En escritorio el encabezado queda fijo a la izquierda mientras se recorre el acordeón. */
+@media (min-width: 992px) {
+  .servicios-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--sp-7);
+    align-items: start;
+  }
+
+  .servicios-layout > .encabezado {
+    position: sticky;
+    top: calc(var(--alto-header) + var(--sp-5));
+    margin-bottom: 0;
+  }
+}
+
 .servicios {
   display: grid;
   gap: var(--sp-4);
@@ -837,6 +851,25 @@ p.centrado {
   margin-top: var(--sp-3);
 }
 
+.documento-legal ul {
+  margin-top: var(--sp-3);
+  padding-left: var(--sp-5);
+  list-style: disc;
+}
+
+.documento-legal li + li {
+  margin-top: var(--sp-2);
+}
+
+/* Valores por definir en los borradores: deben notarse hasta que el dueño los confirme. */
+.documento-legal mark {
+  padding: 0 0.25em;
+  border-radius: 3px;
+  background: var(--color-plata);
+  color: var(--color-granate);
+  font-weight: 700;
+}
+
 /* ========== Página independiente (documento legal/certificación) ========== */
 .body--documento {
   background: var(--color-plata-claro);
@@ -879,6 +912,15 @@ p.centrado {
   color: var(--gris-700);
 }
 
+/* La tarjeta es blanca dentro de una sección oscura: sus enlaces no deben heredar el blanco de la sección. */
+.seccion--oscura .tarjeta-form a:not(.btn) {
+  color: var(--color-azul);
+}
+
+.seccion--oscura .tarjeta-form a:not(.btn):hover {
+  color: var(--color-granate);
+}
+
 @media (min-width: 768px) {
   .tarjeta-form {
     padding: var(--sp-6);
@@ -892,15 +934,17 @@ p.centrado {
   align-items: center;
 }
 
-.split__media img {
+.compromiso__foto {
   width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
   border-radius: var(--radio-md);
   box-shadow: var(--sombra-lg);
 }
 
 @media (min-width: 992px) {
   .split {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--sp-8);
   }
 }
@@ -949,7 +993,7 @@ p.centrado {
 .mision-vision {
   display: grid;
   gap: var(--sp-6);
-  margin-top: var(--sp-8);
+  margin-top: var(--sp-7);
 }
 
 @media (min-width: 768px) {
@@ -981,25 +1025,19 @@ p.centrado {
 }
 
 .objetivos__titulo {
-  margin-top: var(--sp-8);
   font-size: var(--fs-h3);
-  text-align: center;
 }
 
 .objetivos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--sp-4);
+  display: grid;
+  gap: var(--sp-3);
 }
 
 .objetivo {
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  flex: 1 1 260px;
-  max-width: 320px;
-  padding: var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
   border-radius: var(--radio-md);
   background: var(--blanco);
   box-shadow: var(--sombra-sm);
@@ -1063,6 +1101,37 @@ p.centrado {
 }
 
 /* ========== Clientes ========== */
+/* Encabezado y testimonios van lado a lado en escritorio; sin testimonios, el encabezado queda centrado. */
+.clientes-cabecera {
+  display: grid;
+  gap: var(--sp-6);
+  align-items: center;
+  margin-bottom: var(--sp-6);
+}
+
+.clientes-cabecera .encabezado {
+  margin-bottom: 0;
+}
+
+.clientes-cabecera .testimonios:empty {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .clientes-cabecera:has(.testimonios:not(:empty)) {
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--sp-8);
+  }
+
+  .clientes-cabecera:has(.testimonios:not(:empty)) .encabezado--centrado {
+    text-align: left;
+  }
+
+  .clientes-cabecera:has(.testimonios:not(:empty)) .encabezado--centrado p {
+    margin-inline: 0;
+  }
+}
+
 .cinta {
   display: flex;
   overflow: hidden;
@@ -1158,59 +1227,6 @@ p.centrado {
 
 .desplegable--izquierda .desplegable__cuerpo {
   margin-top: var(--sp-4);
-}
-
-.buscador {
-  position: relative;
-  max-width: 480px;
-  margin: 0 auto var(--sp-3);
-}
-
-.buscador .icono {
-  position: absolute;
-  top: 50%;
-  left: var(--sp-4);
-  color: var(--gris-500);
-  transform: translateY(-50%);
-}
-
-.buscador input[type="search"] {
-  padding-left: 48px;
-}
-
-.buscador__estado {
-  min-height: 1.5em;
-  margin-inline: auto;
-  font-size: var(--fs-small);
-  text-align: center;
-}
-
-.lista-clientes {
-  columns: 1;
-  column-gap: var(--sp-6);
-  font-size: 0.9375rem;
-}
-
-.lista-clientes li {
-  padding: var(--sp-2) 0;
-  border-bottom: 1px solid var(--gris-300);
-  break-inside: avoid;
-}
-
-@media (min-width: 576px) { .lista-clientes { columns: 2; } }
-@media (min-width: 992px) { .lista-clientes { columns: 3; } }
-
-.paginacion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-4);
-  margin-top: var(--sp-5);
-}
-
-.paginacion button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 /* ========== Testimonios ========== */
@@ -1372,7 +1388,7 @@ p.centrado {
   justify-items: center;
   gap: var(--sp-3);
   padding: var(--sp-8) var(--sp-5);
-  border: 2px dashed var(--gris-200);
+  border: 2px dashed var(--color-plata);
   border-radius: var(--radio-md);
   color: var(--gris-700);
   text-align: center;
@@ -1519,11 +1535,13 @@ p.centrado {
   gap: var(--sp-1);
 }
 
-.mapa iframe {
+.contacto__mapa {
   display: block;
   width: 100%;
-  height: 420px;
+  height: 280px;
+  margin-top: var(--sp-6);
   border: 0;
+  border-radius: var(--radio-md);
 }
 
 /* ========== Formularios ========== */
@@ -1631,6 +1649,18 @@ input[type="file"] {
   accent-color: var(--color-azul);
 }
 
+/* Checkbox dentro de un .campo: anula el label en negrita y el margen de .check. */
+.campo label.check {
+  align-items: flex-start;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+
+.campo label.check input {
+  flex: none;
+  margin-top: 2px;
+}
+
 /* ========== Footer ========== */
 .footer {
   border-top: 3px solid var(--color-plata);
@@ -1644,46 +1674,94 @@ input[type="file"] {
 }
 
 .footer__principal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-6);
+  display: grid;
+  gap: var(--sp-7) var(--sp-6);
   padding-block: var(--sp-7);
+}
+
+/* Tablet: la marca ocupa la columna izquierda y las 2 columnas de datos se apilan a su derecha. */
+@media (min-width: 768px) {
+  .footer__principal {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer__marca {
+    grid-row: span 2;
+  }
+}
+
+@media (min-width: 992px) {
+  .footer__principal {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+
+  .footer__marca {
+    grid-row: auto;
+  }
 }
 
 .footer__marca {
   display: grid;
   gap: var(--sp-3);
+  align-content: start;
+}
+
+.footer__direccion {
+  display: grid;
+  gap: var(--sp-1);
+  font-style: normal;
+}
+
+.footer__direccion a {
+  justify-self: start;
+  color: inherit;
+  text-decoration: underline;
+}
+
+.footer__direccion a:hover {
+  color: var(--blanco);
 }
 
 .footer__logo {
   width: 200px;
 }
 
-.footer__redes {
+.footer__col {
   display: grid;
-  gap: var(--sp-3);
+  gap: var(--sp-6);
+  align-content: start;
 }
 
-.footer__col {
+.footer__grupo {
   display: grid;
   gap: var(--sp-2);
   align-content: start;
 }
 
-.footer__documentos {
+.footer__lista {
   display: grid;
   gap: var(--sp-2);
 }
 
-.footer__documentos a {
+.footer__lista a {
   color: inherit;
   text-decoration: underline;
 }
 
-.footer__documentos a:hover {
+.footer__lista a:hover {
   color: var(--blanco);
+}
+
+.footer__lista--respaldo li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+}
+
+.footer__lista--respaldo .icono {
+  flex: none;
+  margin-top: 1px;
+  color: var(--color-plata);
 }
 
 .footer__titulo {
@@ -1696,6 +1774,7 @@ input[type="file"] {
 
 .footer__red {
   display: inline-flex;
+  justify-self: start;
   align-items: center;
   gap: var(--sp-3);
   padding: var(--sp-2) var(--sp-5) var(--sp-2) var(--sp-2);

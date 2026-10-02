@@ -13,31 +13,53 @@ import { empresa, ruta } from "../../../data/sitio";
   <section class="seccion">
     <div class="contenedor documento-legal">
       <h1>Política de privacidad</h1>
-      <p class="nota-revision">Borrador redactado para esta propuesta de rediseño, pendiente de revisión legal y de aprobación del dueño antes de publicarse como versión definitiva.</p>
-      <p>Última actualización: 29 de septiembre de 2026.</p>
+      <p class="nota-revision">Borrador pendiente de revisión legal y de aprobación del dueño antes de publicarse. Antes de publicar: (1) reemplazar el correo de contacto por uno real y atendido, (2) confirmar el plazo de conservación, el proveedor de correo y que las afirmaciones sobre Web3Forms y Google coinciden con sus términos vigentes, (3) verificar con un abogado si el banco de datos debe inscribirse en el Registro Nacional de Protección de Datos Personales y si el Reglamento (D.S. 016-2024-JUS) exige algo más.</p>
+      <p>Última actualización: 2 de octubre de 2026.</p>
 
-      <h2>1. Responsable del tratamiento</h2>
-      <p>{empresa.razonSocial}, con domicilio en {empresa.direccion.linea1}, {empresa.direccion.linea2}, es responsable del tratamiento de los datos personales que usted nos proporciona a través de este sitio web.</p>
+      <h2>1. Titular del banco de datos</h2>
+      <p>{empresa.razonSocial}, con RUC {empresa.ruc} y domicilio en {empresa.direccion.linea1}, {empresa.direccion.linea2}, es titular del banco de datos personales formado con la información que usted nos proporciona a través de este sitio web.</p>
 
-      <h2>2. Qué datos recopilamos</h2>
-      <p>Cuando completa nuestro formulario de contacto, recopilamos: nombre, correo electrónico, teléfono, servicio de su interés, origen y destino del traslado, el detalle de su requerimiento y, opcionalmente, empresa y cargo. No recopilamos datos a través de cookies ni herramientas de analítica: este sitio no utiliza ninguna.</p>
+      <h2>2. Normativa aplicable</h2>
+      <p>Tratamos sus datos conforme a la Ley N.° 29733, Ley de Protección de Datos Personales, y su Reglamento aprobado por el Decreto Supremo N.° 016-2024-JUS.</p>
 
-      <h2>3. Finalidad</h2>
-      <p>Usamos estos datos únicamente para responder a su solicitud de cotización o consulta, y para contactarlo por correo electrónico, teléfono o WhatsApp según el medio que usted prefiera.</p>
+      <h2>3. Qué datos recopilamos</h2>
+      <p>Cuando completa nuestro formulario de contacto, recopilamos: nombre, correo electrónico, teléfono, servicio de su interés, origen y destino del traslado y el detalle de su requerimiento. Empresa y cargo son opcionales.</p>
+      <p>Los datos obligatorios son necesarios para poder atender su solicitud: si no los proporciona, no podremos enviarle la cotización.</p>
 
-      <h2>4. Con quién compartimos sus datos</h2>
-      <p>El envío del formulario se procesa a través de <a href="https://web3forms.com/" target="_blank" rel="noopener">Web3Forms</a>, un servicio externo que reenvía el contenido del formulario a nuestro correo electrónico sin almacenarlo en sus propios servidores. No vendemos ni cedemos sus datos a terceros con fines comerciales.</p>
+      <h2>4. Finalidad</h2>
+      <p>Usamos estos datos únicamente para responder a su solicitud de cotización o consulta, y para contactarlo por correo electrónico, teléfono o WhatsApp. No los usamos para enviarle publicidad ni los vendemos.</p>
 
-      <h2>5. Conservación</h2>
-      <p>Conservamos los datos de contacto solo durante el tiempo necesario para atender su solicitud, salvo que exista una relación comercial posterior que requiera conservarlos por más tiempo.</p>
+      <h2>5. Consentimiento</h2>
+      <p>Al marcar la casilla del formulario y enviarlo, usted nos autoriza de forma libre, previa, expresa e informada a tratar sus datos para la finalidad indicada. Puede retirar su consentimiento en cualquier momento escribiéndonos al correo de la sección 11.</p>
 
-      <h2>6. Sus derechos</h2>
-      <p>De acuerdo con la Ley N.° 29733, Ley de Protección de Datos Personales del Perú, usted puede ejercer sus derechos de acceso, rectificación, cancelación y oposición (derechos ARCO) sobre sus datos personales escribiéndonos a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a>.</p>
+      <h2>6. Con quién compartimos sus datos</h2>
+      <p>Sus datos solo son accesibles para nuestro personal autorizado y para los proveedores que nos prestan servicios de apoyo:</p>
+      <ul>
+        <li><a href="https://web3forms.com/" target="_blank" rel="noopener">Web3Forms</a>, servicio externo que recibe el formulario y lo reenvía a nuestro correo electrónico.</li>
+        <li>Nuestro proveedor de correo electrónico <mark>[nombre del proveedor]</mark>, donde recibimos y conservamos su solicitud.</li>
+        <li>Google (Firebase), que aloja este sitio y almacena el contenido que mostramos, como la lista de clientes y la galería de fotos. Los datos del formulario no se guardan allí.</li>
+      </ul>
 
-      <h2>7. Cambios a esta política</h2>
+      <h2>7. Transferencia fuera del Perú</h2>
+      <p>Los proveedores mencionados pueden procesar datos en servidores ubicados fuera del Perú. Exigimos a estos proveedores medidas de protección adecuadas, y los datos se envían únicamente para la finalidad indicada.</p>
+
+      <h2>8. Cookies y servicios de terceros</h2>
+      <p>Este sitio no usa cookies propias ni herramientas de analítica o publicidad. Sin embargo, incorpora servicios de Google (tipografías, mapa de ubicación y Firebase) que, al cargarse en su navegador, pueden recibir datos técnicos como su dirección IP, y el mapa puede instalar sus propias cookies. El tratamiento de esos datos se rige por la política de privacidad de Google.</p>
+
+      <h2>9. Conservación</h2>
+      <p>Conservamos los datos de contacto por <mark>[2 años]</mark> desde su última comunicación, y por más tiempo solo si existe una relación comercial posterior u obligaciones legales que lo requieran. Luego los eliminamos o anonimizamos.</p>
+
+      <h2>10. Seguridad</h2>
+      <p>Adoptamos medidas técnicas y organizativas razonables para proteger sus datos contra acceso no autorizado, pérdida o alteración, como acceso restringido a la bandeja de correo y a las herramientas que administran el sitio.</p>
+
+      <h2>11. Sus derechos</h2>
+      <p>Usted puede ejercer sus derechos de acceso, rectificación, cancelación y oposición (derechos ARCO), así como retirar su consentimiento, escribiéndonos a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a> e indicando su nombre completo, el derecho que desea ejercer y una copia de su documento de identidad. Responderemos dentro de los plazos que establece la ley.</p>
+      <p>Si considera que no hemos atendido su solicitud, puede presentar un reclamo ante la Autoridad Nacional de Protección de Datos Personales, del Ministerio de Justicia y Derechos Humanos.</p>
+
+      <h2>12. Cambios a esta política</h2>
       <p>Podemos actualizar esta política ocasionalmente. La fecha de la última actualización se indica al inicio de esta página.</p>
 
-      <h2>8. Contacto</h2>
+      <h2>13. Contacto</h2>
       <p>Si tiene preguntas sobre esta política, escríbanos a <a href={`mailto:${empresa.correo}`}>{empresa.correo}</a>.</p>
     </div>
   </section>
