@@ -8,6 +8,9 @@
   --color-azul: #014171;
   --color-granate: #8f0616;
   --color-cian: #00b5e8;
+  /* Plata de la flota y los uniformes: acento sobre fondos oscuros y tinte de las bandas claras. */
+  --color-plata: #bbbcbf;
+  --color-plata-claro: color-mix(in srgb, var(--color-plata) 40%, #fff);
   --color-azul-hover: color-mix(in srgb, var(--color-azul) 82%, #000);
   --color-granate-hover: color-mix(in srgb, var(--color-granate) 82%, #000);
   /* Excepción aprobada por el dueño: verde oficial de WhatsApp, solo para el botón flotante (ver GUIA-DE-ESTILO.md § 9). */
@@ -91,7 +94,7 @@ body {
   font-size: var(--fs-body);
   line-height: 1.65;
   color: var(--gris-700);
-  background: var(--blanco);
+  background: var(--color-plata-claro);
   font-synthesis: none;
   overflow-x: hidden;
 }
@@ -377,11 +380,13 @@ p.centrado {
   top: 0;
   z-index: 100;
   background: var(--color-azul);
+  /* Franja plata, como la de los vehículos. */
+  box-shadow: inset 0 -3px 0 var(--color-plata);
   transition: box-shadow var(--transicion);
 }
 
 .header--scroll {
-  box-shadow: var(--sombra-md);
+  box-shadow: inset 0 -3px 0 var(--color-plata), var(--sombra-md);
 }
 
 .header__inner {
@@ -522,7 +527,7 @@ p.centrado {
 }
 
 .seccion--clara {
-  background: var(--gris-50);
+  background: var(--color-plata-claro);
 }
 
 .seccion--azul,
@@ -542,8 +547,9 @@ p.centrado {
 }
 
 .seccion--azul .overline,
-.seccion--oscura .overline {
-  color: var(--color-cian);
+.seccion--oscura .overline,
+.hero .overline {
+  color: var(--color-plata);
 }
 
 .seccion--granate .overline {
@@ -558,7 +564,7 @@ p.centrado {
 
 .seccion--azul a:not(.btn):hover,
 .seccion--oscura a:not(.btn):hover {
-  color: var(--color-cian);
+  color: var(--color-plata);
 }
 
 .seccion__subbloque {
@@ -696,6 +702,7 @@ p.centrado {
 
 .servicio__titulo {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--sp-3);
   font-family: var(--font-display);
@@ -778,39 +785,16 @@ p.centrado {
   color: var(--color-azul);
 }
 
-.mineria {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-5);
-  margin-top: var(--sp-6);
-  padding: var(--sp-6);
-  border-radius: var(--radio-md);
-  background: var(--color-azul);
+.servicio__etiqueta {
+  padding: 2px var(--sp-2);
+  border-radius: var(--radio-sm);
+  background: var(--color-granate);
+  font-family: var(--font-texto);
+  font-size: var(--fs-overline);
+  font-weight: 700;
+  letter-spacing: 0.08em;
   color: var(--blanco);
-}
-
-.mineria .overline {
-  color: var(--color-cian);
-}
-
-.mineria__titulo {
-  color: var(--blanco);
-}
-
-.mineria p:last-child {
-  margin-bottom: 0;
-}
-
-@media (min-width: 992px) {
-  .mineria {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--sp-7);
-  }
-
-  .mineria .motivo__circulo {
-    margin-bottom: 0;
-  }
+  text-transform: uppercase;
 }
 
 .chips {
@@ -855,7 +839,7 @@ p.centrado {
 
 /* ========== Página independiente (documento legal/certificación) ========== */
 .body--documento {
-  background: var(--gris-50);
+  background: var(--color-plata-claro);
 }
 
 .documento__cabecera {
@@ -1068,7 +1052,7 @@ p.centrado {
   height: 96px;
   flex-shrink: 0;
   margin-bottom: var(--sp-4);
-  border: 2px solid var(--blanco);
+  border: 2px solid var(--color-plata);
   border-radius: var(--radio-circulo);
   color: var(--blanco);
 }
@@ -1103,6 +1087,8 @@ p.centrado {
   padding: var(--sp-2) var(--sp-4);
   border: 1px solid var(--gris-200);
   border-radius: 999px;
+  /* Blanco para que el fondo de la imagen del logo se funda con su contenedor. */
+  background: var(--blanco);
   font-size: var(--fs-small);
   color: var(--gris-700);
   white-space: nowrap;
@@ -1207,7 +1193,7 @@ p.centrado {
 
 .lista-clientes li {
   padding: var(--sp-2) 0;
-  border-bottom: 1px solid var(--gris-100);
+  border-bottom: 1px solid var(--gris-300);
   break-inside: avoid;
 }
 
@@ -1281,6 +1267,7 @@ p.centrado {
   object-fit: contain;
   border-radius: var(--radio-circulo);
   border: 1px solid var(--gris-100);
+  background: var(--blanco);
 }
 
 .testimonio__nombre {
@@ -1387,7 +1374,7 @@ p.centrado {
   padding: var(--sp-8) var(--sp-5);
   border: 2px dashed var(--gris-200);
   border-radius: var(--radio-md);
-  color: var(--gris-500);
+  color: var(--gris-700);
   text-align: center;
 }
 
@@ -1472,12 +1459,12 @@ p.centrado {
   gap: var(--sp-5);
 }
 
-.lista-contacto li {
+.lista-contacto > li {
   display: flex;
   gap: var(--sp-3);
 }
 
-.lista-contacto li > span {
+.lista-contacto > li > span {
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-1) var(--sp-4);
@@ -1489,6 +1476,36 @@ p.centrado {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.lista-numeros {
+  display: grid;
+  flex-basis: 100%;
+  gap: var(--sp-2);
+}
+
+.numero {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.numero__texto {
+  margin-right: var(--sp-1);
+}
+
+.numero__accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio-circulo);
+  background: rgb(255 255 255 / 0.12);
+}
+
+.numero__accion:hover {
+  background: rgb(255 255 255 / 0.25);
 }
 
 .seccion--oscura .lista-contacto .icono,
@@ -1581,7 +1598,7 @@ input[type="file"] {
   color: var(--color-error);
 }
 
-.trampa {
+.form__extra {
   position: absolute;
   left: -9999px;
 }
@@ -1616,6 +1633,7 @@ input[type="file"] {
 
 /* ========== Footer ========== */
 .footer {
+  border-top: 3px solid var(--color-plata);
   background: var(--gris-900);
   color: var(--gris-400);
   font-size: var(--fs-small);
@@ -1689,7 +1707,7 @@ input[type="file"] {
 }
 
 .footer__red:hover {
-  border-color: var(--color-cian);
+  border-color: var(--color-plata);
   background: rgb(255 255 255 / 0.06);
   color: var(--blanco);
 }

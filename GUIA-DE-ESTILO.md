@@ -40,11 +40,15 @@ El logo tiene el texto **"JEANPIERRE" en blanco** y el lema en rojo, sobre un c�
 
 ### 2.1 Colores de marca
 
+Los colores de la marca son **azul, granate y plata**: los mismos de la flota y los uniformes (confirmado por el dueño 2026-10-02). El plata no es un gris neutro más: debe percibirse como color de marca, por encima del blanco.
+
 | Token | Hex | Origen | Uso |
 |---|---|---|---|
 | `--color-azul` | `#014171` | Header, bloque "¿Por qué elegirnos?" | Color institucional principal: header, footer superior, bandas de sección, títulos y enlaces sobre fondo claro |
 | `--color-granate` | `#8F0616` | Botones, "Nuestro compromiso", cabeceras de página | Acción y énfasis: botones principales (CTA), bandas destacadas |
-| `--color-cian` | `#00B5E8` | Círculo del logo (y hover del menú de servicios) | Acento: indicador de menú activo, íconos, líneas decorativas, anillo de foco. **Nunca como color de texto sobre blanco** |
+| `--color-plata` | `#BBBCBF` | Camión del logo, vehículos y uniformes | Acento sobre fondos oscuros (antetítulos, enlaces en hover, borde de los círculos de íconos), franjas bajo el header y sobre el footer. **Nunca como color de texto sobre blanco** |
+| `--color-plata-claro` | `color-mix(plata 40%, blanco)` ≈ `#E4E4E5` | Derivado del plata | **Fondo de todas las secciones claras y de la página.** Ningún fondo de sección es blanco; el blanco queda para tarjetas y campos |
+| `--color-cian` | `#00B5E8` | Círculo del logo | Acentos puntuales que se mantienen por decisión del cliente: subrayado activo/hover del menú, métricas de la portada, año de fundación, borde y comilla de los testimonios, íconos y etiquetas de la sección Contacto, y el anillo de foco |
 | `--color-rojo-logo` | `#E41319` | Lema del logo | **Reservado al logo.** No se usa en la interfaz para no competir con el granate |
 
 `#004070` (bloque "Visítenos") es prácticamente idéntico a `#014171`: se unifica en `--color-azul`.
@@ -60,10 +64,10 @@ Se consolidan los ~12 grises del tema original en una sola escala (todos ya exis
 | `--gris-700` | `#4C4C4C` | Bandas "Nuestros servicios" | Texto de párrafo sobre fondo claro, bandas carbón |
 | `--gris-500` | `#737373` | Texto base actual | Texto secundario (fechas, notas, ayudas de formulario) |
 | `--gris-400` | `#A2A2A2` | Texto del footer | Texto sobre `--gris-900` |
-| `--gris-300` | `#BBBCBF` | Gris oscuro del camión del logo | Bordes de inputs, separadores sobre fondo claro |
+| `--gris-300` | `#BBBCBF` | Gris oscuro del camión del logo | Mismo valor que `--color-plata`. Bordes de inputs, separadores sobre fondo claro |
 | `--gris-200` | `#D0D0D1` | Gris claro del camión del logo | Bordes suaves, tarjetas |
 | `--gris-100` | `#E6E6E6` | Separadores del menú móvil | Divisores |
-| `--gris-50` | `#F2F2F2` | Equivale al `rgba(0,0,0,.05)` de filas/inputs actuales | Fondo de bandas claras alternas, filas de tabla |
+| `--gris-50` | `#F2F2F2` | Equivale al `rgba(0,0,0,.05)` de filas/inputs actuales | Fondos suaves dentro de tarjetas, filas de tabla |
 | `--blanco` | `#FFFFFF` | — | Fondo base, texto sobre fondos oscuros |
 
 ### 2.3 Colores funcionales
@@ -93,6 +97,10 @@ Se abandona el hover gris (`#545454`) de los botones del tema original.
 | `--gris-700` sobre blanco | 8.6 : 1 | ✅ Texto de párrafo |
 | `--gris-500` sobre blanco | 4.7 : 1 | ⚠️ Justo AA — solo texto secundario, nunca párrafos largos |
 | `--gris-400` sobre `--gris-900` | 5.6 : 1 | ✅ |
+| `--color-plata` sobre `--color-azul` | 5.5 : 1 | ✅ Antetítulos, cifras, íconos, menú activo |
+| `--color-plata` sobre `--gris-800` | 6.6 : 1 | ✅ |
+| `--gris-700` sobre `--color-plata-claro` | 6.6 : 1 | ✅ Texto de párrafo en bandas claras |
+| `--color-plata` sobre blanco | 1.9 : 1 | ❌ Nunca texto; solo bordes y decoración |
 | `--color-cian` sobre `--gris-900` | 6.0 : 1 | ✅ |
 | `--color-cian` sobre `--color-azul` | 4.4 : 1 | ⚠️ Solo texto grande (≥24 px) o elementos decorativos |
 | `--color-cian` sobre blanco | 2.4 : 1 | ❌ Nunca texto; solo decoración |
@@ -173,8 +181,9 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 ## 5. Lenguaje visual
 
 - **Bandas de color a ancho completo**: es el rasgo más reconocible del sitio original (granate → carbón → azul). Se mantiene, pero:
-  - Alternar bandas oscuras con bandas claras (`--blanco` / `--gris-50`) para dar respiro; no encadenar más de dos bandas oscuras seguidas.
+  - Las bandas claras usan `--color-plata-claro` (nunca blanco); no encadenar más de dos bandas oscuras seguidas.
   - Cada banda oscura usa un solo color de marca plano (sin degradados entre granate y azul).
+- **Plata como tercer color de marca**: es el fondo de toda la página (plata claro) y el acento de antetítulos y círculos sobre las bandas oscuras. Una franja plata de 3 px bajo el header y sobre el footer recuerda la franja de los vehículos. El cian se mantiene solo en los acentos listados en 2.1.
 - **El círculo** del logo es el motivo gráfico recurrente: contenedores circulares para íconos (como ya hace "¿Por qué elegirnos?"), avatares de testimonios, viñetas.
 - **Fotografía**: fotos reales de la flota, el personal y los almacenes; nada de bancos de imágenes genéricos. Proporciones fijas (`16/9` en banners y tarjetas) con `object-fit: cover` centrado y `loading="lazy"` salvo la primera imagen visible. Nunca recortar una foto para esconder texto incrustado: se usa la versión de la imagen sin texto.
 - **Texto sobre foto**: siempre con una capa azul (`linear-gradient(rgb(1 65 113 / .85), rgb(1 65 113 / .45))`) para garantizar contraste.
@@ -199,7 +208,7 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 
 ### 6.2 Header y navegación
 
-- Fondo `--color-azul`, logo a la izquierda, menú a la derecha (como el original).
+- Fondo `--color-azul` con franja plata inferior de 3 px, logo a la izquierda, menú a la derecha (como el original).
 - Ítems en Fjalla One mayúsculas, blancos. **Activo/hover: línea inferior de 3 px `--color-cian`** y texto blanco (reemplaza el `#156E85` actual, que no se ve sobre azul).
 - Botón de llamada/cotización (variante principal) a la derecha del menú en escritorio.
 - Header fijo al hacer scroll más compacto (logo más chico, `--sombra-md`), sin cambiar de color.
@@ -208,7 +217,7 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 ### 6.3 Enlaces
 
 - En texto sobre fondo claro: `--color-azul`, subrayado (`text-underline-offset: 3px`); hover `--color-granate`.
-- Sobre fondo oscuro: blanco subrayado; hover `--color-cian`.
+- Sobre fondo oscuro: blanco subrayado; hover `--color-plata`.
 - Se retira el `#156E85` (color de enlace del tema Konstruct; no aparece en el logo ni en ningún bloque de marca).
 
 ### 6.4 Tarjetas (servicios, testimonios)
@@ -220,7 +229,7 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 ### 6.5 Íconos
 
 - Los íconos actuales (`public/images/iconos/elegirnos-*.png`) son PNG blancos con fondo azul incrustado. En el rediseño se reemplazan por **SVG de línea** (trazo 2 px, extremos redondeados) con **los mismos pictogramas** (camión, personal, reloj/puntualidad, escudo/seguridad), coloreados con `currentColor`.
-- Se presentan dentro de un círculo: blanco con ícono azul sobre bandas oscuras, o azul con ícono blanco sobre bandas claras.
+- Se presentan dentro de un círculo: borde plata con ícono blanco sobre bandas oscuras, o granate/azul con ícono blanco sobre bandas claras.
 
 ### 6.6 Formularios
 
@@ -236,7 +245,7 @@ Las sombras usan el azul de marca con baja opacidad en vez de gris puro.
 
 ### 6.8 Footer
 
-- Fondo `--gris-900` (se conserva el mapa de fondo `footer-mapa.png` con baja opacidad), texto `--gris-400`, títulos blancos en Fjalla One.
+- Fondo `--gris-900` con franja plata superior de 3 px (se conserva el mapa de fondo `footer-mapa.png` con baja opacidad), texto `--gris-400`, títulos blancos en Fjalla One.
 - Columnas: contacto (teléfonos como enlaces `tel:`), dirección, horario, redes ("Síguenos").
 - Barra inferior con copyright y créditos, separada por un borde `rgb(255 255 255 / .1)`.
 
@@ -251,7 +260,9 @@ Bloque de referencia para el inicio de `src/styles/site.css` cuando se implement
   /* Marca */
   --color-azul: #014171;
   --color-granate: #8F0616;
-  --color-cian: #00B5E8;
+  --color-cian: #00B5E8; /* acentos puntuales, ver 2.1 */
+  --color-plata: #BBBCBF;
+  --color-plata-claro: color-mix(in srgb, var(--color-plata) 40%, #fff);
   --color-rojo-logo: #E41319; /* solo logo */
   --color-azul-hover: color-mix(in srgb, var(--color-azul) 82%, #000);
   --color-granate-hover: color-mix(in srgb, var(--color-granate) 82%, #000);
@@ -328,8 +339,9 @@ Bloque de referencia para el inicio de `src/styles/site.css` cuando se implement
 
 Estas decisiones respetan la paleta, pero cambian cómo se usa un color existente:
 
-1. Retirar el `#156E85` (azul verdoso de enlaces del tema) y usar el azul de marca para enlaces y el cian para el estado activo del menú.
+1. Retirar el `#156E85` (azul verdoso de enlaces del tema) y usar el azul de marca para enlaces y el plata para los antetítulos sobre fondo oscuro (el menú activo sigue en cian).
 2. Unificar `#004070` en `#014171`.
 3. Subir el texto base de 14 px a 16 px y oscurecer el texto de párrafo de `#737373` a `#4C4C4C`.
 4. Mantener el header azul también en móvil (hoy es blanco y oculta el nombre del logo).
 5. **Decidido** (2026-09-29): excepción puntual a la regla de "no introducir tonos nuevos" — el botón flotante de WhatsApp usa el verde oficial de la marca (`#25D366`, token `--color-whatsapp`), porque es el ícono de un canal externo reconocible, no una marca nueva del sitio. El botón de WhatsApp del hero mantiene la paleta del sitio (variante `.btn--relleno` sobre `.btn--claro`), a propósito más discreto que "Llamar" pero visible (no un simple contorno transparente).
+6. **Decidido** (2026-10-02): los colores de marca son **azul, granate y plata** (flota y uniformes). Al supervisor del rediseño la web le parecía "azul, rojo y blanco". Ajuste deliberadamente leve, sin cambiar la estructura: el plata reemplaza al cian en todos los acentos, las bandas claras pasan de `--gris-50` a `--color-plata-claro`, y se agregan franjas plata bajo el header y sobre el footer. Un primer intento más drástico (fondo de toda la página en plata, bandas de plata pura, contacto en azul) se descartó. Ajuste posterior del mismo día: **ningún fondo de sección es blanco** (toda la página usa `--color-plata-claro`; el cliente pidió compactar secciones para que compartan fila en escritorio, lo que reduce la necesidad de alternar colores), y el cian se conserva en menú, métricas, año de fundación, testimonios y Contacto.

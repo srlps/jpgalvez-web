@@ -11,7 +11,7 @@ import GaleriaGrid from "../../components/new/GaleriaGrid.astro";
 import FormContacto from "../../components/new/FormContacto.astro";
 import { empresa } from "../../data/sitio";
 
-const telOficina = empresa.oficinas[0];
+const telPrincipal = empresa.celulares[0];
 const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
 ---
 <NewLayout title="Inicio">
@@ -24,15 +24,15 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
         <h1 class="hero__titulo">Servicio de calidad con un enfoque personal</h1>
         <p class="lead">Desde {empresa.fundacion} trasladamos carga, mudanzas y mercadería aduanera con flota propia, personal capacitado y unidades monitoreadas por GPS.</p>
         <div class="acciones">
-          <a class="btn btn--primario" href={`tel:${telOficina.tel}`}><Icono nombre="telefono" size={18} />Llamar al {telOficina.numero}</a>
-          <a class="btn btn--claro btn--relleno" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener"><Icono nombre="whatsapp" size={18} />WhatsApp al {empresa.celulares[0].numero}</a>
+          <a class="btn btn--primario" href={`tel:${telPrincipal.tel}`}><Icono nombre="telefono" size={18} />Llamar ahora</a>
+          <a class="btn btn--claro btn--relleno" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener"><Icono nombre="whatsapp" size={18} />Escribir por WhatsApp</a>
         </div>
       </div>
       <ul class="datos">
         <li class="dato"><strong class="dato__valor">{aniosExperiencia}+</strong><span>Años de experiencia</span></li>
         <li class="dato"><strong class="dato__valor"><span data-fs="clientes-total">…</span>+</strong><span>Clientes atendidos</span></li>
-        <li class="dato"><strong class="dato__valor"><Icono nombre="gps" size={32} /></strong><span>Unidades monitoreadas por GPS</span></li>
-        <li class="dato"><strong class="dato__valor"><Icono nombre="mineria" size={32} /></strong><span>Acceso a faenas mineras del Perú</span></li>
+        <li class="dato"><strong class="dato__valor">24/7</strong><span>Monitoreo GPS en todas nuestras unidades</span></li>
+        <li class="dato"><strong class="dato__valor">Todo el Perú</strong><span>Cobertura de nuestro servicio</span></li>
       </ul>
     </div>
   </section>
@@ -70,15 +70,18 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
         <ul class="lista-contacto">
           <li>
             <Icono nombre="telefono" />
-            <span><span class="lista-contacto__etiqueta">Oficina</span>{empresa.oficinas.map((o) => <a href={`tel:${o.tel}`}>{o.numero}</a>)}</span>
-          </li>
-          <li>
-            <Icono nombre="telefono" />
-            <span><span class="lista-contacto__etiqueta">Celulares</span>{empresa.celulares.map((c) => <a href={`tel:${c.tel}`}>{c.numero}</a>)}</span>
-          </li>
-          <li>
-            <Icono nombre="whatsapp" />
-            <span><span class="lista-contacto__etiqueta">WhatsApp</span><a href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener">{empresa.celulares[0].numero}</a></span>
+            <span>
+              <span class="lista-contacto__etiqueta">Teléfono y WhatsApp</span>
+              <ul class="lista-numeros">
+                {empresa.celulares.map((c) => (
+                  <li class="numero">
+                    <span class="numero__texto">{c.numero}</span>
+                    <a class="numero__accion" href={`tel:${c.tel}`} aria-label={`Llamar al ${c.numero}`} title="Llamar"><Icono nombre="telefono" size={18} /></a>
+                    <a class="numero__accion" href={`https://wa.me/${c.tel.slice(1)}`} target="_blank" rel="noopener" aria-label={`Escribir por WhatsApp al ${c.numero}`} title="WhatsApp"><Icono nombre="whatsapp" size={18} /></a>
+                  </li>
+                ))}
+              </ul>
+            </span>
           </li>
           <li>
             <Icono nombre="correo" />
@@ -93,7 +96,6 @@ const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
             <span><span class="lista-contacto__etiqueta">Síganos</span><a class="enlace-icono" href={empresa.facebook} target="_blank" rel="noopener"><Icono nombre="facebook" size={16} /> Facebook</a></span>
           </li>
         </ul>
-        <p class="nota-revision">Correo electrónico de contacto pendiente de confirmar con el dueño — el que se muestra es un placeholder.</p>
       </div>
       <div class="tarjeta-form">
         <FormContacto id="form-contacto" />

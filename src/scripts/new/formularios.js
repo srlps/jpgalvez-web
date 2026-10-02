@@ -41,6 +41,13 @@ document.querySelectorAll("form.js-validar").forEach((form) => {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    // Honeypot relleno: simular éxito sin enviar para no dar pistas al bot.
+    if (form.elements.sitio_web?.value || form.elements.botcheck?.checked) {
+      estado.textContent = "Gracias, hemos recibido su solicitud.";
+      return;
+    }
+
     let primerInvalido = null;
     campos.forEach((campo) => {
       if (!validar(campo) && !primerInvalido) primerInvalido = campo;

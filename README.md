@@ -45,13 +45,13 @@ GUIA-DE-ESTILO.md             # guía de estilo del rediseño: paleta, tipograf�
 
 firebase.json                 # config de Hosting (2 sitios: dist/ y admin/dist/), Firestore y Storage
 .firebaserc                    # alias del proyecto Firebase (jpgalvez-7a5b3) y targets de Hosting
-firestore.rules                # reglas de Firestore para /new/ y la consola admin (prototipo, sin desplegar)
+firestore.rules                # reglas de Firestore para /new/ y la consola admin (desplegadas)
 firestore.indexes.json         # 3 índices compuestos que usan las consultas públicas
-storage.rules                  # reglas de Storage para las imágenes de la consola admin (prototipo, sin desplegar)
+storage.rules                  # reglas de Storage para las imágenes de la consola admin (desplegadas)
 .env.example                   # plantilla de la config web de Firebase para el sitio Astro (copiar como .env)
 ```
 
-> ⚠️ Las reglas de Firestore y Storage ya están escritas para la consola admin, pero son un **prototipo sin desplegar**: revisarlas y desplegarlas antes de usar la consola en producción. Cloud Functions se probó y luego se descartó (el envío de correos sigue en Web3Forms). Ver AGENTS.md → "Firebase backend (Phase 2)".
+> Firebase está en línea (2026-10-01): la landing y la consola admin están desplegadas en sus URLs por defecto de Hosting (sin dominio propio todavía, para que el dueño valide el producto), y Firestore (reglas e índices) y Storage también están desplegados. Cloud Functions se probó y luego se descartó (el envío de correos sigue en Web3Forms). Ver AGENTS.md → "Firebase backend (Phase 2)".
 
 ## Comandos
 
@@ -72,7 +72,7 @@ El sitio público es **una sola página**: todo el menú lleva por scroll a secc
 
 | Ruta | Contenido |
 |---|---|
-| `/new/` | Portada · `#servicios` (acordeón con el detalle de cada servicio + bloque de minería) · `#nosotros` (historia, fundador, misión y visión, objetivos, compromiso, ¿por qué elegirnos?) · `#clientes` (cinta, testimonios, listado completo con buscador) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, formulario, mapa) |
+| `/new/` | Portada · `#servicios` (acordeón con el detalle de cada servicio; el primero es el transporte de carga MATPEL, destacado como «Certificados») · `#nosotros` (historia, fundador, misión y visión, objetivos, compromiso, ¿por qué elegirnos?) · `#clientes` (cinta, testimonios, listado completo con buscador) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, formulario, mapa) |
 
 Sin configurar Firebase, las secciones de clientes/testimonios de `/new/` quedan vacías (no hay semilla estática) y la galería también aparece vacía.
 
@@ -121,4 +121,4 @@ Agregar `--dry-run` a cualquier `firebase deploy` valida la configuración y las
 
 ## Pendientes conocidos
 
-Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual (paginación del listado de Clientes, algunos enlaces de imágenes rotos de terceros, y los formularios de cotización/contacto dependientes del backend, dejados como placeholders estáticos).
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual. Solo cuentan los pendientes de `/new/` (el sitio que quedará en la raíz): formulario de contacto con Web3Forms, dominio propio para la landing y la consola admin, cuenta de administrador de producción (probar correo real y recuperación de contraseña), SEO, contenido por confirmar con el dueño y la promoción de `/new/` a la raíz. Los defectos del sitio raíz (réplica de comparación) no se corrigen porque se eliminará.

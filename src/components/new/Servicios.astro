@@ -14,16 +14,13 @@ import { servicios } from "../../data/servicios";
           <summary class="servicio__resumen">
             <img class="servicio__imagen" src={s.imagen} alt="" width="692" height="247" loading="lazy">
             <span class="servicio__texto">
-              <span class="servicio__titulo"><span class="servicio__icono"><Icono nombre={s.icono} size={22} /></span>{s.titulo}</span>
+              <span class="servicio__titulo"><span class="servicio__icono"><Icono nombre={s.icono} size={22} /></span>{s.titulo}{s.etiqueta && <span class="servicio__etiqueta">{s.etiqueta}</span>}</span>
               <span>{s.resumen}</span>
             </span>
             <span class="servicio__toggle" aria-hidden="true"><Icono nombre="derecha" size={20} /></span>
           </summary>
           <div class="servicio__detalle">
             <div>
-              {s.textoPropuesto && (
-                <p class="nota-revision">Texto propuesto: el sitio original no tenía descripción para este servicio. Validar con el dueño.</p>
-              )}
               {s.parrafos.map((p) => <p>{p}</p>)}
               {s.atendemos && (
                 <>
@@ -43,15 +40,6 @@ import { servicios } from "../../data/servicios";
           </div>
         </details>
       ))}
-    </div>
-
-    <div class="mineria">
-      <span class="motivo__circulo"><Icono nombre="mineria" size={36} /></span>
-      <div>
-        <p class="overline">Carga pesada y minería</p>
-        <h3 class="mineria__titulo">Preparados para la gran minería</h3>
-        <p>Nuestra flota de tracto camiones de última generación, junto con equipos y conductores con la capacidad técnica requerida, puede ingresar a todas las faenas mineras del Perú.</p>
-      </div>
     </div>
   </div>
 </section>

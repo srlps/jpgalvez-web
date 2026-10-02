@@ -12,19 +12,13 @@ export const empresa = {
     linea1: "Jr. Francisco Lazo Nro. 1956",
     linea2: "Lince, Lima — Perú",
   },
-  // ⚠️ El sitio original muestra dos números de oficina distintos (Contáctenos: 265-7956, footer: 471-5162).
-  oficinas: [
-    { numero: "(01) 265-7956", tel: "+5112657956" },
-    { numero: "(01) 471-5162", tel: "+5114715162" },
-  ],
-  // Antes etiquetados como Entel / RPM / RPC (ver AGENTS.md → "Outdated contact numbers").
+  // Solo celulares (los fijos ya no existen); los 3 reciben llamadas y WhatsApp. El primero es el principal.
   celulares: [
+    { numero: "940 199 943", tel: "+51940199943" },
     { numero: "994 192 267", tel: "+51994192267" },
     { numero: "975 682 224", tel: "+51975682224" },
-    { numero: "940 199 943", tel: "+51940199943" },
   ],
-  // ⚠️ Por confirmar con el dueño: que este celular tenga WhatsApp.
-  whatsapp: "51994192267",
+  whatsapp: "51940199943",
   // ⚠️ Placeholder por confirmar con el dueño: no había correo de contacto en el sitio original.
   correo: "contacto@transportesjpgalvez.com",
   facebook: "https://www.facebook.com/transportejpgalvez/",

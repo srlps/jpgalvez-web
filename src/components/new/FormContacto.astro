@@ -13,6 +13,7 @@ interface Campo {
   label: string;
   autocomplete: string;
   opcional?: boolean;
+  placeholder?: string;
 }
 
 // Campos del formulario de Contáctenos original; empresa y cargo pasan a opcionales (mudanzas de hogar).
@@ -22,6 +23,12 @@ const campos: Campo[] = [
   { name: "email", type: "email", label: "Correo electrónico", autocomplete: "email" },
   { name: "telefono", type: "tel", label: "Teléfono", autocomplete: "tel" },
   { name: "cargo", type: "text", label: "Cargo / puesto (opcional)", autocomplete: "organization-title", opcional: true },
+];
+
+// Texto libre (no desplegable): el visitante escribe departamento, provincia y/o distrito.
+const ruta: Campo[] = [
+  { name: "origen", type: "text", label: "Origen (departamento, provincia y/o distrito)", autocomplete: "off", placeholder: "Ej.: Lima, Lima, Lince" },
+  { name: "destino", type: "text", label: "Destino (departamento, provincia y/o distrito)", autocomplete: "off", placeholder: "Ej.: Arequipa, Arequipa, Cercado" },
 ];
 ---
 <!-- TODO(redesign): stub submit — wire to Web3Forms once the owner creates the account and shares the access key -->
@@ -39,19 +46,29 @@ const campos: Campo[] = [
       <select id={`${id}-servicio`} name="servicio" required>
         <option value="">Seleccione un servicio</option>
         {servicios.map((s) => <option>{s.titulo}</option>)}
-        <option>Transporte de carga / minería</option>
         <option>Otro</option>
       </select>
       <span class="campo__error" aria-live="polite"></span>
     </div>
+    {ruta.map((campo) => (
+      <div class="campo">
+        <label for={`${id}-${campo.name}`}>{campo.label}</label>
+        <input type={campo.type} id={`${id}-${campo.name}`} name={campo.name} autocomplete={campo.autocomplete} placeholder={campo.placeholder} required>
+        <span class="campo__error" aria-live="polite"></span>
+      </div>
+    ))}
     <div class="campo campo--completo">
       <label for={`${id}-mensaje`}>Detalle de su requerimiento</label>
-      <textarea id={`${id}-mensaje`} name="mensaje" rows="5" required></textarea>
+      <textarea id={`${id}-mensaje`} name="mensaje" rows="5" placeholder="Ej.: 10 pallets de mercadería (aprox. 4 toneladas) para recoger el lunes 15 en almacén y entregar en 3 días. Requiere montacargas para la descarga." required></textarea>
       <span class="campo__error" aria-live="polite"></span>
     </div>
   </div>
-  <!-- Honeypot anti-spam (Web3Forms lo lee como "botcheck"). -->
-  <input class="trampa" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <!-- Honeypots: "sitio_web" lo descarta formularios.js; "botcheck" es el nombre que exige Web3Forms. -->
+  <div class="form__extra" aria-hidden="true">
+    <label for={`${id}-sitio_web`}>Sitio web</label>
+    <input type="text" id={`${id}-sitio_web`} name="sitio_web" tabindex="-1" autocomplete="off">
+    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+  </div>
   <button type="submit" class="btn btn--primario">Enviar solicitud</button>
   <p class="form__estado" role="status"></p>
 </form>

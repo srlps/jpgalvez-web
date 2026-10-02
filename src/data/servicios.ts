@@ -1,17 +1,33 @@
 export interface Servicio {
   slug: string;
   titulo: string;
-  icono: "caja" | "contenedor" | "camion" | "almacen";
+  icono: "caja" | "contenedor" | "camion" | "almacen" | "peligro";
   resumen: string;
   parrafos: string[];
   atendemos?: string[];
   destacados: string[];
   imagen: string;
-  // true = el sitio original no tenía texto para este servicio; redactado para la propuesta.
-  textoPropuesto?: boolean;
+  // Distintivo junto al título para el servicio que se quiere resaltar.
+  etiqueta?: string;
 }
 
 export const servicios: Servicio[] = [
+  {
+    slug: "transporte-de-carga-matpel",
+    titulo: "Transporte de carga MATPEL",
+    icono: "peligro",
+    etiqueta: "Certificados",
+    resumen: "Transporte certificado de materiales peligrosos para la minería y para toda operación que exija un transportista habilitado para MATPEL.",
+    parrafos: [
+      "Nuestras unidades y conductores cuentan con la certificación para el transporte de materiales peligrosos (MATPEL) y cumplen los requisitos que exige la normativa peruana para este tipo de carga.",
+      "Esto nos permite ingresar a todas las faenas mineras del Perú y atender a la industria, la construcción y cualquier empresa cuyos insumos o productos requieran transporte MATPEL. Consúltenos por el tipo de carga que necesita trasladar.",
+      "Operamos con una flota de tracto camiones de última generación, mantenida en nuestros propios talleres.",
+    ],
+    atendemos: ["Minería", "Industria", "Construcción"],
+    destacados: ["Unidades y conductores certificados MATPEL", "Acceso a todas las faenas mineras del Perú", "Tracto camiones de última generación", "Monitoreo GPS 24/7"],
+    // Provisional: no hay foto propia de una unidad MATPEL; se usa la del camión de la portada.
+    imagen: "/images/fondos/banner-inicio-clean.jpg",
+  },
   {
     slug: "mudanzas",
     titulo: "Mudanzas",
@@ -61,7 +77,6 @@ export const servicios: Servicio[] = [
     ],
     destacados: ["Instalaciones propias", "Bodega de acopio", "Integración con nuestro transporte"],
     imagen: "/images/fotos/alquiler-almacenes-clean-color.png",
-    textoPropuesto: true,
   },
 ];
 
