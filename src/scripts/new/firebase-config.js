@@ -13,5 +13,5 @@ export const firebaseConfigurado = Object.values(firebaseConfig).every(Boolean);
 // o absoluta al dominio principal — esto último para datos escritos por la consola admin, que
 // desde 2026-09-29 vive en admin/ como SPA separado en su propio subdominio, ver AGENTS.md).
 export function esUrlImagenSegura(url) {
-  return typeof url === "string" && (url.startsWith("https://firebasestorage.googleapis.com/") || url.startsWith("/images/") || url.startsWith("https://transportesjpgalvez.com/images/"));
+  return typeof url === "string" && (url.startsWith("https://firebasestorage.googleapis.com/") || url.startsWith("/images/") || url.startsWith("https://transporteseinversionesjeanpierre.com.pe/images/"));
 }

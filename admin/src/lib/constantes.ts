@@ -12,4 +12,4 @@ export const categoriasGaleria = [
 
 // La consola vive en su propio subdominio: las imágenes del sitio principal (assets estáticos,
 // no subidas por la consola) deben referenciarse con URL absoluta, no con ruta relativa "/images/...".
-export const SITIO_URL = "https://transportesjpgalvez.com";
+export const SITIO_URL = "https://transporteseinversionesjeanpierre.com.pe";

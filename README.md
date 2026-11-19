@@ -20,15 +20,15 @@ src/
   components/new/             # componentes del sitio público
   pages/index.astro           # landing de una página
   pages/politica-*/           # páginas legales independientes
+  pages/robots.txt.ts         # genera robots.txt con la URL del sitemap (dominio en astro.config.mjs)
   styles/new.css              # estilos del sitio (tokens de GUIA-DE-ESTILO.md)
   scripts/new/                # navegación, formularios, Firestore público y galería
   data/sitio.ts               # datos de contacto, navegación y categorías
   data/servicios.ts           # servicios y "¿Por qué elegirnos?"
 
 public/
-  favicon.ico                 # ícono del sitio
-  robots.txt                  # directivas de rastreo y URL del sitemap
-  images/                     # imágenes organizadas por tipo
+  favicon.ico, icon-*.png, apple-touch-icon.png  # íconos del sitio
+  images/                     # imágenes organizadas por tipo (fotos en WebP)
     logos/                    # logo de la empresa y logos de clientes
     fondos/                   # imágenes de portada y secciones
     fotos/                    # fotografías de contenido embebidas con <img>
@@ -81,7 +81,7 @@ La carga de datos (Authentication, alta de clientes/testimonios/galería) se hac
 
 ## Consola admin (proyecto separado)
 
-La consola admin vive en `admin/`, un **segundo proyecto npm independiente** (React + Vite + TypeScript), pensado para desplegarse en un subdominio propio (`admin.transportesjpgalvez.com`) separado de la landing. No forma parte del build de Astro.
+La consola admin vive en `admin/`, un **segundo proyecto npm independiente** (React + Vite + TypeScript), pensado para desplegarse en un subdominio propio (`admin.transporteseinversionesjeanpierre.com.pe`) separado de la landing y marcado como no indexable (`noindex`). No forma parte del build de Astro.
 
 | Comando (desde `admin/`, o el atajo equivalente desde la raíz) | Acción |
 |---|---|
@@ -116,4 +116,4 @@ Agregar `--dry-run` a cualquier `firebase deploy` valida la configuración y las
 
 ## Pendientes conocidos
 
-Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual: verificar en producción la entrega del formulario de contacto (ya conectado a Web3Forms), dominio propio para la landing y la consola admin, cuenta de administrador de producción y contenido por confirmar con el dueño. Las rutas antiguas redirigen a las secciones equivalentes.
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual: verificar en producción la entrega del formulario de contacto (ya conectado a Web3Forms), dominio propio (`transporteseinversionesjeanpierre.com.pe`) para la landing y la consola admin, Search Console y Google Business Profile, cuenta de administrador de producción y contenido por confirmar con el dueño.

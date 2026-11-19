@@ -28,6 +28,8 @@ export const empresa = {
     virtual: "24 horas, todos los días",
   },
   mapaEnlace: "https://www.google.com/maps/search/?api=1&query=Transportes+E+Inversiones+Jeanpierre+S.A.C.+Lince",
+  // Las mismas del mapa embebido; las usan los datos estructurados (SEO local).
+  coordenadas: { latitud: -12.0836114, longitud: -77.0304703 },
   mapaEmbed:
     "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1950.7082671415167!2d-77.0304703!3d-12.0836114!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c9a61a433dab%3A0xde659da5d642334a!2sTransportes%20E%20Inversiones%20Jeanpierre%20S.A.C.!5e0!3m2!1ses!2spe!4v1790458962143!5m2!1ses!2spe",
 };

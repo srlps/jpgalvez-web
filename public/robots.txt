@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://transportesjpgalvez.com/sitemap-index.xml

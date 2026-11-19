@@ -9,28 +9,21 @@
     {
       "target": "web",
       "public": "dist",
-      "redirects": [
-        { "source": "/nosotros", "destination": "/#nosotros", "type": 301 },
-        { "source": "/nosotros/", "destination": "/#nosotros", "type": 301 },
-        { "source": "/servicios", "destination": "/#servicios", "type": 301 },
-        { "source": "/servicios/", "destination": "/#servicios", "type": 301 },
-        { "source": "/servicios/mudanzas", "destination": "/#mudanzas", "type": 301 },
-        { "source": "/servicios/mudanzas/", "destination": "/#mudanzas", "type": 301 },
-        { "source": "/servicios/transporte-de-almacenes-de-aduana", "destination": "/#transporte-de-almacenes-de-aduana", "type": 301 },
-        { "source": "/servicios/transporte-de-almacenes-de-aduana/", "destination": "/#transporte-de-almacenes-de-aduana", "type": 301 },
-        { "source": "/servicios/alquiler-de-vehiculos", "destination": "/#alquiler-de-vehiculos", "type": 301 },
-        { "source": "/servicios/alquiler-de-vehiculos/", "destination": "/#alquiler-de-vehiculos", "type": 301 },
-        { "source": "/servicios/alquiler-de-almacenes", "destination": "/#alquiler-de-almacenes", "type": 301 },
-        { "source": "/servicios/alquiler-de-almacenes/", "destination": "/#alquiler-de-almacenes", "type": 301 },
-        { "source": "/clientes", "destination": "/#clientes", "type": 301 },
-        { "source": "/clientes/", "destination": "/#clientes", "type": 301 },
-        { "source": "/contactenos", "destination": "/#contacto", "type": 301 },
-        { "source": "/contactenos/", "destination": "/#contacto", "type": 301 }
-      ],
+      "trailingSlash": true,
       "ignore": [
         "firebase.json",
         "**/.*",
         "**/node_modules/**"
+      ],
+      "headers": [
+        {
+          "source": "/_astro/**",
+          "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+        },
+        {
+          "source": "**/*.@(webp|jpg|jpeg|png|ico)",
+          "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+        }
       ]
     },
     {
@@ -40,6 +33,12 @@
         "firebase.json",
         "**/.*",
         "**/node_modules/**"
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+        }
       ]
     }
   ],

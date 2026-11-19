@@ -3,10 +3,12 @@ import Header from "../components/new/Header.astro";
 import Footer from "../components/new/Footer.astro";
 import Icono from "../components/new/Icono.astro";
 import { empresa } from "../data/sitio";
+import { servicios } from "../data/servicios";
 import "../styles/new.css";
 
 interface Props {
-  title: string;
+  /** Título de la página; sin él se usa el título de la portada. */
+  title?: string;
   description?: string;
   admin?: boolean;
   /** Página independiente (ej. documentos legales): sin header/footer/WhatsApp flotante. */
@@ -15,59 +17,108 @@ interface Props {
 
 const {
   title,
-  description = "Transportes JeanPierre: transporte de carga, mudanzas, transporte aduanero y alquiler de vehículos y almacenes en Lima desde 2006.",
+  description = "Transporte de carga MATPEL certificado, aduanero, mudanzas y alquiler de vehículos y almacenes en Lima y todo el Perú. Flota propia con GPS 24/7 desde 2006.",
   admin = false,
   documento = false,
 } = Astro.props;
 const mostrarChrome = !admin && !documento;
-const urlBase = Astro.site ?? new URL("https://transportesjpgalvez.com");
+const tituloCompleto = title ? `${title} | ${empresa.nombre}` : `${empresa.nombre} | Carga MATPEL, aduanas y mudanzas en Lima`;
+const urlBase = Astro.site!;
 const canonicalUrl = new URL(Astro.url.pathname, urlBase).href;
-const socialImageUrl = new URL("/images/logos/logo.png", urlBase).href;
+const inicioUrl = new URL("/", urlBase).href;
+const socialImageUrl = new URL("/images/og-imagen.jpg", urlBase).href;
 const datosEstructurados = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: empresa.razonSocial,
-  url: new URL("/", urlBase).href,
-  image: socialImageUrl,
-  telephone: empresa.celulares.map(({ tel }) => tel),
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: empresa.direccion.linea1,
-    addressLocality: "Lince",
-    addressRegion: "Lima",
-    addressCountry: "PE",
-  },
-  areaServed: "Perú",
-  sameAs: [empresa.facebook],
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `${inicioUrl}#empresa`,
+      name: empresa.nombre,
+      legalName: empresa.razonSocial,
+      taxID: empresa.ruc,
+      url: inicioUrl,
+      logo: new URL("/images/logos/logo.png", urlBase).href,
+      image: socialImageUrl,
+      description,
+      foundingDate: String(empresa.fundacion),
+      telephone: empresa.celulares[0].tel,
+      email: empresa.correo,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: empresa.direccion.linea1,
+        addressLocality: "Lince",
+        addressRegion: "Lima",
+        addressCountry: "PE",
+      },
+      geo: { "@type": "GeoCoordinates", latitude: empresa.coordenadas.latitud, longitude: empresa.coordenadas.longitud },
+      hasMap: empresa.mapaEnlace,
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "09:00",
+        closes: "17:00",
+      },
+      contactPoint: empresa.celulares.map(({ tel }) => ({
+        "@type": "ContactPoint",
+        telephone: tel,
+        contactType: "customer service",
+        areaServed: "PE",
+        availableLanguage: "es",
+      })),
+      areaServed: { "@type": "Country", name: "Perú" },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servicios",
+        itemListElement: servicios.map((s) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: s.titulo, description: s.resumen, url: `${inicioUrl}#${s.slug}` },
+        })),
+      },
+      sameAs: [empresa.facebook],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${inicioUrl}#sitio`,
+      url: inicioUrl,
+      name: empresa.nombre,
+      inLanguage: "es-PE",
+      publisher: { "@id": `${inicioUrl}#empresa` },
+    },
+  ],
 };
 ---
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-PE">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} | {empresa.nombre}</title>
+<title>{tituloCompleto}</title>
 <meta name="description" content={description}>
-<meta name="robots" content="index, follow">
 <link rel="canonical" href={canonicalUrl}>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PE">
 <meta property="og:site_name" content={empresa.nombre}>
-<meta property="og:title" content={`${title} | ${empresa.nombre}`}>
+<meta property="og:title" content={tituloCompleto}>
 <meta property="og:description" content={description}>
 <meta property="og:url" content={canonicalUrl}>
 <meta property="og:image" content={socialImageUrl}>
-<meta property="og:image:alt" content={empresa.nombre}>
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content={`${title} | ${empresa.nombre}`}>
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content={`Logo de ${empresa.razonSocial}`}>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={tituloCompleto}>
 <meta name="twitter:description" content={description}>
 <meta name="twitter:image" content={socialImageUrl}>
 <meta name="theme-color" content="#014171">
-<link rel="icon" href="/favicon.ico">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap">
-<script type="application/ld+json" set:html={JSON.stringify(datosEstructurados)}></script>
+{!documento && <script type="application/ld+json" set:html={JSON.stringify(datosEstructurados)}></script>}
 </head>
 <body class:list={[{ "body--admin": admin, "body--documento": documento }]}>
   <a class="salto" href="#contenido">Saltar al contenido</a>

@@ -13,10 +13,10 @@ import { empresa } from "../data/sitio";
 const telPrincipal = empresa.celulares[0];
 const aniosExperiencia = new Date().getFullYear() - empresa.fundacion;
 ---
-<NewLayout title="Inicio">
+<NewLayout>
   <!-- La portada ofrece canales directos (llamar / WhatsApp); el formulario solo se enlaza desde "Contacto" del menú. -->
   <section class="hero" id="inicio" data-oculta-whatsapp>
-    <img class="hero__fondo" src="/images/fondos/banner-inicio.jpg" alt="" width="1340" height="557" fetchpriority="high">
+    <img class="hero__fondo" src="/images/fondos/banner-inicio-1920.webp" srcset="/images/fondos/banner-inicio-1280.webp 1280w, /images/fondos/banner-inicio-1920.webp 1920w, /images/fondos/banner-inicio-2560.webp 2560w" sizes="100vw" alt="" width="1920" height="798" fetchpriority="high">
     <div class="contenedor">
       <div class="hero__texto">
         <p class="overline">{empresa.lema}</p>

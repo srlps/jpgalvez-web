@@ -100,7 +100,7 @@ service cloud.firestore {
       // que vive en su propio subdominio (ver AGENTS.md).
       return isStorageUrl(url) ||
         (validString(url, 1, 1000) && url.matches('^/images/[A-Za-z0-9/._-]+$')) ||
-        (validString(url, 1, 1000) && url.matches('^https://transportesjpgalvez[.]com/images/[A-Za-z0-9/._-]+$'));
+        (validString(url, 1, 1000) && url.matches('^https://transporteseinversionesjeanpierre[.]com[.]pe/images/[A-Za-z0-9/._-]+$'));
     }
 
     // Storage path scoped to the collection folder and to this document's ID.
