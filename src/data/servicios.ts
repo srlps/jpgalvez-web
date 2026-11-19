@@ -20,26 +20,13 @@ export const servicios: Servicio[] = [
     resumen: "Transporte certificado de materiales peligrosos para la minería y para toda operación que exija un transportista habilitado para MATPEL.",
     parrafos: [
       "Nuestras unidades y conductores cuentan con la certificación para el transporte de materiales peligrosos (MATPEL) y cumplen los requisitos que exige la normativa peruana para este tipo de carga.",
-      "Esto nos permite ingresar a todas las faenas mineras del Perú y atender a la industria, la construcción y cualquier empresa cuyos insumos o productos requieran transporte MATPEL. Consúltenos por el tipo de carga que necesita trasladar.",
+      "Esto nos permite atender a cualquier empresa cuyos insumos o productos requieran transporte MATPEL. Consúltenos por el tipo de carga que necesita trasladar.",
       "Operamos con una flota de tracto camiones de última generación, mantenida en nuestros propios talleres.",
     ],
     atendemos: ["Minería", "Industria", "Construcción"],
-    destacados: ["Unidades y conductores certificados MATPEL", "Acceso a todas las faenas mineras del Perú", "Tracto camiones de última generación", "Monitoreo GPS 24/7"],
+    destacados: ["Unidades y conductores certificados MATPEL", "Tracto camiones de última generación", "Monitoreo GPS 24/7"],
     // Provisional: no hay foto propia de una unidad MATPEL; se usa la del camión de la portada.
-    imagen: "/images/fondos/banner-inicio.jpg",
-  },
-  {
-    slug: "mudanzas",
-    titulo: "Mudanzas",
-    icono: "caja",
-    resumen: "Mudanzas puerta a puerta de casas, departamentos, oficinas y plantas, con embalaje e inventario incluidos.",
-    parrafos: [
-      "Nuestro servicio de mudanza se realiza puerta a puerta: nos encargamos de todo el embalaje e inventario para seguir con la carga, descarga y ubicación de los muebles de acuerdo a su indicación.",
-      "Contamos con personal altamente calificado y unidades monitoreadas con sistema GPS.",
-    ],
-    atendemos: ["Mudanza de oficinas", "Mudanza de casa", "Mudanza de departamentos", "Mudanza de planta"],
-    destacados: ["Servicio puerta a puerta", "Embalaje e inventario", "Carga, descarga y ubicación de muebles", "Unidades monitoreadas con GPS"],
-    imagen: "/images/fotos/mudanzas.png",
+    imagen: "/images/fotos/carga_matpel.jpeg",
   },
   {
     slug: "transporte-de-almacenes-de-aduana",
@@ -52,6 +39,18 @@ export const servicios: Servicio[] = [
     ],
     destacados: ["Retiro e ingreso a terminales de almacenamiento", "Contenedor completo (FCL)", "Carga suelta (LCL)", "Seguimiento vía GPS hasta destino final"],
     imagen: "/images/fotos/aduana.png",
+  },
+  {
+    slug: "alquiler-de-almacenes",
+    titulo: "Alquiler de almacenes",
+    icono: "almacen",
+    resumen: "Espacio de almacenamiento en nuestras propias instalaciones, con bodega de acopio para su mercadería.",
+    parrafos: [
+      "Contamos con instalaciones propias y bodega de acopio para nuestros clientes.",
+      "Almacenamos su mercadería de forma segura y la integramos con nuestros servicios de transporte, para que su carga salga a destino cuando usted lo necesite.",
+    ],
+    destacados: ["Instalaciones propias", "Bodega de acopio", "Integración con nuestro transporte"],
+    imagen: "/images/fotos/alquiler-almacenes.png",
   },
   {
     slug: "alquiler-de-vehiculos",
@@ -67,16 +66,17 @@ export const servicios: Servicio[] = [
     imagen: "/images/fotos/alquiler-vehiculos.png",
   },
   {
-    slug: "alquiler-de-almacenes",
-    titulo: "Alquiler de almacenes",
-    icono: "almacen",
-    resumen: "Espacio de almacenamiento en nuestras propias instalaciones, con bodega de acopio para su mercadería.",
+    slug: "mudanzas",
+    titulo: "Mudanzas",
+    icono: "caja",
+    resumen: "Mudanzas puerta a puerta de casas, departamentos, oficinas y plantas, con embalaje e inventario incluidos.",
     parrafos: [
-      "Contamos con instalaciones propias y bodega de acopio para nuestros clientes.",
-      "Almacenamos su mercadería de forma segura y la integramos con nuestros servicios de transporte, para que su carga salga a destino cuando usted lo necesite.",
+      "Nuestro servicio de mudanza se realiza puerta a puerta: nos encargamos de todo el embalaje e inventario para seguir con la carga, descarga y ubicación de los muebles de acuerdo a su indicación.",
+      "Contamos con personal altamente calificado y unidades monitoreadas con sistema GPS.",
     ],
-    destacados: ["Instalaciones propias", "Bodega de acopio", "Integración con nuestro transporte"],
-    imagen: "/images/fotos/alquiler-almacenes.png",
+    atendemos: ["Mudanza de oficinas", "Mudanza de casa", "Mudanza de departamentos", "Mudanza de planta"],
+    destacados: ["Servicio puerta a puerta", "Embalaje e inventario", "Carga, descarga y ubicación de muebles", "Unidades monitoreadas con GPS"],
+    imagen: "/images/fotos/mudanzas.png",
   },
 ];
 
