@@ -21,7 +21,7 @@ export const empresa = {
   ],
   whatsapp: "51940199943",
   // ⚠️ Placeholder por confirmar con el dueño: no había correo de contacto en el sitio original.
-  correo: "contacto@transportesjpgalvez.com",
+  correo: "administracion@transporteseinversionesjeanpierre.com.pe",
   facebook: "https://www.facebook.com/transportejpgalvez/",
   horario: {
     oficina: "Lunes a sábado: 9:00 am – 5:00 pm",
