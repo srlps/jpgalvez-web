@@ -63,7 +63,37 @@ document.querySelectorAll("form.js-validar").forEach((form) => {
       return;
     }
 
-    // Stub: reemplazar por el POST a Web3Forms cuando el dueño entregue el access key.
-    estado.textContent = "Formulario válido. El envío todavía no está conectado a un servicio de correo.";
+    enviar(form, estado);
   });
 });
+
+async function enviar(form, estado) {
+  const boton = form.querySelector('button[type="submit"]');
+  const datos = Object.fromEntries(new FormData(form));
+  // El honeypot propio no debe llegar al correo; "botcheck" sí, porque Web3Forms lo revisa.
+  delete datos.sitio_web;
+  datos.acepta_politica = "Sí";
+
+  boton.disabled = true;
+  estado.classList.remove("form__estado--error");
+  estado.textContent = "Enviando su solicitud…";
+
+  try {
+    const respuesta = await fetch(form.action, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(datos),
+    });
+    const resultado = await respuesta.json().catch(() => ({}));
+    if (!respuesta.ok || !resultado.success) throw new Error(resultado.message || `HTTP ${respuesta.status}`);
+
+    form.reset();
+    estado.textContent = "Gracias, hemos recibido su solicitud. Le responderemos a la brevedad.";
+  } catch (error) {
+    console.error("Error al enviar el formulario:", error);
+    estado.classList.add("form__estado--error");
+    estado.textContent = "No pudimos enviar su solicitud. Inténtelo nuevamente o escríbanos por WhatsApp.";
+  } finally {
+    boton.disabled = false;
+  }
+}

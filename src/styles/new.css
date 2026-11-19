@@ -1628,6 +1628,10 @@ input[type="file"] {
   color: var(--color-azul);
 }
 
+.form__estado--error {
+  color: var(--color-error);
+}
+
 .form__ayuda {
   font-size: var(--fs-small);
   color: var(--gris-500);

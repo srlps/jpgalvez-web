@@ -116,4 +116,4 @@ Agregar `--dry-run` a cualquier `firebase deploy` valida la configuración y las
 
 ## Pendientes conocidos
 
-Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual: formulario de contacto con Web3Forms, dominio propio para la landing y la consola admin, cuenta de administrador de producción y contenido por confirmar con el dueño. Las rutas antiguas redirigen a las secciones equivalentes.
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual: verificar en producción la entrega del formulario de contacto (ya conectado a Web3Forms), dominio propio para la landing y la consola admin, cuenta de administrador de producción y contenido por confirmar con el dueño. Las rutas antiguas redirigen a las secciones equivalentes.

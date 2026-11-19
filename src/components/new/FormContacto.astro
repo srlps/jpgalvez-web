@@ -1,6 +1,6 @@
 ---
 import { servicios } from "../../data/servicios";
-import { ruta as rutaSitio } from "../../data/sitio";
+import { ruta as rutaSitio, web3forms } from "../../data/sitio";
 
 interface Props {
   id: string;
@@ -32,8 +32,10 @@ const ruta: Campo[] = [
   { name: "destino", type: "text", label: "Destino (departamento, provincia y/o distrito)", autocomplete: "off", placeholder: "Ej.: Arequipa, Arequipa, Cercado" },
 ];
 ---
-<!-- TODO(redesign): stub submit — wire to Web3Forms once the owner creates the account and shares the access key -->
-<form class="form js-validar" id={id} method="post" novalidate>
+<form class="form js-validar" id={id} action={web3forms.endpoint} method="post" novalidate>
+  <input type="hidden" name="access_key" value={web3forms.accessKey}>
+  <input type="hidden" name="subject" value={web3forms.asunto}>
+  <input type="hidden" name="from_name" value={web3forms.remitente}>
   <div class="form__grid">
     {campos.map((campo) => (
       <div class="campo">
