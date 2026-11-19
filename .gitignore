@@ -16,8 +16,3 @@ firebase-debug.log
 .env
 .env.*
 !.env.example
-
-# local skills
-.agents
-.claude
-skills-lock.json
