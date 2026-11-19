@@ -13,6 +13,7 @@
     "admin:build": "npm run build --prefix admin"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.0",
     "astro": "^7.3.5",
     "firebase": "^12.19.0"
   }

@@ -6,46 +6,41 @@ Para el rediseño (Fase 2), [GUIA-DE-ESTILO.md](GUIA-DE-ESTILO.md) define colore
 
 ## Stack
 
-Construido con [Astro](https://astro.build/) como generador de sitios estáticos — compila a HTML/CSS plano sin framework de JS en el cliente. El sitio actual no tiene backend; la vista previa del rediseño (`/new/`) usa Firebase (Firestore, Storage y Auth) para clientes, testimonios y galería. La consola admin es un **proyecto npm separado** (`admin/`, React + Vite), pensado para desplegarse en su propio subdominio — ver [Consola admin (proyecto separado)](#consola-admin-proyecto-separado) más abajo.
+Construido con [Astro](https://astro.build/) como generador estático. El sitio público vive en la raíz y usa Firebase (Firestore, Storage y Auth) para clientes, testimonios y galería. La consola admin es un **proyecto npm separado** (`admin/`, React + Vite), pensado para desplegarse en su propio subdominio — ver [Consola admin (proyecto separado)](#consola-admin-proyecto-separado) más abajo.
 
-- **Estilos**: un único archivo propio, `src/styles/site.css`, que reemplaza a los 7 CSS del tema original (Bootstrap 3, Font Awesome, Owl Carousel, Revolution Slider, etc.). Astro lo minifica y lo publica como un solo `.css` en `dist/_astro/`.
-- **JavaScript**: sin jQuery ni plugins. `src/scripts/site.js` (unas pocas líneas en JS nativo) cubre lo único que el tema realmente usaba: header fijo al hacer scroll, menú móvil y botón "volver arriba".
+- **Estilos**: `src/styles/new.css`, con los tokens y componentes de `GUIA-DE-ESTILO.md`; los iconos de interfaz son SVG inline.
+- **JavaScript**: módulos nativos para navegación, formularios, Firestore público y galería; sin jQuery ni framework en el cliente.
 - **Fuentes**: Google Fonts (Fjalla One y Open Sans), solo con los pesos que se usan.
 
 ## Estructura del proyecto
 
 ```
 src/
-  layouts/BaseLayout.astro   # <head>, header, footer y carga de estilos/scripts
-  layouts/NewLayout.astro    # layout del rediseño (/new/)
-  components/                # partials compartidos de header/footer/nav/formularios
-  components/new/            # componentes del rediseño
-  pages/                      # un archivo por ruta (routing por archivos de Astro)
-  pages/new/                  # vista previa del rediseño
-  styles/site.css             # hoja de estilos única del sitio
-  styles/new.css              # estilos del rediseño (tokens de GUIA-DE-ESTILO.md)
-  scripts/site.js             # comportamiento del header, menú móvil y "volver arriba"
-  scripts/new/                # JS del rediseño: menú, formularios, Firestore público, galería
-  data/clientes.json          # listado de 360 clientes de la página Clientes (curado 2026-09-28: duplicados fusionados + cliente del testimonio agregado, ver AGENTS.md)
-  data/sitio.ts               # datos de contacto, navegación y categorías de galería del rediseño
-  data/servicios.ts           # textos de los 4 servicios y "¿Por qué elegirnos?" del rediseño
+  layouts/NewLayout.astro     # <head>, SEO, header, footer y scripts
+  components/new/             # componentes del sitio público
+  pages/index.astro           # landing de una página
+  pages/politica-*/           # páginas legales independientes
+  styles/new.css              # estilos del sitio (tokens de GUIA-DE-ESTILO.md)
+  scripts/new/                # navegación, formularios, Firestore público y galería
+  data/sitio.ts               # datos de contacto, navegación y categorías
+  data/servicios.ts           # servicios y "¿Por qué elegirnos?"
 
 public/
   favicon.ico                 # ícono del sitio
-  images/                     # imágenes del sitio original, organizadas por tipo (no por sección)
-    logos/                    # logo de la empresa, firma, logos de clientes
-    iconos/                   # íconos de navegación, comillas de testimonios, viñetas
-    fondos/                   # imágenes usadas como background-image en site.css
+  robots.txt                  # directivas de rastreo y URL del sitemap
+  images/                     # imágenes organizadas por tipo
+    logos/                    # logo de la empresa y logos de clientes
+    fondos/                   # imágenes de portada y secciones
     fotos/                    # fotografías de contenido embebidas con <img>
-dist/                         # sitio estático generado — ignorado por git, nunca editar directamente
+dist/                         # sitio estático generado (incluye sitemap-index.xml) — ignorado por git
 
 admin/                         # consola admin: proyecto npm separado (React + Vite + TS), ver más abajo
 
 GUIA-DE-ESTILO.md             # guía de estilo del rediseño: paleta, tipografía, tokens CSS, componentes
 
-firebase.json                 # config de Hosting (2 sitios: dist/ y admin/dist/), Firestore y Storage
+firebase.json                 # Hosting (landing + admin), redirecciones legacy, Firestore y Storage
 .firebaserc                    # alias del proyecto Firebase (jpgalvez-7a5b3) y targets de Hosting
-firestore.rules                # reglas de Firestore para /new/ y la consola admin (desplegadas)
+firestore.rules                # reglas de Firestore para el sitio público y la consola admin
 firestore.indexes.json         # 3 índices compuestos que usan las consultas públicas
 storage.rules                  # reglas de Storage para las imágenes de la consola admin (desplegadas)
 .env.example                   # plantilla de la config web de Firebase para el sitio Astro (copiar como .env)
@@ -64,17 +59,17 @@ Ejecutar desde la raíz del proyecto:
 | `npm run build` | Genera el sitio estático en `dist/` |
 | `npm run preview` | Sirve localmente el `dist/` ya generado, para verificar el build real |
 
-## Rediseño (vista previa en `/new/`)
+## Sitio público
 
-La propuesta de rediseño vive completa bajo `/new/` (por ejemplo `http://localhost:4321/new/`), sin tocar el sitio actual, para compararlos página por página. Está marcada `noindex` mientras sea vista previa.
-
-El sitio público es **una sola página**: todo el menú lleva por scroll a secciones de Inicio (`/new/#servicios`, `#nosotros`, `#clientes`, `#galeria`, `#contacto`). Cada destino tiene un solo botón visible: «Contacto» del menú es el único acceso al formulario, y la portada ofrece llamar o escribir por WhatsApp.
+El sitio publicado es **una sola página** en `/`: todo el menú lleva por scroll a secciones de Inicio (`/#servicios`, `#nosotros`, `#clientes`, `#galeria`, `#contacto`). Cada destino tiene un solo botón visible: «Contacto» del menú es el único acceso al formulario, y la portada ofrece llamar o escribir por WhatsApp. Las páginas legales son rutas independientes.
 
 | Ruta | Contenido |
 |---|---|
-| `/new/` | Portada · `#servicios` (acordeón con el detalle de cada servicio; el primero es el transporte de carga MATPEL, destacado como «Certificados») · `#nosotros` (historia, fundador, misión y visión, compromiso junto a los objetivos, ¿por qué elegirnos?) · `#clientes` (encabezado junto a los testimonios, cinta de clientes) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, mapa, formulario) |
+| `/` | Portada · `#servicios` (acordeón con el detalle de cada servicio; el primero es el transporte de carga MATPEL, destacado como «Certificados») · `#nosotros` (historia, fundador, misión y visión, compromiso junto a los objetivos, ¿por qué elegirnos?) · `#clientes` (encabezado junto a los testimonios, cinta de clientes) · `#galeria` (filtros, visor, «ver más») · `#contacto` (teléfonos, WhatsApp, dirección, mapa, formulario) |
+| `/politica-de-privacidad/` | Política de privacidad (borrador pendiente de revisión legal y aprobación) |
+| `/politica-de-contratacion-y-cancelacion/` | Política de contratación y cancelación (borrador pendiente de revisión legal y aprobación) |
 
-Sin configurar Firebase, las secciones de clientes/testimonios de `/new/` quedan vacías (no hay semilla estática) y la galería también aparece vacía.
+Las URLs antiguas `/nosotros/`, `/servicios/`, sus subpáginas, `/clientes/` y `/contactenos/` redirigen a las secciones equivalentes de la landing. Sin configurar Firebase, clientes/testimonios y galería quedan vacíos (no hay semilla estática).
 
 ### Activar Firebase para los datos de clientes/testimonios/galería
 
@@ -86,7 +81,7 @@ La carga de datos (Authentication, alta de clientes/testimonios/galería) se hac
 
 ## Consola admin (proyecto separado)
 
-La consola admin vive en `admin/`, un **segundo proyecto npm independiente** (React + Vite + TypeScript), pensado para desplegarse en un subdominio propio (`admin.transportesjpgalvez.com`) separado de la landing. No es parte del build de Astro ni se sirve desde `/new/admin/`.
+La consola admin vive en `admin/`, un **segundo proyecto npm independiente** (React + Vite + TypeScript), pensado para desplegarse en un subdominio propio (`admin.transportesjpgalvez.com`) separado de la landing. No forma parte del build de Astro.
 
 | Comando (desde `admin/`, o el atajo equivalente desde la raíz) | Acción |
 |---|---|
@@ -121,4 +116,4 @@ Agregar `--dry-run` a cualquier `firebase deploy` valida la configuración y las
 
 ## Pendientes conocidos
 
-Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual. Solo cuentan los pendientes de `/new/` (el sitio que quedará en la raíz): formulario de contacto con Web3Forms, dominio propio para la landing y la consola admin, cuenta de administrador de producción (probar correo real y recuperación de contraseña), SEO, contenido por confirmar con el dueño y la promoción de `/new/` a la raíz. Los defectos del sitio raíz (réplica de comparación) no se corrigen porque se eliminará.
+Ver AGENTS.md → "Known gaps to improve in Phase 2" para el listado actual: formulario de contacto con Web3Forms, dominio propio para la landing y la consola admin, cuenta de administrador de producción y contenido por confirmar con el dueño. Las rutas antiguas redirigen a las secciones equivalentes.

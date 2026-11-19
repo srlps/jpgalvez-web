@@ -1,5 +1,5 @@
-// Datos compartidos del rediseño (vive bajo /new/ hasta que el dueño lo apruebe).
-export const BASE = "/new";
+// Datos compartidos del sitio público.
+export const BASE = "";
 
 export const ruta = (path = "/") => `${BASE}${path}`;
 

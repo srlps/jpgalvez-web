@@ -20,6 +20,26 @@ const {
   documento = false,
 } = Astro.props;
 const mostrarChrome = !admin && !documento;
+const urlBase = Astro.site ?? new URL("https://transportesjpgalvez.com");
+const canonicalUrl = new URL(Astro.url.pathname, urlBase).href;
+const socialImageUrl = new URL("/images/logos/logo.png", urlBase).href;
+const datosEstructurados = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: empresa.razonSocial,
+  url: new URL("/", urlBase).href,
+  image: socialImageUrl,
+  telephone: empresa.celulares.map(({ tel }) => tel),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: empresa.direccion.linea1,
+    addressLocality: "Lince",
+    addressRegion: "Lima",
+    addressCountry: "PE",
+  },
+  areaServed: "Perú",
+  sameAs: [empresa.facebook],
+};
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -28,13 +48,26 @@ const mostrarChrome = !admin && !documento;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} | {empresa.nombre}</title>
 <meta name="description" content={description}>
-<!-- Vista previa del rediseño: quitar noindex al publicarlo en la raíz. -->
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href={canonicalUrl}>
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PE">
+<meta property="og:site_name" content={empresa.nombre}>
+<meta property="og:title" content={`${title} | ${empresa.nombre}`}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonicalUrl}>
+<meta property="og:image" content={socialImageUrl}>
+<meta property="og:image:alt" content={empresa.nombre}>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content={`${title} | ${empresa.nombre}`}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={socialImageUrl}>
 <meta name="theme-color" content="#014171">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap">
+<script type="application/ld+json" set:html={JSON.stringify(datosEstructurados)}></script>
 </head>
 <body class:list={[{ "body--admin": admin, "body--documento": documento }]}>
   <a class="salto" href="#contenido">Saltar al contenido</a>

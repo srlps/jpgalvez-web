@@ -9,6 +9,24 @@
     {
       "target": "web",
       "public": "dist",
+      "redirects": [
+        { "source": "/nosotros", "destination": "/#nosotros", "type": 301 },
+        { "source": "/nosotros/", "destination": "/#nosotros", "type": 301 },
+        { "source": "/servicios", "destination": "/#servicios", "type": 301 },
+        { "source": "/servicios/", "destination": "/#servicios", "type": 301 },
+        { "source": "/servicios/mudanzas", "destination": "/#mudanzas", "type": 301 },
+        { "source": "/servicios/mudanzas/", "destination": "/#mudanzas", "type": 301 },
+        { "source": "/servicios/transporte-de-almacenes-de-aduana", "destination": "/#transporte-de-almacenes-de-aduana", "type": 301 },
+        { "source": "/servicios/transporte-de-almacenes-de-aduana/", "destination": "/#transporte-de-almacenes-de-aduana", "type": 301 },
+        { "source": "/servicios/alquiler-de-vehiculos", "destination": "/#alquiler-de-vehiculos", "type": 301 },
+        { "source": "/servicios/alquiler-de-vehiculos/", "destination": "/#alquiler-de-vehiculos", "type": 301 },
+        { "source": "/servicios/alquiler-de-almacenes", "destination": "/#alquiler-de-almacenes", "type": 301 },
+        { "source": "/servicios/alquiler-de-almacenes/", "destination": "/#alquiler-de-almacenes", "type": 301 },
+        { "source": "/clientes", "destination": "/#clientes", "type": 301 },
+        { "source": "/clientes/", "destination": "/#clientes", "type": 301 },
+        { "source": "/contactenos", "destination": "/#contacto", "type": 301 },
+        { "source": "/contactenos/", "destination": "/#contacto", "type": 301 }
+      ],
       "ignore": [
         "firebase.json",
         "**/.*",

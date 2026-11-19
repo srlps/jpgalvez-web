@@ -26,7 +26,7 @@ export const servicios: Servicio[] = [
     atendemos: ["Minería", "Industria", "Construcción"],
     destacados: ["Unidades y conductores certificados MATPEL", "Acceso a todas las faenas mineras del Perú", "Tracto camiones de última generación", "Monitoreo GPS 24/7"],
     // Provisional: no hay foto propia de una unidad MATPEL; se usa la del camión de la portada.
-    imagen: "/images/fondos/banner-inicio-clean.jpg",
+    imagen: "/images/fondos/banner-inicio.jpg",
   },
   {
     slug: "mudanzas",
@@ -39,7 +39,7 @@ export const servicios: Servicio[] = [
     ],
     atendemos: ["Mudanza de oficinas", "Mudanza de casa", "Mudanza de departamentos", "Mudanza de planta"],
     destacados: ["Servicio puerta a puerta", "Embalaje e inventario", "Carga, descarga y ubicación de muebles", "Unidades monitoreadas con GPS"],
-    imagen: "/images/fotos/mudanzas-clean-color.png",
+    imagen: "/images/fotos/mudanzas.png",
   },
   {
     slug: "transporte-de-almacenes-de-aduana",
@@ -51,7 +51,7 @@ export const servicios: Servicio[] = [
       "Asimismo, le brindamos orientación en el manejo de mercancías, ya sea en contenedor (FCL) o carga suelta (LCL). Adicionalmente coordinamos su seguimiento vía GPS hasta su destino final.",
     ],
     destacados: ["Retiro e ingreso a terminales de almacenamiento", "Contenedor completo (FCL)", "Carga suelta (LCL)", "Seguimiento vía GPS hasta destino final"],
-    imagen: "/images/fotos/aduana-clean-color.png",
+    imagen: "/images/fotos/aduana.png",
   },
   {
     slug: "alquiler-de-vehiculos",
@@ -64,7 +64,7 @@ export const servicios: Servicio[] = [
       "En caso tenga algún inconveniente con la camioneta, puede solicitar soporte técnico en nuestros talleres, donde nos preocupamos por mantener toda nuestra flota en buenas condiciones.",
     ],
     destacados: ["Camionetas para carga pesada", "Cajas amplias para objetos grandes", "Asesoría sobre cada modelo", "Soporte técnico en nuestros talleres"],
-    imagen: "/images/fotos/alquiler-vehiculos-clean-color.png",
+    imagen: "/images/fotos/alquiler-vehiculos.png",
   },
   {
     slug: "alquiler-de-almacenes",
@@ -76,7 +76,7 @@ export const servicios: Servicio[] = [
       "Almacenamos su mercadería de forma segura y la integramos con nuestros servicios de transporte, para que su carga salga a destino cuando usted lo necesite.",
     ],
     destacados: ["Instalaciones propias", "Bodega de acopio", "Integración con nuestro transporte"],
-    imagen: "/images/fotos/alquiler-almacenes-clean-color.png",
+    imagen: "/images/fotos/alquiler-almacenes.png",
   },
 ];
 
